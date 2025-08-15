@@ -1,0 +1,15 @@
+module.exports = {
+  createBook: require("./createBook"),
+  getIdListOfBookByField: require("./getIdListOfBookByField"),
+  getBookById: require("./getBookById"),
+  getBookAggById: require("./getBookAggById"),
+  getBookListByQuery: require("./getBookListByQuery"),
+  getBookStatsByQuery: require("./getBookStatsByQuery"),
+  getBookByQuery: require("./getBookByQuery"),
+  updateBookById: require("./updateBookById"),
+  updateBookByIdList: require("./updateBookByIdList"),
+  updateBookByQuery: require("./updateBookByQuery"),
+  deleteBookById: require("./deleteBookById"),
+  deleteBookByQuery: require("./deleteBookByQuery"),
+  getBookByIsbn: require("./getBookByIsbn"),
+};
