@@ -1,3 +1,5 @@
+const { sequelize } = require("common");
+const { Op } = require("sequelize");
 const {
   HttpServerError,
   BadRequestError,
@@ -5,13 +7,21 @@ const {
   ForbiddenError,
   NotFoundError,
 } = require("common");
+const { hexaLogger } = require("common");
 
-const { PurchaseOrder } = require("models");
-const { ObjectId } = require("mongoose").Types;
+const {
+  Book,
+  Branch,
+  BranchInventory,
+  InventoryAuditLog,
+  InterBranchTransfer,
+  PurchaseOrder,
+  CatalogInventoryShareToken,
+} = require("models");
 
-const { DBGetMongooseCommand } = require("dbCommand");
+const { DBGetSequelizeCommand } = require("dbCommand");
 
-class DbGetPurchaseorderCommand extends DBGetMongooseCommand {
+class DbGetPurchaseorderCommand extends DBGetSequelizeCommand {
   constructor(input) {
     super(input, PurchaseOrder);
     this.commandName = "dbGetPurchaseorder";
@@ -25,16 +35,8 @@ class DbGetPurchaseorderCommand extends DBGetMongooseCommand {
   }
 
   async getCqrsJoins(data) {
-    if (PurchaseOrder.getCqrsJoins) {
-      await PurchaseOrder.getCqrsJoins(data);
-    }
+    if (PurchaseOrder.getCqrsJoins) await PurchaseOrder.getCqrsJoins(data);
   }
-
-  // populateQuery(query) {
-  //  if (!this.input.getJoins) return query;
-  //
-  //  return query;
-  //}
 
   initOwnership(input) {
     super.initOwnership(input);
@@ -44,10 +46,14 @@ class DbGetPurchaseorderCommand extends DBGetMongooseCommand {
     return true;
   }
 
-  // ask about this should i rename the whereClause to dataClause???
-
   async transposeResult() {
     // transpose dbData
+  }
+
+  buildIncludes(forWhereClause) {
+    if (!this.input.getJoins) forWhereClause = true;
+    const includes = [];
+    return includes;
   }
 }
 

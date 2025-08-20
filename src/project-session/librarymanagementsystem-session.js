@@ -14,6 +14,14 @@ class LibrarymanagementsystemSession extends HexaAuth {
     this.isRemoteAuth = false;
     this.useRemoteSession = false;
   }
+
+  userHasRole(roleName) {
+    const userRoleInSession = this.session?.roleId;
+    if (!userRoleInSession) return false;
+    return Array.isArray(userRoleInSession)
+      ? userRoleInSession.includes(roleName)
+      : userRoleInSession == roleName;
+  }
 }
 
 module.exports = LibrarymanagementsystemSession;

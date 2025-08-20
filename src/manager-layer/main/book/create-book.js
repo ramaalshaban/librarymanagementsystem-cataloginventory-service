@@ -100,15 +100,15 @@ class CreateBookManager extends BookManager {
   }
 
   async getDataClause() {
-    const { newObjectId } = require("common");
+    const { newUUID } = require("common");
 
     const { hashString } = require("common");
 
     if (this.id) this.bookId = this.id;
-    if (!this.bookId) this.bookId = newObjectId();
+    if (!this.bookId) this.bookId = newUUID(false);
 
     const dataClause = {
-      _id: this.bookId,
+      id: this.bookId,
       title: this.title,
       authors: this.authors,
       isbn: this.isbn,

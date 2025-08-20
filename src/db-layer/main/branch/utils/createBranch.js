@@ -1,16 +1,21 @@
-const { HttpServerError, BadRequestError, newUUID } = require("common");
-//should i add the elastic for mongodb?
+const { HttpServerError, BadRequestError } = require("common");
+
 const { ElasticIndexer } = require("serviceCommon");
 
 const { Branch } = require("models");
+const { hexaLogger, newUUID } = require("common");
 
 const indexDataToElastic = async (data) => {
-  const elasticIndexer = new ElasticIndexer("branch");
+  const elasticIndexer = new ElasticIndexer(
+    "branch",
+    this.session,
+    this.requestId,
+  );
   await elasticIndexer.indexData(data);
 };
 
 const validateData = (data) => {
-  const requiredFields = ["name", "isActive"];
+  const requiredFields = ["name"];
 
   requiredFields.forEach((field) => {
     if (data[field] === null || data[field] === undefined) {
@@ -20,30 +25,21 @@ const validateData = (data) => {
     }
   });
 
-  if (!data._id && !data.id) {
-    data._id = newUUID();
+  if (!data.id) {
+    data.id = newUUID();
   }
 };
 
 const createBranch = async (data) => {
   try {
-    if (!data || Object.keys(data).length === 0) {
-      throw new BadRequestError(`errMsg_invalidInputDataForBranch`);
-    }
-
     validateData(data);
 
-    const newbranch = new Branch(data);
-    const createdbranch = await newbranch.save();
-
-    //shoul i use model's getData method for consistency with Sequelize
-    const _data = createdbranch.getData();
-
+    const newbranch = await Branch.create(data);
+    const _data = newbranch.getData();
     await indexDataToElastic(_data);
-
     return _data;
   } catch (err) {
-    throw new HttpServerError(`errMsg_dbErrorWhenCreatingBranch`, err);
+    throw new HttpServerError("errMsg_dbErrorWhenCreatingBranch", err);
   }
 };
 

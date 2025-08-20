@@ -1,11 +1,13 @@
-const { HttpServerError, BadRequestError, NotFoundError } = require("common");
+//ask about this no other option other than softdelete
+const {
+  HttpServerError,
+  BadRequestError,
+  NotAuthenticatedError,
+  ForbiddenError,
+  NotFoundError,
+} = require("common");
 const { BranchInventory } = require("models");
 const { ElasticIndexer } = require("serviceCommon");
-
-const indexDataToElastic = async (id) => {
-  const elasticIndexer = new ElasticIndexer("branchInventory");
-  await elasticIndexer.deleteData(id);
-};
 
 const deleteBranchInventoryById = async (id) => {
   try {
@@ -16,32 +18,21 @@ const deleteBranchInventoryById = async (id) => {
       throw new BadRequestError("ID is required in utility delete function");
 
     const existingDoc = await BranchInventory.findOne({
-      _id: id,
-      isActive: true,
+      where: { id, isActive: true },
     });
-
     if (!existingDoc) {
       throw new NotFoundError(`Record with ID ${id} not found.`);
     }
-
-    const options = { new: true };
     const dataClause = { isActive: false };
+    await existingDoc.update(dataClause);
 
-    const deletedDoc = await BranchInventory.findOneAndUpdate(
-      { _id: id, isActive: true },
-      dataClause,
-      options,
-    );
+    const elasticIndexer = new ElasticIndexer("branchInventory");
+    await elasticIndexer.deleteData(existingDoc.id);
 
-    await indexDataToElastic(id);
-
-    return deletedDoc.getData();
+    return existingDoc.getData();
   } catch (err) {
-    if (err instanceof NotFoundError) {
-      throw err;
-    }
     throw new HttpServerError(
-      "errMsg_dbErrorWhenUpdatingBranchInventoryById",
+      "An unexpected error occurred during the delete operation.",
       err,
     );
   }

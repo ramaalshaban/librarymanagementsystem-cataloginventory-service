@@ -1,8 +1,3 @@
-// exsik olan :
-//if exits update and if not exits create
-//if index.onDuplicate == "throwError" throw error
-//
-
 const {
   HttpServerError,
   BadRequestError,
@@ -12,8 +7,10 @@ const {
 } = require("common");
 
 const { BranchInventory } = require("models");
+const { Op } = require("sequelize");
+const { hexaLogger } = require("common");
 
-const { DBCreateMongooseCommand } = require("dbCommand");
+const { DBCreateSequelizeCommand } = require("dbCommand");
 
 const {
   BranchInventoryQueryCacheInvalidator,
@@ -22,7 +19,7 @@ const {
 const { ElasticIndexer } = require("serviceCommon");
 const getBranchInventoryById = require("./utils/getBranchInventoryById");
 
-class DbCreateBranchinventoryCommand extends DBCreateMongooseCommand {
+class DbCreateBranchinventoryCommand extends DBCreateSequelizeCommand {
   constructor(input) {
     super(input);
     this.commandName = "dbCreateBranchinventory";
@@ -50,6 +47,8 @@ class DbCreateBranchinventoryCommand extends DBCreateMongooseCommand {
     await elasticIndexer.indexData(dbData);
   }
 
+  // should i add hooksDbLayer here?
+
   // ask about this should i rename the whereClause to dataClause???
 
   async create_childs() {}
@@ -72,7 +71,8 @@ class DbCreateBranchinventoryCommand extends DBCreateMongooseCommand {
       };
 
       branchInventory =
-        branchInventory || (await BranchInventory.findOne(whereClause));
+        branchInventory ||
+        (await BranchInventory.findOne({ where: whereClause }));
 
       if (branchInventory) {
         throw new BadRequestError(
@@ -83,7 +83,7 @@ class DbCreateBranchinventoryCommand extends DBCreateMongooseCommand {
       if (!updated && this.dataClause.id && !exists) {
         branchInventory =
           branchInventory ||
-          (await BranchInventory.findById(this.dataClause.id));
+          (await BranchInventory.findByPk(this.dataClause.id));
         if (branchInventory) {
           delete this.dataClause.id;
           this.dataClause.isActive = true;
@@ -93,6 +93,7 @@ class DbCreateBranchinventoryCommand extends DBCreateMongooseCommand {
       }
     } catch (error) {
       const eDetail = {
+        whereClause: this.normalizeSequalizeOps(whereClause),
         dataClause: this.dataClause,
         errorStack: error.stack,
         checkoutResult: this.input.checkoutResult,

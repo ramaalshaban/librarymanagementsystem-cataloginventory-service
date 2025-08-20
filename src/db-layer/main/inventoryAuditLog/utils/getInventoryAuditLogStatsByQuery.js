@@ -1,6 +1,8 @@
 const { HttpServerError, BadRequestError } = require("common");
 
 const { InventoryAuditLog } = require("models");
+const { Op } = require("sequelize");
+const { hexaLogger } = require("common");
 
 const getInventoryAuditLogStatsByQuery = async (query, stats) => {
   const promises = [];
@@ -12,53 +14,29 @@ const getInventoryAuditLogStatsByQuery = async (query, stats) => {
     };
 
     for (const stat of stats) {
-      const statParts = stat.replace("(", "-").replace(")", "").split("-");
+      let statParts = stat.replace("(", "-").replace(")", "").split("-");
       if (stat === "count") {
-        promises.push(InventoryAuditLog.countDocuments(queryWithSoftDelete));
+        promises.push(InventoryAuditLog.count({ where: queryWithSoftDelete }));
         statLabels.push("count");
       } else if (statParts.length == 2) {
         if (statParts[0] === "sum") {
-          const pipeline = [
-            { $match: queryWithSoftDelete },
-            { $group: { _id: null, total: { $sum: `$${statParts[1]}` } } },
-          ];
           promises.push(
-            InventoryAuditLog.aggregate(pipeline).then((result) =>
-              result.length > 0 ? result[0].total : 0,
-            ),
+            InventoryAuditLog.sum(statParts[1], { where: queryWithSoftDelete }),
           );
           statLabels.push("sum-" + statParts[1]);
         } else if (statParts[0] === "avg") {
-          const pipeline = [
-            { $match: queryWithSoftDelete },
-            { $group: { _id: null, average: { $avg: `$${statParts[1]}` } } },
-          ];
           promises.push(
-            InventoryAuditLog.aggregate(pipeline).then((result) =>
-              result.length > 0 ? result[0].average : 0,
-            ),
+            InventoryAuditLog.avg(statParts[1], { where: queryWithSoftDelete }),
           );
           statLabels.push("avg-" + statParts[1]);
         } else if (statParts[0] === "min") {
-          const pipeline = [
-            { $match: queryWithSoftDelete },
-            { $group: { _id: null, minimum: { $min: `$${statParts[1]}` } } },
-          ];
           promises.push(
-            InventoryAuditLog.aggregate(pipeline).then((result) =>
-              result.length > 0 ? result[0].minimum : null,
-            ),
+            InventoryAuditLog.min(statParts[1], { where: queryWithSoftDelete }),
           );
           statLabels.push("min-" + statParts[1]);
         } else if (statParts[0] === "max") {
-          const pipeline = [
-            { $match: queryWithSoftDelete },
-            { $group: { _id: null, maximum: { $max: `$${statParts[1]}` } } },
-          ];
           promises.push(
-            InventoryAuditLog.aggregate(pipeline).then((result) =>
-              result.length > 0 ? result[0].maximum : null,
-            ),
+            InventoryAuditLog.max(statParts[1], { where: queryWithSoftDelete }),
           );
           statLabels.push("max-" + statParts[1]);
         }
@@ -66,7 +44,7 @@ const getInventoryAuditLogStatsByQuery = async (query, stats) => {
     }
 
     if (promises.length == 0) {
-      return await InventoryAuditLog.countDocuments(queryWithSoftDelete);
+      return await InventoryAuditLog.count({ where: queryWithSoftDelete });
     } else if (promises.length == 1) {
       return await promises[0];
     } else {

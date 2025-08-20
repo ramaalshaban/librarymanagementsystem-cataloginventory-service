@@ -1,45 +1,60 @@
-const { mongoose } = require("common");
-const { Schema } = mongoose;
-const branchSchema = new mongoose.Schema(
+const { sequelize } = require("common");
+const { DataTypes } = require("sequelize");
+
+//Represents a physical library branch for catalog holdings: names, contact details, and geocoordinates for geospatial/proximity queries.
+const Branch = sequelize.define(
+  "branch",
   {
+    id: {
+      type: DataTypes.UUID,
+      primaryKey: true,
+    },
     name: {
-      type: String,
-      required: true,
+      // The common name of the library branch.
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     address: {
-      type: Schema.Types.Mixed,
-      required: false,
+      // Branch postal address object (street, city, zip, etc).
+      type: DataTypes.JSONB,
+      allowNull: true,
     },
     geoLocation: {
-      type: Schema.Types.Mixed,
-      required: false,
+      // GeoJSON Point for branch location (for spatial/proximity queries).
+      type: DataTypes.JSONB,
+      allowNull: true,
     },
     contactEmail: {
-      type: String,
-      required: false,
+      // Branch or staff contact email for inquiries.
+      type: DataTypes.STRING,
+      allowNull: true,
     },
     isActive: {
       // isActive property will be set to false when deleted
       // so that the document will be archived
-      type: Boolean,
-      default: true,
-      required: false,
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
+      allowNull: true,
     },
   },
   {
-    toJSON: {
-      transform(doc, ret) {
-        ret.id = ret._id.toString();
-        delete ret._id;
+    indexes: [
+      {
+        unique: false,
+        fields: ["name"],
       },
-    },
+      {
+        unique: false,
+        fields: ["geoLocation"],
+      },
+
+      {
+        unique: true,
+        fields: ["name"],
+        where: { isActive: true },
+      },
+    ],
   },
 );
 
-branchSchema.set("versionKey", "recordVersion");
-branchSchema.set("timestamps", true);
-
-branchSchema.set("toObject", { virtuals: true });
-branchSchema.set("toJSON", { virtuals: true });
-
-module.exports = branchSchema;
+module.exports = Branch;

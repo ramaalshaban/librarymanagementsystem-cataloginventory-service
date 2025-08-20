@@ -5,10 +5,10 @@ const {
   ForbiddenError,
   NotFoundError,
 } = require("common");
-// do i need to add the referring part or does the mongodb use the things differently
-// is there specific approch to handle the referential integrity or it done interrenly
+
 const { InventoryAuditLog } = require("models");
-const { ObjectId } = require("mongoose").Types;
+const { Op } = require("sequelize");
+const { hexaLogger } = require("common");
 
 const {
   InventoryAuditLogQueryCacheInvalidator,
@@ -16,9 +16,9 @@ const {
 
 const { ElasticIndexer } = require("serviceCommon");
 
-const { DBSoftDeleteMongooseCommand } = require("dbCommand");
+const { DBSoftDeleteSequelizeCommand } = require("dbCommand");
 
-class DbDeleteInventoryauditlogCommand extends DBSoftDeleteMongooseCommand {
+class DbDeleteInventoryauditlogCommand extends DBSoftDeleteSequelizeCommand {
   constructor(input) {
     const instanceMode = true;
     super(input, InventoryAuditLog, instanceMode);
@@ -27,9 +27,7 @@ class DbDeleteInventoryauditlogCommand extends DBSoftDeleteMongooseCommand {
     this.objectName = "inventoryAuditLog";
     this.serviceLabel = "librarymanagementsystem-cataloginventory-service";
     this.dbEvent =
-      "librarymanagementsystem-cataloginventory-service" +
-      "-dbevent-" +
-      "inventoryauditlog-deleted";
+      "librarymanagementsystem-cataloginventory-service-dbevent-inventoryauditlog-deleted";
   }
 
   loadHookFunctions() {
@@ -52,6 +50,8 @@ class DbDeleteInventoryauditlogCommand extends DBSoftDeleteMongooseCommand {
     );
     await elasticIndexer.deleteData(this.dbData.id);
   }
+
+  //should i add this here?
 
   // ask about this should i rename the whereClause to dataClause???
 

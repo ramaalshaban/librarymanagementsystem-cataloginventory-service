@@ -1,6 +1,7 @@
-const { HttpServerError, BadRequestError, NotFoundError } = require("common");
+const { HttpServerError, NotFoundError, BadRequestError } = require("common");
 
 const { PurchaseOrder } = require("models");
+const { Op } = require("sequelize");
 
 const getIdListOfPurchaseOrderByField = async (
   fieldName,
@@ -8,6 +9,8 @@ const getIdListOfPurchaseOrderByField = async (
   isArray,
 ) => {
   try {
+    let isValidField = false;
+
     const purchaseOrderProperties = [
       "id",
       "branchId",
@@ -17,44 +20,28 @@ const getIdListOfPurchaseOrderByField = async (
       "approvalNotes",
     ];
 
-    if (!purchaseOrderProperties.includes(fieldName)) {
+    isValidField = purchaseOrderProperties.includes(fieldName);
+
+    if (!isValidField) {
       throw new BadRequestError(`Invalid field name: ${fieldName}.`);
     }
 
-    // type validation different from sequelize for mongodb
-    const schemaPath = PurchaseOrder.schema.paths[fieldName];
-    if (schemaPath && fieldValue !== undefined && fieldValue !== null) {
-      const expectedType = schemaPath.instance.toLowerCase();
-      const actualType = typeof fieldValue;
+    const expectedType = typeof PurchaseOrder[fieldName];
 
-      const typeMapping = {
-        string: "string",
-        number: "number",
-        boolean: "boolean",
-        objectid: "string", // ObjectIds are typically passed as strings
-      };
-
-      const expectedJSType = typeMapping[expectedType];
-      if (expectedJSType && actualType !== expectedJSType) {
-        throw new BadRequestError(
-          `Invalid field value type for ${fieldName}. Expected ${expectedJSType}, got ${actualType}.`,
-        );
-      }
+    if (typeof fieldValue !== expectedType) {
+      throw new BadRequestError(
+        `Invalid field value type for ${fieldName}. Expected ${expectedType}.`,
+      );
     }
 
-    let query = isArray
-      ? {
-          [fieldName]: {
-            $in: Array.isArray(fieldValue) ? fieldValue : [fieldValue],
-          },
-        }
-      : { [fieldName]: fieldValue };
+    const options = {
+      where: isArray
+        ? { [fieldName]: { [Op.contains]: [fieldValue] }, isActive: true }
+        : { [fieldName]: fieldValue, isActive: true },
+      attributes: ["id"],
+    };
 
-    query.isActive = true;
-
-    let purchaseOrderIdList = await PurchaseOrder.find(query, { _id: 1 })
-      .lean()
-      .exec();
+    let purchaseOrderIdList = await PurchaseOrder.findAll(options);
 
     if (!purchaseOrderIdList || purchaseOrderIdList.length === 0) {
       throw new NotFoundError(
@@ -62,10 +49,7 @@ const getIdListOfPurchaseOrderByField = async (
       );
     }
 
-    purchaseOrderIdList = purchaseOrderIdList.map((item) =>
-      item._id.toString(),
-    );
-
+    purchaseOrderIdList = purchaseOrderIdList.map((item) => item.id);
     return purchaseOrderIdList;
   } catch (err) {
     throw new HttpServerError(

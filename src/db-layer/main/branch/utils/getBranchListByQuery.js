@@ -1,5 +1,8 @@
-const { HttpServerError, BadRequestError, NotFoundError } = require("common");
+const { HttpServerError, BadRequestError } = require("common");
+
 const { Branch } = require("models");
+const { Op } = require("sequelize");
+const { hexaLogger } = require("common");
 
 const getBranchListByQuery = async (query) => {
   try {
@@ -9,11 +12,13 @@ const getBranchListByQuery = async (query) => {
       );
     }
 
-    const branch = await Branch.find(query);
-
-    if (!branch || branch.length === 0) return [];
+    const branch = await Branch.findAll({
+      where: { ...query, isActive: true },
+    });
 
     //should i add not found error or only return empty array?
+    if (!branch || branch.length === 0) return [];
+
     //      if (!branch || branch.length === 0) {
     //      throw new NotFoundError(
     //      `Branch with the specified criteria not found`

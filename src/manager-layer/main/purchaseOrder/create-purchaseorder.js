@@ -114,15 +114,15 @@ class CreatePurchaseOrderManager extends PurchaseOrderManager {
   }
 
   async getDataClause() {
-    const { newObjectId } = require("common");
+    const { newUUID } = require("common");
 
     const { hashString } = require("common");
 
     if (this.id) this.purchaseOrderId = this.id;
-    if (!this.purchaseOrderId) this.purchaseOrderId = newObjectId();
+    if (!this.purchaseOrderId) this.purchaseOrderId = newUUID(false);
 
     const dataClause = {
-      _id: this.purchaseOrderId,
+      id: this.purchaseOrderId,
       branchId: this.branchId,
       requestedByUserId: this.requestedByUserId,
       itemRequests: this.itemRequests

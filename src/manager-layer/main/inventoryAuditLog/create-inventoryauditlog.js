@@ -126,15 +126,15 @@ class CreateInventoryAuditLogManager extends InventoryAuditLogManager {
   }
 
   async getDataClause() {
-    const { newObjectId } = require("common");
+    const { newUUID } = require("common");
 
     const { hashString } = require("common");
 
     if (this.id) this.inventoryAuditLogId = this.id;
-    if (!this.inventoryAuditLogId) this.inventoryAuditLogId = newObjectId();
+    if (!this.inventoryAuditLogId) this.inventoryAuditLogId = newUUID(false);
 
     const dataClause = {
-      _id: this.inventoryAuditLogId,
+      id: this.inventoryAuditLogId,
       branchId: this.branchId,
       branchInventoryId: this.branchInventoryId,
       auditType: this.auditType,

@@ -102,10 +102,11 @@ class UpdatePurchaseOrderManager extends PurchaseOrderManager {
   }
 
   async getWhereClause() {
-    const { convertUserQueryToMongoDbQuery } = require("common");
+    const { convertUserQueryToSequelizeQuery } = require("common");
 
     const routeQuery = await this.getRouteQuery();
-    return convertUserQueryToMongoDbQuery(routeQuery);
+
+    return convertUserQueryToSequelizeQuery(routeQuery);
   }
 
   async getDataClause() {

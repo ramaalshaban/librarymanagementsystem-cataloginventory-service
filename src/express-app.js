@@ -92,6 +92,7 @@ const {
   inventoryAuditLogRouter,
   interBranchTransferRouter,
   purchaseOrderRouter,
+  catalogInventoryShareTokenRouter,
 } = require("restLayer");
 
 app.use("", bookRouter);
@@ -100,6 +101,7 @@ app.use("", branchInventoryRouter);
 app.use("", inventoryAuditLogRouter);
 app.use("", interBranchTransferRouter);
 app.use("", purchaseOrderRouter);
+app.use("", catalogInventoryShareTokenRouter);
 
 // swagger
 

@@ -1,11 +1,16 @@
-const { HttpServerError, BadRequestError, newUUID } = require("common");
-//should i add the elastic for mongodb?
+const { HttpServerError, BadRequestError } = require("common");
+
 const { ElasticIndexer } = require("serviceCommon");
 
 const { InventoryAuditLog } = require("models");
+const { hexaLogger, newUUID } = require("common");
 
 const indexDataToElastic = async (data) => {
-  const elasticIndexer = new ElasticIndexer("inventoryAuditLog");
+  const elasticIndexer = new ElasticIndexer(
+    "inventoryAuditLog",
+    this.session,
+    this.requestId,
+  );
   await elasticIndexer.indexData(data);
 };
 
@@ -15,7 +20,6 @@ const validateData = (data) => {
     "branchInventoryId",
     "auditType",
     "recordedByUserId",
-    "isActive",
   ];
 
   requiredFields.forEach((field) => {
@@ -26,31 +30,22 @@ const validateData = (data) => {
     }
   });
 
-  if (!data._id && !data.id) {
-    data._id = newUUID();
+  if (!data.id) {
+    data.id = newUUID();
   }
 };
 
 const createInventoryAuditLog = async (data) => {
   try {
-    if (!data || Object.keys(data).length === 0) {
-      throw new BadRequestError(`errMsg_invalidInputDataForInventoryAuditLog`);
-    }
-
     validateData(data);
 
-    const newinventoryAuditLog = new InventoryAuditLog(data);
-    const createdinventoryAuditLog = await newinventoryAuditLog.save();
-
-    //shoul i use model's getData method for consistency with Sequelize
-    const _data = createdinventoryAuditLog.getData();
-
+    const newinventoryAuditLog = await InventoryAuditLog.create(data);
+    const _data = newinventoryAuditLog.getData();
     await indexDataToElastic(_data);
-
     return _data;
   } catch (err) {
     throw new HttpServerError(
-      `errMsg_dbErrorWhenCreatingInventoryAuditLog`,
+      "errMsg_dbErrorWhenCreatingInventoryAuditLog",
       err,
     );
   }

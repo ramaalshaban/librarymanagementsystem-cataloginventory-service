@@ -1,6 +1,8 @@
 const { HttpServerError, BadRequestError } = require("common");
 
 const { Branch } = require("models");
+const { Op } = require("sequelize");
+const { hexaLogger } = require("common");
 
 const getBranchStatsByQuery = async (query, stats) => {
   const promises = [];
@@ -12,53 +14,29 @@ const getBranchStatsByQuery = async (query, stats) => {
     };
 
     for (const stat of stats) {
-      const statParts = stat.replace("(", "-").replace(")", "").split("-");
+      let statParts = stat.replace("(", "-").replace(")", "").split("-");
       if (stat === "count") {
-        promises.push(Branch.countDocuments(queryWithSoftDelete));
+        promises.push(Branch.count({ where: queryWithSoftDelete }));
         statLabels.push("count");
       } else if (statParts.length == 2) {
         if (statParts[0] === "sum") {
-          const pipeline = [
-            { $match: queryWithSoftDelete },
-            { $group: { _id: null, total: { $sum: `$${statParts[1]}` } } },
-          ];
           promises.push(
-            Branch.aggregate(pipeline).then((result) =>
-              result.length > 0 ? result[0].total : 0,
-            ),
+            Branch.sum(statParts[1], { where: queryWithSoftDelete }),
           );
           statLabels.push("sum-" + statParts[1]);
         } else if (statParts[0] === "avg") {
-          const pipeline = [
-            { $match: queryWithSoftDelete },
-            { $group: { _id: null, average: { $avg: `$${statParts[1]}` } } },
-          ];
           promises.push(
-            Branch.aggregate(pipeline).then((result) =>
-              result.length > 0 ? result[0].average : 0,
-            ),
+            Branch.avg(statParts[1], { where: queryWithSoftDelete }),
           );
           statLabels.push("avg-" + statParts[1]);
         } else if (statParts[0] === "min") {
-          const pipeline = [
-            { $match: queryWithSoftDelete },
-            { $group: { _id: null, minimum: { $min: `$${statParts[1]}` } } },
-          ];
           promises.push(
-            Branch.aggregate(pipeline).then((result) =>
-              result.length > 0 ? result[0].minimum : null,
-            ),
+            Branch.min(statParts[1], { where: queryWithSoftDelete }),
           );
           statLabels.push("min-" + statParts[1]);
         } else if (statParts[0] === "max") {
-          const pipeline = [
-            { $match: queryWithSoftDelete },
-            { $group: { _id: null, maximum: { $max: `$${statParts[1]}` } } },
-          ];
           promises.push(
-            Branch.aggregate(pipeline).then((result) =>
-              result.length > 0 ? result[0].maximum : null,
-            ),
+            Branch.max(statParts[1], { where: queryWithSoftDelete }),
           );
           statLabels.push("max-" + statParts[1]);
         }
@@ -66,7 +44,7 @@ const getBranchStatsByQuery = async (query, stats) => {
     }
 
     if (promises.length == 0) {
-      return await Branch.countDocuments(queryWithSoftDelete);
+      return await Branch.count({ where: queryWithSoftDelete });
     } else if (promises.length == 1) {
       return await promises[0];
     } else {

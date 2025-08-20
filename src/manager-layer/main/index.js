@@ -36,4 +36,5 @@ module.exports = {
   UpdatePurchaseOrderManager: require("./purchaseOrder/update-purchaseorder"),
   DeletePurchaseOrderManager: require("./purchaseOrder/delete-purchaseorder"),
   ListPurchaseOrdersManager: require("./purchaseOrder/list-purchaseorders"),
+  // CatalogInventoryShareToken Db Object
 };

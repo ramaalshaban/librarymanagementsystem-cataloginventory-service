@@ -1,8 +1,3 @@
-// exsik olan :
-//if exits update and if not exits create
-//if index.onDuplicate == "throwError" throw error
-//
-
 const {
   HttpServerError,
   BadRequestError,
@@ -12,8 +7,10 @@ const {
 } = require("common");
 
 const { InterBranchTransfer } = require("models");
+const { Op } = require("sequelize");
+const { hexaLogger } = require("common");
 
-const { DBCreateMongooseCommand } = require("dbCommand");
+const { DBCreateSequelizeCommand } = require("dbCommand");
 
 const {
   InterBranchTransferQueryCacheInvalidator,
@@ -22,7 +19,7 @@ const {
 const { ElasticIndexer } = require("serviceCommon");
 const getInterBranchTransferById = require("./utils/getInterBranchTransferById");
 
-class DbCreateInterbranchtransferCommand extends DBCreateMongooseCommand {
+class DbCreateInterbranchtransferCommand extends DBCreateSequelizeCommand {
   constructor(input) {
     super(input);
     this.commandName = "dbCreateInterbranchtransfer";
@@ -50,6 +47,8 @@ class DbCreateInterbranchtransferCommand extends DBCreateMongooseCommand {
     await elasticIndexer.indexData(dbData);
   }
 
+  // should i add hooksDbLayer here?
+
   // ask about this should i rename the whereClause to dataClause???
 
   async create_childs() {}
@@ -73,7 +72,8 @@ class DbCreateInterbranchtransferCommand extends DBCreateMongooseCommand {
       };
 
       interBranchTransfer =
-        interBranchTransfer || (await InterBranchTransfer.findOne(whereClause));
+        interBranchTransfer ||
+        (await InterBranchTransfer.findOne({ where: whereClause }));
 
       if (interBranchTransfer) {
         throw new BadRequestError(
@@ -85,7 +85,7 @@ class DbCreateInterbranchtransferCommand extends DBCreateMongooseCommand {
       if (!updated && this.dataClause.id && !exists) {
         interBranchTransfer =
           interBranchTransfer ||
-          (await InterBranchTransfer.findById(this.dataClause.id));
+          (await InterBranchTransfer.findByPk(this.dataClause.id));
         if (interBranchTransfer) {
           delete this.dataClause.id;
           this.dataClause.isActive = true;
@@ -95,6 +95,7 @@ class DbCreateInterbranchtransferCommand extends DBCreateMongooseCommand {
       }
     } catch (error) {
       const eDetail = {
+        whereClause: this.normalizeSequalizeOps(whereClause),
         dataClause: this.dataClause,
         errorStack: error.stack,
         checkoutResult: this.input.checkoutResult,

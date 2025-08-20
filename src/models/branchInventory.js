@@ -1,55 +1,72 @@
-const { mongoose } = require("common");
-const { Schema } = mongoose;
-const branchinventorySchema = new mongoose.Schema(
+const { sequelize } = require("common");
+const { DataTypes } = require("sequelize");
+
+//Links a book with a branch; tracks quantity, availability, local shelf/copy/serial identifiers, and overall condition for per-branch inventory.
+const BranchInventory = sequelize.define(
+  "branchInventory",
   {
+    id: {
+      type: DataTypes.UUID,
+      primaryKey: true,
+    },
     bookId: {
-      type: String,
-      required: true,
+      // Foreign key to book.
+      type: DataTypes.UUID,
+      allowNull: false,
     },
     branchId: {
-      type: String,
-      required: true,
+      // Foreign key to branch.
+      type: DataTypes.UUID,
+      allowNull: false,
     },
     totalCopies: {
-      type: Number,
-      required: true,
+      // Total number of copies held at this branch.
+      type: DataTypes.INTEGER,
+      allowNull: false,
       defaultValue: 1,
     },
     availableCopies: {
-      type: Number,
-      required: true,
+      // Number of un-lent, available copies at this branch.
+      type: DataTypes.INTEGER,
+      allowNull: false,
       defaultValue: 1,
     },
     localShelfLocation: {
-      type: String,
-      required: false,
+      // Shelf, area, or local ID for physical asset at branch.
+      type: DataTypes.STRING,
+      allowNull: true,
     },
     conditionNotes: {
-      type: String,
-      required: false,
+      // Notes on general condition or issues for this holding.
+      type: DataTypes.TEXT,
+      allowNull: true,
     },
     isActive: {
       // isActive property will be set to false when deleted
       // so that the document will be archived
-      type: Boolean,
-      default: true,
-      required: false,
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
+      allowNull: true,
     },
   },
   {
-    toJSON: {
-      transform(doc, ret) {
-        ret.id = ret._id.toString();
-        delete ret._id;
+    indexes: [
+      {
+        unique: false,
+        fields: ["bookId"],
       },
-    },
+      {
+        unique: false,
+        fields: ["branchId"],
+      },
+
+      {
+        unique: true,
+        fields: ["branchId", "bookId"],
+        where: { isActive: true },
+      },
+    ],
   },
 );
 
-branchinventorySchema.set("versionKey", "recordVersion");
-branchinventorySchema.set("timestamps", true);
-
-branchinventorySchema.set("toObject", { virtuals: true });
-branchinventorySchema.set("toJSON", { virtuals: true });
-
-module.exports = branchinventorySchema;
+module.exports = BranchInventory;

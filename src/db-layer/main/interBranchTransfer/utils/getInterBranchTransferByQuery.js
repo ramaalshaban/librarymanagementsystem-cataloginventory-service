@@ -1,6 +1,8 @@
 const { HttpServerError, BadRequestError } = require("common");
 
 const { InterBranchTransfer } = require("models");
+const { Op } = require("sequelize");
+const { hexaLogger } = require("common");
 
 const getInterBranchTransferByQuery = async (query) => {
   try {
@@ -11,12 +13,10 @@ const getInterBranchTransferByQuery = async (query) => {
     }
 
     const interBranchTransfer = await InterBranchTransfer.findOne({
-      ...query,
-      isActive: true,
+      where: { ...query, isActive: true },
     });
 
     if (!interBranchTransfer) return null;
-
     return interBranchTransfer.getData();
   } catch (err) {
     throw new HttpServerError(

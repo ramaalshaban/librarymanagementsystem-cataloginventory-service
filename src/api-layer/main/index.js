@@ -6,4 +6,5 @@ module.exports = {
   // InventoryAuditLog Db Object
   // InterBranchTransfer Db Object
   // PurchaseOrder Db Object
+  // CatalogInventoryShareToken Db Object
 };

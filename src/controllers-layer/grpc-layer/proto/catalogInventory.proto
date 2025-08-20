@@ -60,6 +60,18 @@ message purchaseOrder {
     int32 status = 5;
     string approvalNotes = 6;
 }
+message catalogInventoryShareToken {
+    string id = 1;
+    string configName = 2;
+    string objectName = 3;
+    string objectId = 4;
+    string ownerId = 5;
+    string peopleOption = 6;
+    string tokenPermissions = 7;
+    string allowedEmails = 8;
+    google.protobuf.Timestamp expireDate = 9;
+}
+
 
 
 

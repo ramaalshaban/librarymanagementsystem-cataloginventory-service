@@ -128,4 +128,30 @@ module.exports = {
   updatePurchaseOrderByQuery: mainFunctions.updatePurchaseOrderByQuery,
   deletePurchaseOrderById: mainFunctions.deletePurchaseOrderById,
   deletePurchaseOrderByQuery: mainFunctions.deletePurchaseOrderByQuery,
+
+  // CatalogInventoryShareToken Db Object
+  createCatalogInventoryShareToken:
+    mainFunctions.createCatalogInventoryShareToken,
+  getIdListOfCatalogInventoryShareTokenByField:
+    mainFunctions.getIdListOfCatalogInventoryShareTokenByField,
+  getCatalogInventoryShareTokenById:
+    mainFunctions.getCatalogInventoryShareTokenById,
+  getCatalogInventoryShareTokenAggById:
+    mainFunctions.getCatalogInventoryShareTokenAggById,
+  getCatalogInventoryShareTokenListByQuery:
+    mainFunctions.getCatalogInventoryShareTokenListByQuery,
+  getCatalogInventoryShareTokenStatsByQuery:
+    mainFunctions.getCatalogInventoryShareTokenStatsByQuery,
+  getCatalogInventoryShareTokenByQuery:
+    mainFunctions.getCatalogInventoryShareTokenByQuery,
+  updateCatalogInventoryShareTokenById:
+    mainFunctions.updateCatalogInventoryShareTokenById,
+  updateCatalogInventoryShareTokenByIdList:
+    mainFunctions.updateCatalogInventoryShareTokenByIdList,
+  updateCatalogInventoryShareTokenByQuery:
+    mainFunctions.updateCatalogInventoryShareTokenByQuery,
+  deleteCatalogInventoryShareTokenById:
+    mainFunctions.deleteCatalogInventoryShareTokenById,
+  deleteCatalogInventoryShareTokenByQuery:
+    mainFunctions.deleteCatalogInventoryShareTokenByQuery,
 };

@@ -146,15 +146,16 @@ class CreateInterBranchTransferManager extends InterBranchTransferManager {
   }
 
   async getDataClause() {
-    const { newObjectId } = require("common");
+    const { newUUID } = require("common");
 
     const { hashString } = require("common");
 
     if (this.id) this.interBranchTransferId = this.id;
-    if (!this.interBranchTransferId) this.interBranchTransferId = newObjectId();
+    if (!this.interBranchTransferId)
+      this.interBranchTransferId = newUUID(false);
 
     const dataClause = {
-      _id: this.interBranchTransferId,
+      id: this.interBranchTransferId,
       bookId: this.bookId,
       sourceBranchId: this.sourceBranchId,
       destBranchId: this.destBranchId,

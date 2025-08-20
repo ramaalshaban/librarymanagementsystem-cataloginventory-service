@@ -1,55 +1,72 @@
-const { mongoose } = require("common");
-const { Schema } = mongoose;
-const inventoryauditlogSchema = new mongoose.Schema(
+const { sequelize } = require("common");
+const { DataTypes } = require("sequelize");
+
+//Log/audit entries of inventory audits, discrepancy findings, loss/damage/adjustment events during branch stock checks.
+const InventoryAuditLog = sequelize.define(
+  "inventoryAuditLog",
   {
+    id: {
+      type: DataTypes.UUID,
+      primaryKey: true,
+    },
     branchId: {
-      type: String,
-      required: true,
+      // Branch where audit/adjustment occurs.
+      type: DataTypes.UUID,
+      allowNull: false,
     },
     branchInventoryId: {
-      type: String,
-      required: true,
+      // Inventory record at branch for this adjustment/event.
+      type: DataTypes.UUID,
+      allowNull: false,
     },
     auditType: {
-      type: String,
-      required: true,
+      // Type of audit or adjustment: inventory, damage, loss, etc.
+      type: DataTypes.STRING,
+      allowNull: false,
       defaultValue: "audit",
     },
     detailNote: {
-      type: String,
-      required: false,
+      // Notes/details for this audit/discrepancy entry (explanation, corrective action, etc).
+      type: DataTypes.TEXT,
+      allowNull: true,
     },
     adjustmentValue: {
-      type: Number,
-      required: false,
+      // Adjustment: +n/-n to available copies (for missing, found, disposed books).
+      type: DataTypes.INTEGER,
+      allowNull: true,
       defaultValue: 0,
     },
     recordedByUserId: {
-      type: String,
-      required: true,
+      // User (staff) who recorded this audit entry.
+      type: DataTypes.UUID,
+      allowNull: false,
     },
     isActive: {
       // isActive property will be set to false when deleted
       // so that the document will be archived
-      type: Boolean,
-      default: true,
-      required: false,
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
+      allowNull: true,
     },
   },
   {
-    toJSON: {
-      transform(doc, ret) {
-        ret.id = ret._id.toString();
-        delete ret._id;
+    indexes: [
+      {
+        unique: false,
+        fields: ["branchId"],
       },
-    },
+      {
+        unique: false,
+        fields: ["branchInventoryId"],
+      },
+
+      {
+        unique: true,
+        fields: ["branchId", "branchInventoryId"],
+        where: { isActive: true },
+      },
+    ],
   },
 );
 
-inventoryauditlogSchema.set("versionKey", "recordVersion");
-inventoryauditlogSchema.set("timestamps", true);
-
-inventoryauditlogSchema.set("toObject", { virtuals: true });
-inventoryauditlogSchema.set("toJSON", { virtuals: true });
-
-module.exports = inventoryauditlogSchema;
+module.exports = InventoryAuditLog;

@@ -29,9 +29,8 @@ const {
   redisClient,
   setRedisData,
   getRedisData,
-  connectToMongoDb,
-  startMongoDb,
-  closeMongoDbConnection,
+  startPostgres,
+  closePostgres,
 } = require("./common");
 
 const { ElasticIndexer } = require("serviceCommon");
@@ -92,7 +91,7 @@ const start = async () => {
   }
 
   try {
-    await startMongoDb();
+    await startPostgres();
   } catch (err) {
     console.log("Database start failed ", err);
     hexaLogger.insertError("DatabaseStartError", {}, "index.js->start", err);

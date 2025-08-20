@@ -1,6 +1,8 @@
 const { HttpServerError, BadRequestError } = require("common");
 
 const { Branch } = require("models");
+const { Op } = require("sequelize");
+const { hexaLogger } = require("common");
 
 const getBranchByQuery = async (query) => {
   try {
@@ -11,12 +13,10 @@ const getBranchByQuery = async (query) => {
     }
 
     const branch = await Branch.findOne({
-      ...query,
-      isActive: true,
+      where: { ...query, isActive: true },
     });
 
     if (!branch) return null;
-
     return branch.getData();
   } catch (err) {
     throw new HttpServerError("errMsg_dbErrorWhenRequestingBranchByQuery", err);

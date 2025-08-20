@@ -1,5 +1,8 @@
-const { HttpServerError, BadRequestError, NotFoundError } = require("common");
+const { HttpServerError, BadRequestError } = require("common");
+
 const { InventoryAuditLog } = require("models");
+const { Op } = require("sequelize");
+const { hexaLogger } = require("common");
 
 const getInventoryAuditLogListByQuery = async (query) => {
   try {
@@ -9,11 +12,13 @@ const getInventoryAuditLogListByQuery = async (query) => {
       );
     }
 
-    const inventoryAuditLog = await InventoryAuditLog.find(query);
-
-    if (!inventoryAuditLog || inventoryAuditLog.length === 0) return [];
+    const inventoryAuditLog = await InventoryAuditLog.findAll({
+      where: { ...query, isActive: true },
+    });
 
     //should i add not found error or only return empty array?
+    if (!inventoryAuditLog || inventoryAuditLog.length === 0) return [];
+
     //      if (!inventoryAuditLog || inventoryAuditLog.length === 0) {
     //      throw new NotFoundError(
     //      `InventoryAuditLog with the specified criteria not found`

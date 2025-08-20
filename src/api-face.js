@@ -872,6 +872,57 @@ module.exports = (app) => {
           },
         ],
       },
+
+      {
+        name: "CatalogInventoryShareToken",
+        description:
+          "A data object that stores the share tokens for tokenized access to shared objects.",
+        reference: {
+          tableName: "catalogInventoryShareToken",
+          properties: [
+            {
+              name: "configName",
+              type: "String",
+            },
+
+            {
+              name: "objectName",
+              type: "String",
+            },
+
+            {
+              name: "objectId",
+              type: "ID",
+            },
+
+            {
+              name: "ownerId",
+              type: "ID",
+            },
+
+            {
+              name: "peopleOption",
+              type: "String",
+            },
+
+            {
+              name: "tokenPermissions",
+              type: "",
+            },
+
+            {
+              name: "allowedEmails",
+              type: "",
+            },
+
+            {
+              name: "expireDate",
+              type: "Date",
+            },
+          ],
+        },
+        endpoints: [],
+      },
     ],
   };
 

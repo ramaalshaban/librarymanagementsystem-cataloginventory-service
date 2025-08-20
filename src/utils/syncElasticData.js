@@ -16,6 +16,10 @@ const {
   getPurchaseOrderById,
   getIdListOfPurchaseOrderByField,
 } = require("dbLayer");
+const {
+  getCatalogInventoryShareTokenById,
+  getIdListOfCatalogInventoryShareTokenByField,
+} = require("dbLayer");
 const path = require("path");
 const fs = require("fs");
 const { ElasticIndexer } = require("serviceCommon");
@@ -152,6 +156,31 @@ const indexPurchaseOrderData = async () => {
   return total;
 };
 
+const indexCatalogInventoryShareTokenData = async () => {
+  const catalogInventoryShareTokenIndexer = new ElasticIndexer(
+    "catalogInventoryShareToken",
+    { isSilent: true },
+  );
+  console.log("Starting to update indexes for CatalogInventoryShareToken");
+
+  const idList =
+    (await getIdListOfCatalogInventoryShareTokenByField("isActive", true)) ??
+    [];
+  const chunkSize = 500;
+  let total = 0;
+  for (let i = 0; i < idList.length; i += chunkSize) {
+    const chunk = idList.slice(i, i + chunkSize);
+    const dataList = await getCatalogInventoryShareTokenById(chunk);
+    if (dataList.length) {
+      await catalogInventoryShareTokenIndexer.indexBulkData(dataList);
+      await catalogInventoryShareTokenIndexer.deleteRedisCache();
+    }
+    total += dataList.length;
+  }
+
+  return total;
+};
+
 const syncElasticIndexData = async () => {
   const startTime = new Date();
   console.log("syncElasticIndexData started", startTime);
@@ -218,6 +247,19 @@ const syncElasticIndexData = async () => {
   } catch (err) {
     console.log(
       "Elastic Index Error When Syncing PurchaseOrder data",
+      err.toString(),
+    );
+  }
+
+  try {
+    const dataCount = await indexCatalogInventoryShareTokenData();
+    console.log(
+      "CatalogInventoryShareToken agregated data is indexed, total catalogInventoryShareTokens:",
+      dataCount,
+    );
+  } catch (err) {
+    console.log(
+      "Elastic Index Error When Syncing CatalogInventoryShareToken data",
       err.toString(),
     );
   }

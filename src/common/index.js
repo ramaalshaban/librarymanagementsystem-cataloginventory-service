@@ -117,6 +117,12 @@ const {
   convertUserQueryToElasticQuery,
   convertUserQueryToMongoDbQuery,
 } = require("./queryBuilder");
+
+const {
+  OpenAiFetchManager,
+  AnthropicFetchManager,
+} = require("./AiFetchManager");
+
 module.exports = {
   checkUserHasRightForObject: require("./permission"),
   createJWT,
@@ -203,5 +209,7 @@ module.exports = {
   convertUserQueryToSequelizeQuery,
   convertUserQueryToElasticQuery,
   convertUserQueryToMongoDbQuery,
+  OpenAiFetchManager,
+  AnthropicFetchManager,
   ...require("./imageUtils"),
 };

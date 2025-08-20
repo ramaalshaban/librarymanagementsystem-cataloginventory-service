@@ -86,6 +86,7 @@ app.post("/mcp", async (req, res) => {
       inventoryAuditLogMcpRouter,
       interBranchTransferMcpRouter,
       purchaseOrderMcpRouter,
+      catalogInventoryShareTokenMcpRouter,
       getSessionRouter,
     } = require("mcpLayer")(initialHeaders);
 
@@ -132,6 +133,14 @@ app.post("/mcp", async (req, res) => {
       ),
     );
     purchaseOrderMcpRouter.forEach((mcpTool) =>
+      server.tool(
+        mcpTool.name,
+        mcpTool.description,
+        mcpTool.parameters,
+        mcpTool.controller,
+      ),
+    );
+    catalogInventoryShareTokenMcpRouter.forEach((mcpTool) =>
       server.tool(
         mcpTool.name,
         mcpTool.description,

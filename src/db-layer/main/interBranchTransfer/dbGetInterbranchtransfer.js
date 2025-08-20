@@ -1,3 +1,5 @@
+const { sequelize } = require("common");
+const { Op } = require("sequelize");
 const {
   HttpServerError,
   BadRequestError,
@@ -5,13 +7,21 @@ const {
   ForbiddenError,
   NotFoundError,
 } = require("common");
+const { hexaLogger } = require("common");
 
-const { InterBranchTransfer } = require("models");
-const { ObjectId } = require("mongoose").Types;
+const {
+  Book,
+  Branch,
+  BranchInventory,
+  InventoryAuditLog,
+  InterBranchTransfer,
+  PurchaseOrder,
+  CatalogInventoryShareToken,
+} = require("models");
 
-const { DBGetMongooseCommand } = require("dbCommand");
+const { DBGetSequelizeCommand } = require("dbCommand");
 
-class DbGetInterbranchtransferCommand extends DBGetMongooseCommand {
+class DbGetInterbranchtransferCommand extends DBGetSequelizeCommand {
   constructor(input) {
     super(input, InterBranchTransfer);
     this.commandName = "dbGetInterbranchtransfer";
@@ -25,16 +35,9 @@ class DbGetInterbranchtransferCommand extends DBGetMongooseCommand {
   }
 
   async getCqrsJoins(data) {
-    if (InterBranchTransfer.getCqrsJoins) {
+    if (InterBranchTransfer.getCqrsJoins)
       await InterBranchTransfer.getCqrsJoins(data);
-    }
   }
-
-  // populateQuery(query) {
-  //  if (!this.input.getJoins) return query;
-  //
-  //  return query;
-  //}
 
   initOwnership(input) {
     super.initOwnership(input);
@@ -44,10 +47,14 @@ class DbGetInterbranchtransferCommand extends DBGetMongooseCommand {
     return true;
   }
 
-  // ask about this should i rename the whereClause to dataClause???
-
   async transposeResult() {
     // transpose dbData
+  }
+
+  buildIncludes(forWhereClause) {
+    if (!this.input.getJoins) forWhereClause = true;
+    const includes = [];
+    return includes;
   }
 }
 

@@ -7,5 +7,7 @@ module.exports = (headers) => {
     inventoryAuditLogMcpRouter: require("./inventoryAuditLog")(headers),
     interBranchTransferMcpRouter: require("./interBranchTransfer")(headers),
     purchaseOrderMcpRouter: require("./purchaseOrder")(headers),
+    catalogInventoryShareTokenMcpRouter:
+      require("./catalogInventoryShareToken")(headers),
   };
 };

@@ -1,16 +1,21 @@
-const { HttpServerError, BadRequestError, newUUID } = require("common");
-//should i add the elastic for mongodb?
+const { HttpServerError, BadRequestError } = require("common");
+
 const { ElasticIndexer } = require("serviceCommon");
 
 const { Book } = require("models");
+const { hexaLogger, newUUID } = require("common");
 
 const indexDataToElastic = async (data) => {
-  const elasticIndexer = new ElasticIndexer("book");
+  const elasticIndexer = new ElasticIndexer(
+    "book",
+    this.session,
+    this.requestId,
+  );
   await elasticIndexer.indexData(data);
 };
 
 const validateData = (data) => {
-  const requiredFields = ["title", "authors", "isActive"];
+  const requiredFields = ["title", "authors"];
 
   requiredFields.forEach((field) => {
     if (data[field] === null || data[field] === undefined) {
@@ -20,30 +25,21 @@ const validateData = (data) => {
     }
   });
 
-  if (!data._id && !data.id) {
-    data._id = newUUID();
+  if (!data.id) {
+    data.id = newUUID();
   }
 };
 
 const createBook = async (data) => {
   try {
-    if (!data || Object.keys(data).length === 0) {
-      throw new BadRequestError(`errMsg_invalidInputDataForBook`);
-    }
-
     validateData(data);
 
-    const newbook = new Book(data);
-    const createdbook = await newbook.save();
-
-    //shoul i use model's getData method for consistency with Sequelize
-    const _data = createdbook.getData();
-
+    const newbook = await Book.create(data);
+    const _data = newbook.getData();
     await indexDataToElastic(_data);
-
     return _data;
   } catch (err) {
-    throw new HttpServerError(`errMsg_dbErrorWhenCreatingBook`, err);
+    throw new HttpServerError("errMsg_dbErrorWhenCreatingBook", err);
   }
 };
 

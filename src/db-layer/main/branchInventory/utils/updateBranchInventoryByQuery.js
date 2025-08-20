@@ -1,26 +1,24 @@
 const { HttpServerError, BadRequestError } = require("common");
 
 const { BranchInventory } = require("models");
+const { Op } = require("sequelize");
 
-const updateBranchInventoryByQuery = async (query, dataClause) => {
+const updateBranchInventoryByQuery = async (dataClause, query) => {
   try {
     if (!query || typeof query !== "object") {
       throw new BadRequestError(
         "Invalid query provided. Query must be an object.",
       );
     }
+    let rowsCount = null;
+    let rows = null;
 
-    dataClause.updatedAt = new Date();
+    const options = { where: { query, isActive: true }, returning: true };
 
-    const options = { new: true, runValidators: true };
+    [rowsCount, rows] = await BranchInventory.update(dataClause, options);
 
-    const result = await BranchInventory.updateMany(
-      { ...query, isActive: true },
-      dataClause,
-      options,
-    );
-
-    return { modifiedCount: result.modifiedCount };
+    if (!rowsCount) return [];
+    return rows.map((item) => item.getData());
   } catch (err) {
     throw new HttpServerError(
       "errMsg_dbErrorWhenUpdatingBranchInventoryByQuery",

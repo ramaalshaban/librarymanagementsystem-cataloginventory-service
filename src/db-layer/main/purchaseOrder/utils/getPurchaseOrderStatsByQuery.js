@@ -1,6 +1,8 @@
 const { HttpServerError, BadRequestError } = require("common");
 
 const { PurchaseOrder } = require("models");
+const { Op } = require("sequelize");
+const { hexaLogger } = require("common");
 
 const getPurchaseOrderStatsByQuery = async (query, stats) => {
   const promises = [];
@@ -12,53 +14,29 @@ const getPurchaseOrderStatsByQuery = async (query, stats) => {
     };
 
     for (const stat of stats) {
-      const statParts = stat.replace("(", "-").replace(")", "").split("-");
+      let statParts = stat.replace("(", "-").replace(")", "").split("-");
       if (stat === "count") {
-        promises.push(PurchaseOrder.countDocuments(queryWithSoftDelete));
+        promises.push(PurchaseOrder.count({ where: queryWithSoftDelete }));
         statLabels.push("count");
       } else if (statParts.length == 2) {
         if (statParts[0] === "sum") {
-          const pipeline = [
-            { $match: queryWithSoftDelete },
-            { $group: { _id: null, total: { $sum: `$${statParts[1]}` } } },
-          ];
           promises.push(
-            PurchaseOrder.aggregate(pipeline).then((result) =>
-              result.length > 0 ? result[0].total : 0,
-            ),
+            PurchaseOrder.sum(statParts[1], { where: queryWithSoftDelete }),
           );
           statLabels.push("sum-" + statParts[1]);
         } else if (statParts[0] === "avg") {
-          const pipeline = [
-            { $match: queryWithSoftDelete },
-            { $group: { _id: null, average: { $avg: `$${statParts[1]}` } } },
-          ];
           promises.push(
-            PurchaseOrder.aggregate(pipeline).then((result) =>
-              result.length > 0 ? result[0].average : 0,
-            ),
+            PurchaseOrder.avg(statParts[1], { where: queryWithSoftDelete }),
           );
           statLabels.push("avg-" + statParts[1]);
         } else if (statParts[0] === "min") {
-          const pipeline = [
-            { $match: queryWithSoftDelete },
-            { $group: { _id: null, minimum: { $min: `$${statParts[1]}` } } },
-          ];
           promises.push(
-            PurchaseOrder.aggregate(pipeline).then((result) =>
-              result.length > 0 ? result[0].minimum : null,
-            ),
+            PurchaseOrder.min(statParts[1], { where: queryWithSoftDelete }),
           );
           statLabels.push("min-" + statParts[1]);
         } else if (statParts[0] === "max") {
-          const pipeline = [
-            { $match: queryWithSoftDelete },
-            { $group: { _id: null, maximum: { $max: `$${statParts[1]}` } } },
-          ];
           promises.push(
-            PurchaseOrder.aggregate(pipeline).then((result) =>
-              result.length > 0 ? result[0].maximum : null,
-            ),
+            PurchaseOrder.max(statParts[1], { where: queryWithSoftDelete }),
           );
           statLabels.push("max-" + statParts[1]);
         }
@@ -66,7 +44,7 @@ const getPurchaseOrderStatsByQuery = async (query, stats) => {
     }
 
     if (promises.length == 0) {
-      return await PurchaseOrder.countDocuments(queryWithSoftDelete);
+      return await PurchaseOrder.count({ where: queryWithSoftDelete });
     } else if (promises.length == 1) {
       return await promises[0];
     } else {

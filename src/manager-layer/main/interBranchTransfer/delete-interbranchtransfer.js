@@ -95,10 +95,11 @@ class DeleteInterBranchTransferManager extends InterBranchTransferManager {
   }
 
   async getWhereClause() {
-    const { convertUserQueryToMongoDbQuery } = require("common");
+    const { convertUserQueryToSequelizeQuery } = require("common");
 
     const routeQuery = await this.getRouteQuery();
-    return convertUserQueryToMongoDbQuery(routeQuery);
+
+    return convertUserQueryToSequelizeQuery(routeQuery);
   }
 }
 

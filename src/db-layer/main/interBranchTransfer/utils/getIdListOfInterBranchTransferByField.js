@@ -1,6 +1,7 @@
-const { HttpServerError, BadRequestError, NotFoundError } = require("common");
+const { HttpServerError, NotFoundError, BadRequestError } = require("common");
 
 const { InterBranchTransfer } = require("models");
+const { Op } = require("sequelize");
 
 const getIdListOfInterBranchTransferByField = async (
   fieldName,
@@ -8,6 +9,8 @@ const getIdListOfInterBranchTransferByField = async (
   isArray,
 ) => {
   try {
+    let isValidField = false;
+
     const interBranchTransferProperties = [
       "id",
       "bookId",
@@ -19,46 +22,28 @@ const getIdListOfInterBranchTransferByField = async (
       "transferLog",
     ];
 
-    if (!interBranchTransferProperties.includes(fieldName)) {
+    isValidField = interBranchTransferProperties.includes(fieldName);
+
+    if (!isValidField) {
       throw new BadRequestError(`Invalid field name: ${fieldName}.`);
     }
 
-    // type validation different from sequelize for mongodb
-    const schemaPath = InterBranchTransfer.schema.paths[fieldName];
-    if (schemaPath && fieldValue !== undefined && fieldValue !== null) {
-      const expectedType = schemaPath.instance.toLowerCase();
-      const actualType = typeof fieldValue;
+    const expectedType = typeof InterBranchTransfer[fieldName];
 
-      const typeMapping = {
-        string: "string",
-        number: "number",
-        boolean: "boolean",
-        objectid: "string", // ObjectIds are typically passed as strings
-      };
-
-      const expectedJSType = typeMapping[expectedType];
-      if (expectedJSType && actualType !== expectedJSType) {
-        throw new BadRequestError(
-          `Invalid field value type for ${fieldName}. Expected ${expectedJSType}, got ${actualType}.`,
-        );
-      }
+    if (typeof fieldValue !== expectedType) {
+      throw new BadRequestError(
+        `Invalid field value type for ${fieldName}. Expected ${expectedType}.`,
+      );
     }
 
-    let query = isArray
-      ? {
-          [fieldName]: {
-            $in: Array.isArray(fieldValue) ? fieldValue : [fieldValue],
-          },
-        }
-      : { [fieldName]: fieldValue };
+    const options = {
+      where: isArray
+        ? { [fieldName]: { [Op.contains]: [fieldValue] }, isActive: true }
+        : { [fieldName]: fieldValue, isActive: true },
+      attributes: ["id"],
+    };
 
-    query.isActive = true;
-
-    let interBranchTransferIdList = await InterBranchTransfer.find(query, {
-      _id: 1,
-    })
-      .lean()
-      .exec();
+    let interBranchTransferIdList = await InterBranchTransfer.findAll(options);
 
     if (!interBranchTransferIdList || interBranchTransferIdList.length === 0) {
       throw new NotFoundError(
@@ -66,10 +51,9 @@ const getIdListOfInterBranchTransferByField = async (
       );
     }
 
-    interBranchTransferIdList = interBranchTransferIdList.map((item) =>
-      item._id.toString(),
+    interBranchTransferIdList = interBranchTransferIdList.map(
+      (item) => item.id,
     );
-
     return interBranchTransferIdList;
   } catch (err) {
     throw new HttpServerError(

@@ -4,6 +4,7 @@ const branchInventoryFunctions = require("./branchInventory");
 const inventoryAuditLogFunctions = require("./inventoryAuditLog");
 const interBranchTransferFunctions = require("./interBranchTransfer");
 const purchaseOrderFunctions = require("./purchaseOrder");
+const catalogInventoryShareTokenFunctions = require("./catalogInventoryShareToken");
 
 module.exports = {
   // main Database
@@ -161,4 +162,30 @@ module.exports = {
   updatePurchaseOrderByQuery: purchaseOrderFunctions.updatePurchaseOrderByQuery,
   deletePurchaseOrderById: purchaseOrderFunctions.deletePurchaseOrderById,
   deletePurchaseOrderByQuery: purchaseOrderFunctions.deletePurchaseOrderByQuery,
+
+  // CatalogInventoryShareToken Db Object
+  createCatalogInventoryShareToken:
+    catalogInventoryShareTokenFunctions.createCatalogInventoryShareToken,
+  getIdListOfCatalogInventoryShareTokenByField:
+    catalogInventoryShareTokenFunctions.getIdListOfCatalogInventoryShareTokenByField,
+  getCatalogInventoryShareTokenById:
+    catalogInventoryShareTokenFunctions.getCatalogInventoryShareTokenById,
+  getCatalogInventoryShareTokenAggById:
+    catalogInventoryShareTokenFunctions.getCatalogInventoryShareTokenAggById,
+  getCatalogInventoryShareTokenListByQuery:
+    catalogInventoryShareTokenFunctions.getCatalogInventoryShareTokenListByQuery,
+  getCatalogInventoryShareTokenStatsByQuery:
+    catalogInventoryShareTokenFunctions.getCatalogInventoryShareTokenStatsByQuery,
+  getCatalogInventoryShareTokenByQuery:
+    catalogInventoryShareTokenFunctions.getCatalogInventoryShareTokenByQuery,
+  updateCatalogInventoryShareTokenById:
+    catalogInventoryShareTokenFunctions.updateCatalogInventoryShareTokenById,
+  updateCatalogInventoryShareTokenByIdList:
+    catalogInventoryShareTokenFunctions.updateCatalogInventoryShareTokenByIdList,
+  updateCatalogInventoryShareTokenByQuery:
+    catalogInventoryShareTokenFunctions.updateCatalogInventoryShareTokenByQuery,
+  deleteCatalogInventoryShareTokenById:
+    catalogInventoryShareTokenFunctions.deleteCatalogInventoryShareTokenById,
+  deleteCatalogInventoryShareTokenByQuery:
+    catalogInventoryShareTokenFunctions.deleteCatalogInventoryShareTokenByQuery,
 };

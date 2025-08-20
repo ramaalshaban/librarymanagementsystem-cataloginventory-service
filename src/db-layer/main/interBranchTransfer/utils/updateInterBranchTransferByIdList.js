@@ -1,21 +1,20 @@
 const { HttpServerError } = require("common");
 
 const { InterBranchTransfer } = require("models");
+const { Op } = require("sequelize");
 
 const updateInterBranchTransferByIdList = async (idList, dataClause) => {
   try {
-    await InterBranchTransfer.updateMany(
-      { _id: { $in: idList }, isActive: true },
-      dataClause,
-    );
+    let rowsCount = null;
+    let rows = null;
 
-    const updatedDocs = await InterBranchTransfer.find(
-      { _id: { $in: idList }, isActive: true },
-      { _id: 1 },
-    );
+    const options = {
+      where: { id: { [Op.in]: idList }, isActive: true },
+      returning: true,
+    };
 
-    const interBranchTransferIdList = updatedDocs.map((doc) => doc._id);
-
+    [rowsCount, rows] = await InterBranchTransfer.update(dataClause, options);
+    const interBranchTransferIdList = rows.map((item) => item.id);
     return interBranchTransferIdList;
   } catch (err) {
     throw new HttpServerError(

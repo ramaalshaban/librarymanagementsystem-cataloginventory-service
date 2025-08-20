@@ -1,6 +1,8 @@
 const { HttpServerError, BadRequestError } = require("common");
 
 const { Book } = require("models");
+const { Op } = require("sequelize");
+const { hexaLogger } = require("common");
 
 const getBookByQuery = async (query) => {
   try {
@@ -11,12 +13,10 @@ const getBookByQuery = async (query) => {
     }
 
     const book = await Book.findOne({
-      ...query,
-      isActive: true,
+      where: { ...query, isActive: true },
     });
 
     if (!book) return null;
-
     return book.getData();
   } catch (err) {
     throw new HttpServerError("errMsg_dbErrorWhenRequestingBookByQuery", err);

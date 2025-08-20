@@ -1,59 +1,85 @@
-const { mongoose } = require("common");
-const { Schema } = mongoose;
-const interbranchtransferSchema = new mongoose.Schema(
+const { sequelize } = require("common");
+const { DataTypes } = require("sequelize");
+
+//Tracks in-progress or completed inter-branch transfers of books/materials, including statuses, movement, who requested, and fulfillment actions.
+const InterBranchTransfer = sequelize.define(
+  "interBranchTransfer",
   {
+    id: {
+      type: DataTypes.UUID,
+      primaryKey: true,
+    },
     bookId: {
-      type: String,
-      required: true,
+      // Book to transfer (master catalog id).
+      type: DataTypes.UUID,
+      allowNull: false,
     },
     sourceBranchId: {
-      type: String,
-      required: true,
+      // Branch from which book is sent.
+      type: DataTypes.UUID,
+      allowNull: false,
     },
     destBranchId: {
-      type: String,
-      required: true,
+      // Branch receiving the transfer.
+      type: DataTypes.UUID,
+      allowNull: false,
     },
     quantity: {
-      type: Number,
-      required: true,
+      // Number of copies to transfer.
+      type: DataTypes.INTEGER,
+      allowNull: false,
       defaultValue: 1,
     },
     requestedByUserId: {
-      type: String,
-      required: true,
+      // User (staff) who requested the transfer.
+      type: DataTypes.UUID,
+      allowNull: false,
     },
     status: {
-      type: String,
-      required: true,
+      // Status (requested, approved, inTransit, completed, rejected, canceled).
+      type: DataTypes.STRING,
+      allowNull: false,
       defaultValue: "requested",
     },
     transferLog: {
-      type: [Schema.Types.Mixed],
-      required: false,
+      // Log array (timestamp, action, userId, note) for steps in the transfer workflow.
+      type: DataTypes.ARRAY(DataTypes.JSONB),
+      allowNull: true,
     },
     isActive: {
       // isActive property will be set to false when deleted
       // so that the document will be archived
-      type: Boolean,
-      default: true,
-      required: false,
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
+      allowNull: true,
     },
   },
   {
-    toJSON: {
-      transform(doc, ret) {
-        ret.id = ret._id.toString();
-        delete ret._id;
+    indexes: [
+      {
+        unique: false,
+        fields: ["bookId"],
       },
-    },
+      {
+        unique: false,
+        fields: ["sourceBranchId"],
+      },
+      {
+        unique: false,
+        fields: ["destBranchId"],
+      },
+      {
+        unique: false,
+        fields: ["status"],
+      },
+
+      {
+        unique: true,
+        fields: ["sourceBranchId", "destBranchId", "bookId"],
+        where: { isActive: true },
+      },
+    ],
   },
 );
 
-interbranchtransferSchema.set("versionKey", "recordVersion");
-interbranchtransferSchema.set("timestamps", true);
-
-interbranchtransferSchema.set("toObject", { virtuals: true });
-interbranchtransferSchema.set("toJSON", { virtuals: true });
-
-module.exports = interbranchtransferSchema;
+module.exports = InterBranchTransfer;

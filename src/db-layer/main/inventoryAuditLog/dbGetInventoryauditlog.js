@@ -1,3 +1,5 @@
+const { sequelize } = require("common");
+const { Op } = require("sequelize");
 const {
   HttpServerError,
   BadRequestError,
@@ -5,13 +7,21 @@ const {
   ForbiddenError,
   NotFoundError,
 } = require("common");
+const { hexaLogger } = require("common");
 
-const { InventoryAuditLog } = require("models");
-const { ObjectId } = require("mongoose").Types;
+const {
+  Book,
+  Branch,
+  BranchInventory,
+  InventoryAuditLog,
+  InterBranchTransfer,
+  PurchaseOrder,
+  CatalogInventoryShareToken,
+} = require("models");
 
-const { DBGetMongooseCommand } = require("dbCommand");
+const { DBGetSequelizeCommand } = require("dbCommand");
 
-class DbGetInventoryauditlogCommand extends DBGetMongooseCommand {
+class DbGetInventoryauditlogCommand extends DBGetSequelizeCommand {
   constructor(input) {
     super(input, InventoryAuditLog);
     this.commandName = "dbGetInventoryauditlog";
@@ -25,16 +35,9 @@ class DbGetInventoryauditlogCommand extends DBGetMongooseCommand {
   }
 
   async getCqrsJoins(data) {
-    if (InventoryAuditLog.getCqrsJoins) {
+    if (InventoryAuditLog.getCqrsJoins)
       await InventoryAuditLog.getCqrsJoins(data);
-    }
   }
-
-  // populateQuery(query) {
-  //  if (!this.input.getJoins) return query;
-  //
-  //  return query;
-  //}
 
   initOwnership(input) {
     super.initOwnership(input);
@@ -44,10 +47,14 @@ class DbGetInventoryauditlogCommand extends DBGetMongooseCommand {
     return true;
   }
 
-  // ask about this should i rename the whereClause to dataClause???
-
   async transposeResult() {
     // transpose dbData
+  }
+
+  buildIncludes(forWhereClause) {
+    if (!this.input.getJoins) forWhereClause = true;
+    const includes = [];
+    return includes;
   }
 }
 

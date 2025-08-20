@@ -342,6 +342,21 @@ _Enum Options_
 | **fulfilled** | `"fulfilled""` | 3 |
 | **canceled** | `"canceled""` | 4 |
 
+### CatalogInventoryShareToken resource
+
+_Resource Definition_ : A data object that stores the share tokens for tokenized access to shared objects.
+_CatalogInventoryShareToken Resource Properties_
+| Name | Type | Required | Default | Definition |
+| ---- | ---- | -------- | ------- | ---------- |
+| **configName** | String | | | _A string value to represent the related configuration of the shared token._ |
+| **objectName** | String | | | _A string value to represent the type name of the shared object like `report`, `document`._ |
+| **objectId** | ID | | | _An ID value to represent the shared target data object instance._ |
+| **ownerId** | ID | | | _An ID value to represent the user who shared the object by creating this token._ |
+| **peopleOption** | String | | | _A string value to represent the access option of the share token. It can be either anyoneWithLink or specificEmails._ |
+| **tokenPermissions** | | | | _A string array to store the names of permissions (or roles) by the sharing user._ |
+| **allowedEmails** | | | | _A string array to store the allowed emails if the peopleOption is specificEmails._ |
+| **expireDate** | Date | | | _A date value to specify the expire date of the token. Null for infinite token._ |
+
 ## Crud Routes
 
 ### Route: getBook

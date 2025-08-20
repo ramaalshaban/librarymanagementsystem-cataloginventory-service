@@ -89,6 +89,22 @@ const purchaseOrderMapping = {
   createdAt: { type: "date" },
   updatedAt: { type: "date" },
 };
+const catalogInventoryShareTokenMapping = {
+  id: { type: "keyword" },
+  _owner: { type: "keyword" },
+  configName: { type: "keyword", index: true },
+  objectName: { type: "keyword", index: true },
+  objectId: { type: "keyword", index: true },
+  ownerId: { type: "keyword", index: true },
+  peopleOption: { type: "keyword", index: true },
+  tokenPermissions: { type: "keyword", index: true },
+  allowedEmails: { type: "keyword", index: true },
+  expireDate: { type: "date", index: true },
+  isActive: { type: "boolean" },
+  recordVersion: { type: "integer" },
+  createdAt: { type: "date" },
+  updatedAt: { type: "date" },
+};
 
 const updateElasticIndexMappings = async () => {
   try {
@@ -114,6 +130,13 @@ const updateElasticIndexMappings = async () => {
     ElasticIndexer.addMapping("purchaseOrder", purchaseOrderMapping);
     await new ElasticIndexer("purchaseOrder").updateMapping(
       purchaseOrderMapping,
+    );
+    ElasticIndexer.addMapping(
+      "catalogInventoryShareToken",
+      catalogInventoryShareTokenMapping,
+    );
+    await new ElasticIndexer("catalogInventoryShareToken").updateMapping(
+      catalogInventoryShareTokenMapping,
     );
   } catch (err) {
     hexaLogger.insertError(

@@ -1,6 +1,13 @@
-const { HttpServerError, BadRequestError, NotFoundError } = require("common");
-
+const {
+  HttpServerError,
+  BadRequestError,
+  NotAuthenticatedError,
+  ForbiddenError,
+  NotFoundError,
+} = require("common");
 const { InterBranchTransfer } = require("models");
+const { Op } = require("sequelize");
+const { hexaLogger } = require("common");
 const { ElasticIndexer } = require("serviceCommon");
 
 const indexDataToElastic = async (data) => {
@@ -25,34 +32,28 @@ const updateInterBranchTransferById = async (id, dataClause) => {
       throw new BadRequestError("ID is required in utility update function");
 
     const existingDoc = await InterBranchTransfer.findOne({
-      _id: id,
-      isActive: true,
+      where: { id, isActive: true },
     });
 
     if (!existingDoc) {
       throw new NotFoundError(`Record with ID ${id} not found.`);
     }
 
-    const options = { new: true };
+    const options = { where: { id, isActive: true }, returning: true };
 
-    const whereClause = { _id: id, isActive: true };
-
-    const dbDoc = await InterBranchTransfer.findOneAndUpdate(
-      whereClause,
+    const [rowsCount, [dbDoc]] = await InterBranchTransfer.update(
       dataClause,
       options,
     );
-
     if (!dbDoc) {
       throw new NotFoundError("Record not found for update.");
     }
-
     const _data = dbDoc.getData();
     await indexDataToElastic(_data);
     return _data;
   } catch (err) {
     throw new HttpServerError(
-      "errMsg_dbErrorWhenUpdatingInterBranchTransferById",
+      "An unexpected error occurred during the update operation.",
       err,
     );
   }

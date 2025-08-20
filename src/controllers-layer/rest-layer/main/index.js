@@ -6,4 +6,5 @@ module.exports = {
   inventoryAuditLogRouter: require("./inventoryAuditLog"),
   interBranchTransferRouter: require("./interBranchTransfer"),
   purchaseOrderRouter: require("./purchaseOrder"),
+  catalogInventoryShareTokenRouter: require("./catalogInventoryShareToken"),
 };
