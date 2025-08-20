@@ -1,3 +1,8 @@
+// exsik olan :
+//if exits update and if not exits create
+//if index.onDuplicate == "throwError" throw error
+//
+
 const {
   HttpServerError,
   BadRequestError,
@@ -7,10 +12,8 @@ const {
 } = require("common");
 
 const { InventoryAuditLog } = require("models");
-const { Op } = require("sequelize");
-const { hexaLogger } = require("common");
 
-const { DBCreateSequelizeCommand } = require("dbCommand");
+const { DBCreateMongooseCommand } = require("dbCommand");
 
 const {
   InventoryAuditLogQueryCacheInvalidator,
@@ -19,7 +22,7 @@ const {
 const { ElasticIndexer } = require("serviceCommon");
 const getInventoryAuditLogById = require("./utils/getInventoryAuditLogById");
 
-class DbCreateInventoryauditlogCommand extends DBCreateSequelizeCommand {
+class DbCreateInventoryauditlogCommand extends DBCreateMongooseCommand {
   constructor(input) {
     super(input);
     this.commandName = "dbCreateInventoryauditlog";
@@ -47,8 +50,6 @@ class DbCreateInventoryauditlogCommand extends DBCreateSequelizeCommand {
     await elasticIndexer.indexData(dbData);
   }
 
-  // should i add hooksDbLayer here?
-
   // ask about this should i rename the whereClause to dataClause???
 
   async create_childs() {}
@@ -71,8 +72,7 @@ class DbCreateInventoryauditlogCommand extends DBCreateSequelizeCommand {
       };
 
       inventoryAuditLog =
-        inventoryAuditLog ||
-        (await InventoryAuditLog.findOne({ where: whereClause }));
+        inventoryAuditLog || (await InventoryAuditLog.findOne(whereClause));
 
       if (inventoryAuditLog) {
         throw new BadRequestError(
@@ -84,7 +84,7 @@ class DbCreateInventoryauditlogCommand extends DBCreateSequelizeCommand {
       if (!updated && this.dataClause.id && !exists) {
         inventoryAuditLog =
           inventoryAuditLog ||
-          (await InventoryAuditLog.findByPk(this.dataClause.id));
+          (await InventoryAuditLog.findById(this.dataClause.id));
         if (inventoryAuditLog) {
           delete this.dataClause.id;
           this.dataClause.isActive = true;
@@ -94,7 +94,6 @@ class DbCreateInventoryauditlogCommand extends DBCreateSequelizeCommand {
       }
     } catch (error) {
       const eDetail = {
-        whereClause: this.normalizeSequalizeOps(whereClause),
         dataClause: this.dataClause,
         errorStack: error.stack,
         checkoutResult: this.input.checkoutResult,

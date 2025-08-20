@@ -1,20 +1,21 @@
 const { HttpServerError } = require("common");
 
 const { PurchaseOrder } = require("models");
-const { Op } = require("sequelize");
 
 const updatePurchaseOrderByIdList = async (idList, dataClause) => {
   try {
-    let rowsCount = null;
-    let rows = null;
+    await PurchaseOrder.updateMany(
+      { _id: { $in: idList }, isActive: true },
+      dataClause,
+    );
 
-    const options = {
-      where: { id: { [Op.in]: idList }, isActive: true },
-      returning: true,
-    };
+    const updatedDocs = await PurchaseOrder.find(
+      { _id: { $in: idList }, isActive: true },
+      { _id: 1 },
+    );
 
-    [rowsCount, rows] = await PurchaseOrder.update(dataClause, options);
-    const purchaseOrderIdList = rows.map((item) => item.id);
+    const purchaseOrderIdList = updatedDocs.map((doc) => doc._id);
+
     return purchaseOrderIdList;
   } catch (err) {
     throw new HttpServerError(

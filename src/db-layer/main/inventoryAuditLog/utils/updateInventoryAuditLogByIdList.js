@@ -1,20 +1,21 @@
 const { HttpServerError } = require("common");
 
 const { InventoryAuditLog } = require("models");
-const { Op } = require("sequelize");
 
 const updateInventoryAuditLogByIdList = async (idList, dataClause) => {
   try {
-    let rowsCount = null;
-    let rows = null;
+    await InventoryAuditLog.updateMany(
+      { _id: { $in: idList }, isActive: true },
+      dataClause,
+    );
 
-    const options = {
-      where: { id: { [Op.in]: idList }, isActive: true },
-      returning: true,
-    };
+    const updatedDocs = await InventoryAuditLog.find(
+      { _id: { $in: idList }, isActive: true },
+      { _id: 1 },
+    );
 
-    [rowsCount, rows] = await InventoryAuditLog.update(dataClause, options);
-    const inventoryAuditLogIdList = rows.map((item) => item.id);
+    const inventoryAuditLogIdList = updatedDocs.map((doc) => doc._id);
+
     return inventoryAuditLogIdList;
   } catch (err) {
     throw new HttpServerError(

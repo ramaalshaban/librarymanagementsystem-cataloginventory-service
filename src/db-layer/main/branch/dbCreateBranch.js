@@ -1,3 +1,8 @@
+// exsik olan :
+//if exits update and if not exits create
+//if index.onDuplicate == "throwError" throw error
+//
+
 const {
   HttpServerError,
   BadRequestError,
@@ -7,17 +12,15 @@ const {
 } = require("common");
 
 const { Branch } = require("models");
-const { Op } = require("sequelize");
-const { hexaLogger } = require("common");
 
-const { DBCreateSequelizeCommand } = require("dbCommand");
+const { DBCreateMongooseCommand } = require("dbCommand");
 
 const { BranchQueryCacheInvalidator } = require("./query-cache-classes");
 
 const { ElasticIndexer } = require("serviceCommon");
 const getBranchById = require("./utils/getBranchById");
 
-class DbCreateBranchCommand extends DBCreateSequelizeCommand {
+class DbCreateBranchCommand extends DBCreateMongooseCommand {
   constructor(input) {
     super(input);
     this.commandName = "dbCreateBranch";
@@ -45,8 +48,6 @@ class DbCreateBranchCommand extends DBCreateSequelizeCommand {
     await elasticIndexer.indexData(dbData);
   }
 
-  // should i add hooksDbLayer here?
-
   // ask about this should i rename the whereClause to dataClause???
 
   async create_childs() {}
@@ -67,7 +68,7 @@ class DbCreateBranchCommand extends DBCreateSequelizeCommand {
         name: this.dataClause.name,
       };
 
-      branch = branch || (await Branch.findOne({ where: whereClause }));
+      branch = branch || (await Branch.findOne(whereClause));
 
       if (branch) {
         throw new BadRequestError(
@@ -76,7 +77,7 @@ class DbCreateBranchCommand extends DBCreateSequelizeCommand {
       }
 
       if (!updated && this.dataClause.id && !exists) {
-        branch = branch || (await Branch.findByPk(this.dataClause.id));
+        branch = branch || (await Branch.findById(this.dataClause.id));
         if (branch) {
           delete this.dataClause.id;
           this.dataClause.isActive = true;
@@ -86,7 +87,6 @@ class DbCreateBranchCommand extends DBCreateSequelizeCommand {
       }
     } catch (error) {
       const eDetail = {
-        whereClause: this.normalizeSequalizeOps(whereClause),
         dataClause: this.dataClause,
         errorStack: error.stack,
         checkoutResult: this.input.checkoutResult,

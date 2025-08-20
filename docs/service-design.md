@@ -1,7 +1,7 @@
 # Service Design Specification
 
 **librarymanagementsystem-cataloginventory-service** documentation
--Version:**`1.0.1`**
+-Version:**`1.0.2`**
 
 ## Scope
 
@@ -35,7 +35,7 @@ The following routes are available by default:
 - **Current Session Info:** `/currentuser`
 - **Favicon:** `/favicon.ico`
 
-The service uses a **PostgreSQL** database for data storage, with the database name set to `librarymanagementsystem-cataloginventory-service`.
+The service uses a **MongoDB** database for data storage, with the database name set to `librarymanagementsystem-cataloginventory-service`.
 
 This service is accessible via the following environment-specific URLs:
 
@@ -53,7 +53,7 @@ it will check a valid JWT token in the request query/header/bearer/cookie. If th
 
 ### Service Data Objects
 
-The service uses a **PostgreSQL** database for data storage, with the database name set to `librarymanagementsystem-cataloginventory-service`.
+The service uses a **MongoDB** database for data storage, with the database name set to `librarymanagementsystem-cataloginventory-service`.
 
 Data deletion is managed using a **soft delete** strategy. Instead of removing records from the database, they are flagged as inactive by setting the `isActive` field to `false`.
 

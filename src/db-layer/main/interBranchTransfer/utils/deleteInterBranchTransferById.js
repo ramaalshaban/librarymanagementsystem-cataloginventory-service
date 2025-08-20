@@ -1,13 +1,11 @@
-//ask about this no other option other than softdelete
-const {
-  HttpServerError,
-  BadRequestError,
-  NotAuthenticatedError,
-  ForbiddenError,
-  NotFoundError,
-} = require("common");
+const { HttpServerError, BadRequestError, NotFoundError } = require("common");
 const { InterBranchTransfer } = require("models");
 const { ElasticIndexer } = require("serviceCommon");
+
+const indexDataToElastic = async (id) => {
+  const elasticIndexer = new ElasticIndexer("interBranchTransfer");
+  await elasticIndexer.deleteData(id);
+};
 
 const deleteInterBranchTransferById = async (id) => {
   try {
@@ -18,21 +16,32 @@ const deleteInterBranchTransferById = async (id) => {
       throw new BadRequestError("ID is required in utility delete function");
 
     const existingDoc = await InterBranchTransfer.findOne({
-      where: { id, isActive: true },
+      _id: id,
+      isActive: true,
     });
+
     if (!existingDoc) {
       throw new NotFoundError(`Record with ID ${id} not found.`);
     }
+
+    const options = { new: true };
     const dataClause = { isActive: false };
-    await existingDoc.update(dataClause);
 
-    const elasticIndexer = new ElasticIndexer("interBranchTransfer");
-    await elasticIndexer.deleteData(existingDoc.id);
+    const deletedDoc = await InterBranchTransfer.findOneAndUpdate(
+      { _id: id, isActive: true },
+      dataClause,
+      options,
+    );
 
-    return existingDoc.getData();
+    await indexDataToElastic(id);
+
+    return deletedDoc.getData();
   } catch (err) {
+    if (err instanceof NotFoundError) {
+      throw err;
+    }
     throw new HttpServerError(
-      "An unexpected error occurred during the delete operation.",
+      "errMsg_dbErrorWhenUpdatingInterBranchTransferById",
       err,
     );
   }

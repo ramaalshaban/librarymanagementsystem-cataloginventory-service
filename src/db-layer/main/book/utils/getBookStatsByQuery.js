@@ -1,8 +1,6 @@
 const { HttpServerError, BadRequestError } = require("common");
 
 const { Book } = require("models");
-const { Op } = require("sequelize");
-const { hexaLogger } = require("common");
 
 const getBookStatsByQuery = async (query, stats) => {
   const promises = [];
@@ -14,29 +12,61 @@ const getBookStatsByQuery = async (query, stats) => {
     };
 
     for (const stat of stats) {
-      let statParts = stat.replace("(", "-").replace(")", "").split("-");
+      const statParts = stat.replace("(", "-").replace(")", "").split("-");
       if (stat === "count") {
-        promises.push(Book.count({ where: queryWithSoftDelete }));
+        promises.push(Book.countDocuments(queryWithSoftDelete));
         statLabels.push("count");
       } else if (statParts.length == 2) {
         if (statParts[0] === "sum") {
-          promises.push(Book.sum(statParts[1], { where: queryWithSoftDelete }));
+          const pipeline = [
+            { $match: queryWithSoftDelete },
+            { $group: { _id: null, total: { $sum: `$${statParts[1]}` } } },
+          ];
+          promises.push(
+            Book.aggregate(pipeline).then((result) =>
+              result.length > 0 ? result[0].total : 0,
+            ),
+          );
           statLabels.push("sum-" + statParts[1]);
         } else if (statParts[0] === "avg") {
-          promises.push(Book.avg(statParts[1], { where: queryWithSoftDelete }));
+          const pipeline = [
+            { $match: queryWithSoftDelete },
+            { $group: { _id: null, average: { $avg: `$${statParts[1]}` } } },
+          ];
+          promises.push(
+            Book.aggregate(pipeline).then((result) =>
+              result.length > 0 ? result[0].average : 0,
+            ),
+          );
           statLabels.push("avg-" + statParts[1]);
         } else if (statParts[0] === "min") {
-          promises.push(Book.min(statParts[1], { where: queryWithSoftDelete }));
+          const pipeline = [
+            { $match: queryWithSoftDelete },
+            { $group: { _id: null, minimum: { $min: `$${statParts[1]}` } } },
+          ];
+          promises.push(
+            Book.aggregate(pipeline).then((result) =>
+              result.length > 0 ? result[0].minimum : null,
+            ),
+          );
           statLabels.push("min-" + statParts[1]);
         } else if (statParts[0] === "max") {
-          promises.push(Book.max(statParts[1], { where: queryWithSoftDelete }));
+          const pipeline = [
+            { $match: queryWithSoftDelete },
+            { $group: { _id: null, maximum: { $max: `$${statParts[1]}` } } },
+          ];
+          promises.push(
+            Book.aggregate(pipeline).then((result) =>
+              result.length > 0 ? result[0].maximum : null,
+            ),
+          );
           statLabels.push("max-" + statParts[1]);
         }
       }
     }
 
     if (promises.length == 0) {
-      return await Book.count({ where: queryWithSoftDelete });
+      return await Book.countDocuments(queryWithSoftDelete);
     } else if (promises.length == 1) {
       return await promises[0];
     } else {

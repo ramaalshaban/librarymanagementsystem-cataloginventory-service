@@ -120,11 +120,10 @@ class UpdateBookManager extends BookManager {
   }
 
   async getWhereClause() {
-    const { convertUserQueryToSequelizeQuery } = require("common");
+    const { convertUserQueryToMongoDbQuery } = require("common");
 
     const routeQuery = await this.getRouteQuery();
-
-    return convertUserQueryToSequelizeQuery(routeQuery);
+    return convertUserQueryToMongoDbQuery(routeQuery);
   }
 
   async getDataClause() {
@@ -132,38 +131,10 @@ class UpdateBookManager extends BookManager {
 
     const dataClause = {
       title: this.title,
-      authors: this.authors
-        ? this.authors
-        : this.authors_remove
-          ? sequelize.fn(
-              "array_remove",
-              sequelize.col("authors"),
-              this.authors_remove,
-            )
-          : this.authors_append
-            ? sequelize.fn(
-                "array_append",
-                sequelize.col("authors"),
-                this.authors_append,
-              )
-            : undefined,
+      authors: this.authors,
       isbn: this.isbn,
       synopsis: this.synopsis,
-      genres: this.genres
-        ? this.genres
-        : this.genres_remove
-          ? sequelize.fn(
-              "array_remove",
-              sequelize.col("genres"),
-              this.genres_remove,
-            )
-          : this.genres_append
-            ? sequelize.fn(
-                "array_append",
-                sequelize.col("genres"),
-                this.genres_append,
-              )
-            : undefined,
+      genres: this.genres,
       publicationDate: this.publicationDate,
       language: this.language,
       publisher: this.publisher,

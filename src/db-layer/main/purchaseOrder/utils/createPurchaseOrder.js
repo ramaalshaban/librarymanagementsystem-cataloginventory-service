@@ -1,16 +1,11 @@
-const { HttpServerError, BadRequestError } = require("common");
-
+const { HttpServerError, BadRequestError, newUUID } = require("common");
+//should i add the elastic for mongodb?
 const { ElasticIndexer } = require("serviceCommon");
 
 const { PurchaseOrder } = require("models");
-const { hexaLogger, newUUID } = require("common");
 
 const indexDataToElastic = async (data) => {
-  const elasticIndexer = new ElasticIndexer(
-    "purchaseOrder",
-    this.session,
-    this.requestId,
-  );
+  const elasticIndexer = new ElasticIndexer("purchaseOrder");
   await elasticIndexer.indexData(data);
 };
 
@@ -20,6 +15,7 @@ const validateData = (data) => {
     "requestedByUserId",
     "itemRequests",
     "status",
+    "isActive",
   ];
 
   requiredFields.forEach((field) => {
@@ -30,21 +26,30 @@ const validateData = (data) => {
     }
   });
 
-  if (!data.id) {
-    data.id = newUUID();
+  if (!data._id && !data.id) {
+    data._id = newUUID();
   }
 };
 
 const createPurchaseOrder = async (data) => {
   try {
+    if (!data || Object.keys(data).length === 0) {
+      throw new BadRequestError(`errMsg_invalidInputDataForPurchaseOrder`);
+    }
+
     validateData(data);
 
-    const newpurchaseOrder = await PurchaseOrder.create(data);
-    const _data = newpurchaseOrder.getData();
+    const newpurchaseOrder = new PurchaseOrder(data);
+    const createdpurchaseOrder = await newpurchaseOrder.save();
+
+    //shoul i use model's getData method for consistency with Sequelize
+    const _data = createdpurchaseOrder.getData();
+
     await indexDataToElastic(_data);
+
     return _data;
   } catch (err) {
-    throw new HttpServerError("errMsg_dbErrorWhenCreatingPurchaseOrder", err);
+    throw new HttpServerError(`errMsg_dbErrorWhenCreatingPurchaseOrder`, err);
   }
 };
 

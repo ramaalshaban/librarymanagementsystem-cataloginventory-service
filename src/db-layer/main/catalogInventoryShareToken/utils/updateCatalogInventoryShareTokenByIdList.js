@@ -1,23 +1,21 @@
 const { HttpServerError } = require("common");
 
 const { CatalogInventoryShareToken } = require("models");
-const { Op } = require("sequelize");
 
 const updateCatalogInventoryShareTokenByIdList = async (idList, dataClause) => {
   try {
-    let rowsCount = null;
-    let rows = null;
-
-    const options = {
-      where: { id: { [Op.in]: idList }, isActive: true },
-      returning: true,
-    };
-
-    [rowsCount, rows] = await CatalogInventoryShareToken.update(
+    await CatalogInventoryShareToken.updateMany(
+      { _id: { $in: idList }, isActive: true },
       dataClause,
-      options,
     );
-    const catalogInventoryShareTokenIdList = rows.map((item) => item.id);
+
+    const updatedDocs = await CatalogInventoryShareToken.find(
+      { _id: { $in: idList }, isActive: true },
+      { _id: 1 },
+    );
+
+    const catalogInventoryShareTokenIdList = updatedDocs.map((doc) => doc._id);
+
     return catalogInventoryShareTokenIdList;
   } catch (err) {
     throw new HttpServerError(

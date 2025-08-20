@@ -1,12 +1,9 @@
-const { HttpServerError, NotFoundError, BadRequestError } = require("common");
+const { HttpServerError, BadRequestError, NotFoundError } = require("common");
 
 const { Book } = require("models");
-const { Op } = require("sequelize");
 
 const getIdListOfBookByField = async (fieldName, fieldValue, isArray) => {
   try {
-    let isValidField = false;
-
     const bookProperties = [
       "id",
       "title",
@@ -20,34 +17,49 @@ const getIdListOfBookByField = async (fieldName, fieldValue, isArray) => {
       "coverImageUrl",
     ];
 
-    isValidField = bookProperties.includes(fieldName);
-
-    if (!isValidField) {
+    if (!bookProperties.includes(fieldName)) {
       throw new BadRequestError(`Invalid field name: ${fieldName}.`);
     }
 
-    const expectedType = typeof Book[fieldName];
+    // type validation different from sequelize for mongodb
+    const schemaPath = Book.schema.paths[fieldName];
+    if (schemaPath && fieldValue !== undefined && fieldValue !== null) {
+      const expectedType = schemaPath.instance.toLowerCase();
+      const actualType = typeof fieldValue;
 
-    if (typeof fieldValue !== expectedType) {
-      throw new BadRequestError(
-        `Invalid field value type for ${fieldName}. Expected ${expectedType}.`,
-      );
+      const typeMapping = {
+        string: "string",
+        number: "number",
+        boolean: "boolean",
+        objectid: "string", // ObjectIds are typically passed as strings
+      };
+
+      const expectedJSType = typeMapping[expectedType];
+      if (expectedJSType && actualType !== expectedJSType) {
+        throw new BadRequestError(
+          `Invalid field value type for ${fieldName}. Expected ${expectedJSType}, got ${actualType}.`,
+        );
+      }
     }
 
-    const options = {
-      where: isArray
-        ? { [fieldName]: { [Op.contains]: [fieldValue] }, isActive: true }
-        : { [fieldName]: fieldValue, isActive: true },
-      attributes: ["id"],
-    };
+    let query = isArray
+      ? {
+          [fieldName]: {
+            $in: Array.isArray(fieldValue) ? fieldValue : [fieldValue],
+          },
+        }
+      : { [fieldName]: fieldValue };
 
-    let bookIdList = await Book.findAll(options);
+    query.isActive = true;
+
+    let bookIdList = await Book.find(query, { _id: 1 }).lean().exec();
 
     if (!bookIdList || bookIdList.length === 0) {
       throw new NotFoundError(`Book with the specified criteria not found`);
     }
 
-    bookIdList = bookIdList.map((item) => item.id);
+    bookIdList = bookIdList.map((item) => item._id.toString());
+
     return bookIdList;
   } catch (err) {
     throw new HttpServerError(

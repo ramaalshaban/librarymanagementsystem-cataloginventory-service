@@ -1,3 +1,8 @@
+// exsik olan :
+//if exits update and if not exits create
+//if index.onDuplicate == "throwError" throw error
+//
+
 const {
   HttpServerError,
   BadRequestError,
@@ -7,17 +12,15 @@ const {
 } = require("common");
 
 const { Book } = require("models");
-const { Op } = require("sequelize");
-const { hexaLogger } = require("common");
 
-const { DBCreateSequelizeCommand } = require("dbCommand");
+const { DBCreateMongooseCommand } = require("dbCommand");
 
 const { BookQueryCacheInvalidator } = require("./query-cache-classes");
 
 const { ElasticIndexer } = require("serviceCommon");
 const getBookById = require("./utils/getBookById");
 
-class DbCreateBookCommand extends DBCreateSequelizeCommand {
+class DbCreateBookCommand extends DBCreateMongooseCommand {
   constructor(input) {
     super(input);
     this.commandName = "dbCreateBook";
@@ -45,8 +48,6 @@ class DbCreateBookCommand extends DBCreateSequelizeCommand {
     await elasticIndexer.indexData(dbData);
   }
 
-  // should i add hooksDbLayer here?
-
   // ask about this should i rename the whereClause to dataClause???
 
   async create_childs() {}
@@ -67,7 +68,7 @@ class DbCreateBookCommand extends DBCreateSequelizeCommand {
         title: this.dataClause.title,
       };
 
-      book = book || (await Book.findOne({ where: whereClause }));
+      book = book || (await Book.findOne(whereClause));
 
       if (book) {
         throw new BadRequestError(
@@ -78,7 +79,7 @@ class DbCreateBookCommand extends DBCreateSequelizeCommand {
         isbn: this.dataClause.isbn,
       };
 
-      book = book || (await Book.findOne({ where: whereClause }));
+      book = book || (await Book.findOne(whereClause));
 
       if (book) {
         throw new BadRequestError(
@@ -87,7 +88,7 @@ class DbCreateBookCommand extends DBCreateSequelizeCommand {
       }
 
       if (!updated && this.dataClause.id && !exists) {
-        book = book || (await Book.findByPk(this.dataClause.id));
+        book = book || (await Book.findById(this.dataClause.id));
         if (book) {
           delete this.dataClause.id;
           this.dataClause.isActive = true;
@@ -97,7 +98,6 @@ class DbCreateBookCommand extends DBCreateSequelizeCommand {
       }
     } catch (error) {
       const eDetail = {
-        whereClause: this.normalizeSequalizeOps(whereClause),
         dataClause: this.dataClause,
         errorStack: error.stack,
         checkoutResult: this.input.checkoutResult,

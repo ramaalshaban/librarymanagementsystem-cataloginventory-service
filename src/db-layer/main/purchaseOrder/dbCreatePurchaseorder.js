@@ -1,3 +1,8 @@
+// exsik olan :
+//if exits update and if not exits create
+//if index.onDuplicate == "throwError" throw error
+//
+
 const {
   HttpServerError,
   BadRequestError,
@@ -7,17 +12,15 @@ const {
 } = require("common");
 
 const { PurchaseOrder } = require("models");
-const { Op } = require("sequelize");
-const { hexaLogger } = require("common");
 
-const { DBCreateSequelizeCommand } = require("dbCommand");
+const { DBCreateMongooseCommand } = require("dbCommand");
 
 const { PurchaseOrderQueryCacheInvalidator } = require("./query-cache-classes");
 
 const { ElasticIndexer } = require("serviceCommon");
 const getPurchaseOrderById = require("./utils/getPurchaseOrderById");
 
-class DbCreatePurchaseorderCommand extends DBCreateSequelizeCommand {
+class DbCreatePurchaseorderCommand extends DBCreateMongooseCommand {
   constructor(input) {
     super(input);
     this.commandName = "dbCreatePurchaseorder";
@@ -45,8 +48,6 @@ class DbCreatePurchaseorderCommand extends DBCreateSequelizeCommand {
     await elasticIndexer.indexData(dbData);
   }
 
-  // should i add hooksDbLayer here?
-
   // ask about this should i rename the whereClause to dataClause???
 
   async create_childs() {}
@@ -69,7 +70,7 @@ class DbCreatePurchaseorderCommand extends DBCreateSequelizeCommand {
       };
 
       purchaseOrder =
-        purchaseOrder || (await PurchaseOrder.findOne({ where: whereClause }));
+        purchaseOrder || (await PurchaseOrder.findOne(whereClause));
 
       if (purchaseOrder) {
         throw new BadRequestError(
@@ -79,7 +80,7 @@ class DbCreatePurchaseorderCommand extends DBCreateSequelizeCommand {
 
       if (!updated && this.dataClause.id && !exists) {
         purchaseOrder =
-          purchaseOrder || (await PurchaseOrder.findByPk(this.dataClause.id));
+          purchaseOrder || (await PurchaseOrder.findById(this.dataClause.id));
         if (purchaseOrder) {
           delete this.dataClause.id;
           this.dataClause.isActive = true;
@@ -89,7 +90,6 @@ class DbCreatePurchaseorderCommand extends DBCreateSequelizeCommand {
       }
     } catch (error) {
       const eDetail = {
-        whereClause: this.normalizeSequalizeOps(whereClause),
         dataClause: this.dataClause,
         errorStack: error.stack,
         checkoutResult: this.input.checkoutResult,

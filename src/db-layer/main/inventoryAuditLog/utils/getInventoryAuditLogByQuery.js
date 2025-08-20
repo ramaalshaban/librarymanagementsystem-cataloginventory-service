@@ -1,8 +1,6 @@
 const { HttpServerError, BadRequestError } = require("common");
 
 const { InventoryAuditLog } = require("models");
-const { Op } = require("sequelize");
-const { hexaLogger } = require("common");
 
 const getInventoryAuditLogByQuery = async (query) => {
   try {
@@ -13,10 +11,12 @@ const getInventoryAuditLogByQuery = async (query) => {
     }
 
     const inventoryAuditLog = await InventoryAuditLog.findOne({
-      where: { ...query, isActive: true },
+      ...query,
+      isActive: true,
     });
 
     if (!inventoryAuditLog) return null;
+
     return inventoryAuditLog.getData();
   } catch (err) {
     throw new HttpServerError(

@@ -1,8 +1,5 @@
-const { HttpServerError, BadRequestError } = require("common");
-
+const { HttpServerError, BadRequestError, NotFoundError } = require("common");
 const { InterBranchTransfer } = require("models");
-const { Op } = require("sequelize");
-const { hexaLogger } = require("common");
 
 const getInterBranchTransferListByQuery = async (query) => {
   try {
@@ -12,13 +9,11 @@ const getInterBranchTransferListByQuery = async (query) => {
       );
     }
 
-    const interBranchTransfer = await InterBranchTransfer.findAll({
-      where: { ...query, isActive: true },
-    });
+    const interBranchTransfer = await InterBranchTransfer.find(query);
 
-    //should i add not found error or only return empty array?
     if (!interBranchTransfer || interBranchTransfer.length === 0) return [];
 
+    //should i add not found error or only return empty array?
     //      if (!interBranchTransfer || interBranchTransfer.length === 0) {
     //      throw new NotFoundError(
     //      `InterBranchTransfer with the specified criteria not found`

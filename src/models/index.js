@@ -1,97 +1,67 @@
-const { DataTypes } = require("sequelize");
+const { mongoose } = require("common");
 const { getEnumValue } = require("serviceCommon");
 const { ElasticIndexer } = require("serviceCommon");
 const updateElasticIndexMappings = require("./elastic-index");
-const { hexaLogger } = require("common");
 
-const Book = require("./book");
-const Branch = require("./branch");
-const BranchInventory = require("./branchInventory");
-const InventoryAuditLog = require("./inventoryAuditLog");
-const InterBranchTransfer = require("./interBranchTransfer");
-const PurchaseOrder = require("./purchaseOrder");
-const CatalogInventoryShareToken = require("./catalogInventoryShareToken");
+const bookSchema = require("./book");
 
-Book.prototype.getData = function () {
-  const data = this.dataValues;
+const branchSchema = require("./branch");
 
-  for (const key of Object.keys(data)) {
-    if (key.startsWith("json_")) {
-      data[key] = JSON.parse(data[key]);
-      const newKey = key.slice(5);
-      data[newKey] = data[key];
-      delete data[key];
-    }
-  }
+const branchinventorySchema = require("./branchInventory");
 
-  return data;
+const inventoryauditlogSchema = require("./inventoryAuditLog");
+
+const interbranchtransferSchema = require("./interBranchTransfer");
+
+const purchaseorderSchema = require("./purchaseOrder");
+
+const cataloginventorysharetokenSchema = require("./catalogInventoryShareToken");
+
+bookSchema.methods.getCqrsJoins = async function (data) {};
+
+bookSchema.methods.getData = function () {
+  let ret = {};
+  ret.id = this._doc._id.toString();
+  const docProps = Object.keys(this._doc).filter((key) => key != "_id");
+  // copy all props from doc
+  docProps.forEach((propName) => (ret[propName] = this._doc[propName]));
+
+  return ret;
 };
 
-Branch.prototype.getData = function () {
-  const data = this.dataValues;
+branchSchema.methods.getCqrsJoins = async function (data) {};
 
-  for (const key of Object.keys(data)) {
-    if (key.startsWith("json_")) {
-      data[key] = JSON.parse(data[key]);
-      const newKey = key.slice(5);
-      data[newKey] = data[key];
-      delete data[key];
-    }
-  }
+branchSchema.methods.getData = function () {
+  let ret = {};
+  ret.id = this._doc._id.toString();
+  const docProps = Object.keys(this._doc).filter((key) => key != "_id");
+  // copy all props from doc
+  docProps.forEach((propName) => (ret[propName] = this._doc[propName]));
 
-  return data;
+  return ret;
 };
 
-BranchInventory.prototype.getData = function () {
-  const data = this.dataValues;
+branchinventorySchema.methods.getCqrsJoins = async function (data) {};
 
-  data.book = this.book ? this.book.getData() : undefined;
-  data.branch = this.branch ? this.branch.getData() : undefined;
+branchinventorySchema.methods.getData = function () {
+  let ret = {};
+  ret.id = this._doc._id.toString();
+  const docProps = Object.keys(this._doc).filter((key) => key != "_id");
+  // copy all props from doc
+  docProps.forEach((propName) => (ret[propName] = this._doc[propName]));
 
-  for (const key of Object.keys(data)) {
-    if (key.startsWith("json_")) {
-      data[key] = JSON.parse(data[key]);
-      const newKey = key.slice(5);
-      data[newKey] = data[key];
-      delete data[key];
-    }
-  }
-
-  return data;
+  return ret;
 };
 
-BranchInventory.belongsTo(Book, {
-  as: "book",
-  foreignKey: "bookId",
-  targetKey: "id",
-  constraints: false,
-});
+inventoryauditlogSchema.methods.getCqrsJoins = async function (data) {};
 
-BranchInventory.belongsTo(Branch, {
-  as: "branch",
-  foreignKey: "branchId",
-  targetKey: "id",
-  constraints: false,
-});
+inventoryauditlogSchema.methods.getData = function () {
+  let ret = {};
+  ret.id = this._doc._id.toString();
+  const docProps = Object.keys(this._doc).filter((key) => key != "_id");
+  // copy all props from doc
+  docProps.forEach((propName) => (ret[propName] = this._doc[propName]));
 
-InventoryAuditLog.prototype.getData = function () {
-  const data = this.dataValues;
-
-  data.branch = this.branch ? this.branch.getData() : undefined;
-  data.branchInventory = this.branchInventory
-    ? this.branchInventory.getData()
-    : undefined;
-
-  for (const key of Object.keys(data)) {
-    if (key.startsWith("json_")) {
-      data[key] = JSON.parse(data[key]);
-      const newKey = key.slice(5);
-      data[newKey] = data[key];
-      delete data[key];
-    }
-  }
-
-  // set enum Index and enum value
   const auditTypeOptions = [
     "audit",
     "damage",
@@ -99,53 +69,27 @@ InventoryAuditLog.prototype.getData = function () {
     "discrepancy",
     "adjustment",
   ];
-  const dataTypeauditTypeInventoryAuditLog = typeof data.auditType;
-  const enumIndexauditTypeInventoryAuditLog =
-    dataTypeauditTypeInventoryAuditLog === "string"
-      ? auditTypeOptions.indexOf(data.auditType)
-      : data.auditType;
-  data.auditType_idx = enumIndexauditTypeInventoryAuditLog;
-  data.auditType =
-    enumIndexauditTypeInventoryAuditLog > -1
-      ? auditTypeOptions[enumIndexauditTypeInventoryAuditLog]
-      : undefined;
-
-  return data;
-};
-
-InventoryAuditLog.belongsTo(Branch, {
-  as: "branch",
-  foreignKey: "branchId",
-  targetKey: "id",
-  constraints: false,
-});
-
-InventoryAuditLog.belongsTo(BranchInventory, {
-  as: "branchInventory",
-  foreignKey: "branchInventoryId",
-  targetKey: "id",
-  constraints: false,
-});
-
-InterBranchTransfer.prototype.getData = function () {
-  const data = this.dataValues;
-
-  data.book = this.book ? this.book.getData() : undefined;
-  data.sourceBranch = this.sourceBranch
-    ? this.sourceBranch.getData()
-    : undefined;
-  data.destBranch = this.destBranch ? this.destBranch.getData() : undefined;
-
-  for (const key of Object.keys(data)) {
-    if (key.startsWith("json_")) {
-      data[key] = JSON.parse(data[key]);
-      const newKey = key.slice(5);
-      data[newKey] = data[key];
-      delete data[key];
-    }
+  if (ret.auditType != null) {
+    const enumIndex =
+      typeof ret.auditType === "string"
+        ? auditTypeOptions.indexOf(ret.auditType)
+        : ret.auditType;
+    ret.auditType_idx = enumIndex;
+    ret.auditType = enumIndex > -1 ? auditTypeOptions[enumIndex] : undefined;
   }
 
-  // set enum Index and enum value
+  return ret;
+};
+
+interbranchtransferSchema.methods.getCqrsJoins = async function (data) {};
+
+interbranchtransferSchema.methods.getData = function () {
+  let ret = {};
+  ret.id = this._doc._id.toString();
+  const docProps = Object.keys(this._doc).filter((key) => key != "_id");
+  // copy all props from doc
+  docProps.forEach((propName) => (ret[propName] = this._doc[propName]));
+
   const statusOptions = [
     "requested",
     "approved",
@@ -154,56 +98,27 @@ InterBranchTransfer.prototype.getData = function () {
     "rejected",
     "canceled",
   ];
-  const dataTypestatusInterBranchTransfer = typeof data.status;
-  const enumIndexstatusInterBranchTransfer =
-    dataTypestatusInterBranchTransfer === "string"
-      ? statusOptions.indexOf(data.status)
-      : data.status;
-  data.status_idx = enumIndexstatusInterBranchTransfer;
-  data.status =
-    enumIndexstatusInterBranchTransfer > -1
-      ? statusOptions[enumIndexstatusInterBranchTransfer]
-      : undefined;
-
-  return data;
-};
-
-InterBranchTransfer.belongsTo(Book, {
-  as: "book",
-  foreignKey: "bookId",
-  targetKey: "id",
-  constraints: false,
-});
-
-InterBranchTransfer.belongsTo(Branch, {
-  as: "sourceBranch",
-  foreignKey: "sourceBranchId",
-  targetKey: "id",
-  constraints: false,
-});
-
-InterBranchTransfer.belongsTo(Branch, {
-  as: "destBranch",
-  foreignKey: "destBranchId",
-  targetKey: "id",
-  constraints: false,
-});
-
-PurchaseOrder.prototype.getData = function () {
-  const data = this.dataValues;
-
-  data.branch = this.branch ? this.branch.getData() : undefined;
-
-  for (const key of Object.keys(data)) {
-    if (key.startsWith("json_")) {
-      data[key] = JSON.parse(data[key]);
-      const newKey = key.slice(5);
-      data[newKey] = data[key];
-      delete data[key];
-    }
+  if (ret.status != null) {
+    const enumIndex =
+      typeof ret.status === "string"
+        ? statusOptions.indexOf(ret.status)
+        : ret.status;
+    ret.status_idx = enumIndex;
+    ret.status = enumIndex > -1 ? statusOptions[enumIndex] : undefined;
   }
 
-  // set enum Index and enum value
+  return ret;
+};
+
+purchaseorderSchema.methods.getCqrsJoins = async function (data) {};
+
+purchaseorderSchema.methods.getData = function () {
+  let ret = {};
+  ret.id = this._doc._id.toString();
+  const docProps = Object.keys(this._doc).filter((key) => key != "_id");
+  // copy all props from doc
+  docProps.forEach((propName) => (ret[propName] = this._doc[propName]));
+
   const statusOptions = [
     "requested",
     "approved",
@@ -211,42 +126,53 @@ PurchaseOrder.prototype.getData = function () {
     "fulfilled",
     "canceled",
   ];
-  const dataTypestatusPurchaseOrder = typeof data.status;
-  const enumIndexstatusPurchaseOrder =
-    dataTypestatusPurchaseOrder === "string"
-      ? statusOptions.indexOf(data.status)
-      : data.status;
-  data.status_idx = enumIndexstatusPurchaseOrder;
-  data.status =
-    enumIndexstatusPurchaseOrder > -1
-      ? statusOptions[enumIndexstatusPurchaseOrder]
-      : undefined;
-
-  return data;
-};
-
-PurchaseOrder.belongsTo(Branch, {
-  as: "branch",
-  foreignKey: "branchId",
-  targetKey: "id",
-  constraints: false,
-});
-
-CatalogInventoryShareToken.prototype.getData = function () {
-  const data = this.dataValues;
-
-  for (const key of Object.keys(data)) {
-    if (key.startsWith("json_")) {
-      data[key] = JSON.parse(data[key]);
-      const newKey = key.slice(5);
-      data[newKey] = data[key];
-      delete data[key];
-    }
+  if (ret.status != null) {
+    const enumIndex =
+      typeof ret.status === "string"
+        ? statusOptions.indexOf(ret.status)
+        : ret.status;
+    ret.status_idx = enumIndex;
+    ret.status = enumIndex > -1 ? statusOptions[enumIndex] : undefined;
   }
 
-  data._owner = data.ownerId ?? undefined;
-  return data;
+  return ret;
 };
+
+cataloginventorysharetokenSchema.methods.getCqrsJoins = async function (
+  data,
+) {};
+
+cataloginventorysharetokenSchema.methods.getData = function () {
+  let ret = {};
+  ret.id = this._doc._id.toString();
+  const docProps = Object.keys(this._doc).filter((key) => key != "_id");
+  // copy all props from doc
+  docProps.forEach((propName) => (ret[propName] = this._doc[propName]));
+
+  ret._owner = ret.ownerId ?? undefined;
+
+  return ret;
+};
+
+const Book = mongoose.model("Book", bookSchema);
+const Branch = mongoose.model("Branch", branchSchema);
+const BranchInventory = mongoose.model(
+  "BranchInventory",
+  branchinventorySchema,
+);
+const InventoryAuditLog = mongoose.model(
+  "InventoryAuditLog",
+  inventoryauditlogSchema,
+);
+const InterBranchTransfer = mongoose.model(
+  "InterBranchTransfer",
+  interbranchtransferSchema,
+);
+const PurchaseOrder = mongoose.model("PurchaseOrder", purchaseorderSchema);
+const CatalogInventoryShareToken = mongoose.model(
+  "CatalogInventoryShareToken",
+  cataloginventorysharetokenSchema,
+);
 
 module.exports = {
   Book,

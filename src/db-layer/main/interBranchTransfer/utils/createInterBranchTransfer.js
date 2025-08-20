@@ -1,16 +1,11 @@
-const { HttpServerError, BadRequestError } = require("common");
-
+const { HttpServerError, BadRequestError, newUUID } = require("common");
+//should i add the elastic for mongodb?
 const { ElasticIndexer } = require("serviceCommon");
 
 const { InterBranchTransfer } = require("models");
-const { hexaLogger, newUUID } = require("common");
 
 const indexDataToElastic = async (data) => {
-  const elasticIndexer = new ElasticIndexer(
-    "interBranchTransfer",
-    this.session,
-    this.requestId,
-  );
+  const elasticIndexer = new ElasticIndexer("interBranchTransfer");
   await elasticIndexer.indexData(data);
 };
 
@@ -22,6 +17,7 @@ const validateData = (data) => {
     "quantity",
     "requestedByUserId",
     "status",
+    "isActive",
   ];
 
   requiredFields.forEach((field) => {
@@ -32,22 +28,33 @@ const validateData = (data) => {
     }
   });
 
-  if (!data.id) {
-    data.id = newUUID();
+  if (!data._id && !data.id) {
+    data._id = newUUID();
   }
 };
 
 const createInterBranchTransfer = async (data) => {
   try {
+    if (!data || Object.keys(data).length === 0) {
+      throw new BadRequestError(
+        `errMsg_invalidInputDataForInterBranchTransfer`,
+      );
+    }
+
     validateData(data);
 
-    const newinterBranchTransfer = await InterBranchTransfer.create(data);
-    const _data = newinterBranchTransfer.getData();
+    const newinterBranchTransfer = new InterBranchTransfer(data);
+    const createdinterBranchTransfer = await newinterBranchTransfer.save();
+
+    //shoul i use model's getData method for consistency with Sequelize
+    const _data = createdinterBranchTransfer.getData();
+
     await indexDataToElastic(_data);
+
     return _data;
   } catch (err) {
     throw new HttpServerError(
-      "errMsg_dbErrorWhenCreatingInterBranchTransfer",
+      `errMsg_dbErrorWhenCreatingInterBranchTransfer`,
       err,
     );
   }

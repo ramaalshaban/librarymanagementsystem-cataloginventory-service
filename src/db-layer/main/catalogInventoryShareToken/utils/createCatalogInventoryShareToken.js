@@ -1,16 +1,11 @@
-const { HttpServerError, BadRequestError } = require("common");
-
+const { HttpServerError, BadRequestError, newUUID } = require("common");
+//should i add the elastic for mongodb?
 const { ElasticIndexer } = require("serviceCommon");
 
 const { CatalogInventoryShareToken } = require("models");
-const { hexaLogger, newUUID } = require("common");
 
 const indexDataToElastic = async (data) => {
-  const elasticIndexer = new ElasticIndexer(
-    "catalogInventoryShareToken",
-    this.session,
-    this.requestId,
-  );
+  const elasticIndexer = new ElasticIndexer("catalogInventoryShareToken");
   await elasticIndexer.indexData(data);
 };
 
@@ -24,6 +19,7 @@ const validateData = (data) => {
     "tokenPermissions",
     "allowedEmails",
     "expireDate",
+    "isActive",
   ];
 
   requiredFields.forEach((field) => {
@@ -34,23 +30,34 @@ const validateData = (data) => {
     }
   });
 
-  if (!data.id) {
-    data.id = newUUID();
+  if (!data._id && !data.id) {
+    data._id = newUUID();
   }
 };
 
 const createCatalogInventoryShareToken = async (data) => {
   try {
+    if (!data || Object.keys(data).length === 0) {
+      throw new BadRequestError(
+        `errMsg_invalidInputDataForCatalogInventoryShareToken`,
+      );
+    }
+
     validateData(data);
 
-    const newcatalogInventoryShareToken =
-      await CatalogInventoryShareToken.create(data);
-    const _data = newcatalogInventoryShareToken.getData();
+    const newcatalogInventoryShareToken = new CatalogInventoryShareToken(data);
+    const createdcatalogInventoryShareToken =
+      await newcatalogInventoryShareToken.save();
+
+    //shoul i use model's getData method for consistency with Sequelize
+    const _data = createdcatalogInventoryShareToken.getData();
+
     await indexDataToElastic(_data);
+
     return _data;
   } catch (err) {
     throw new HttpServerError(
-      "errMsg_dbErrorWhenCreatingCatalogInventoryShareToken",
+      `errMsg_dbErrorWhenCreatingCatalogInventoryShareToken`,
       err,
     );
   }

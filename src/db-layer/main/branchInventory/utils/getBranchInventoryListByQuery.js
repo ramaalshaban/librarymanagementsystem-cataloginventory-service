@@ -1,8 +1,5 @@
-const { HttpServerError, BadRequestError } = require("common");
-
+const { HttpServerError, BadRequestError, NotFoundError } = require("common");
 const { BranchInventory } = require("models");
-const { Op } = require("sequelize");
-const { hexaLogger } = require("common");
 
 const getBranchInventoryListByQuery = async (query) => {
   try {
@@ -12,13 +9,11 @@ const getBranchInventoryListByQuery = async (query) => {
       );
     }
 
-    const branchInventory = await BranchInventory.findAll({
-      where: { ...query, isActive: true },
-    });
+    const branchInventory = await BranchInventory.find(query);
 
-    //should i add not found error or only return empty array?
     if (!branchInventory || branchInventory.length === 0) return [];
 
+    //should i add not found error or only return empty array?
     //      if (!branchInventory || branchInventory.length === 0) {
     //      throw new NotFoundError(
     //      `BranchInventory with the specified criteria not found`

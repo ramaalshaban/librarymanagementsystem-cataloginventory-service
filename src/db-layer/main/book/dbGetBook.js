@@ -1,5 +1,3 @@
-const { sequelize } = require("common");
-const { Op } = require("sequelize");
 const {
   HttpServerError,
   BadRequestError,
@@ -7,21 +5,13 @@ const {
   ForbiddenError,
   NotFoundError,
 } = require("common");
-const { hexaLogger } = require("common");
 
-const {
-  Book,
-  Branch,
-  BranchInventory,
-  InventoryAuditLog,
-  InterBranchTransfer,
-  PurchaseOrder,
-  CatalogInventoryShareToken,
-} = require("models");
+const { Book } = require("models");
+const { ObjectId } = require("mongoose").Types;
 
-const { DBGetSequelizeCommand } = require("dbCommand");
+const { DBGetMongooseCommand } = require("dbCommand");
 
-class DbGetBookCommand extends DBGetSequelizeCommand {
+class DbGetBookCommand extends DBGetMongooseCommand {
   constructor(input) {
     super(input, Book);
     this.commandName = "dbGetBook";
@@ -35,8 +25,16 @@ class DbGetBookCommand extends DBGetSequelizeCommand {
   }
 
   async getCqrsJoins(data) {
-    if (Book.getCqrsJoins) await Book.getCqrsJoins(data);
+    if (Book.getCqrsJoins) {
+      await Book.getCqrsJoins(data);
+    }
   }
+
+  // populateQuery(query) {
+  //  if (!this.input.getJoins) return query;
+  //
+  //  return query;
+  //}
 
   initOwnership(input) {
     super.initOwnership(input);
@@ -46,14 +44,10 @@ class DbGetBookCommand extends DBGetSequelizeCommand {
     return true;
   }
 
+  // ask about this should i rename the whereClause to dataClause???
+
   async transposeResult() {
     // transpose dbData
-  }
-
-  buildIncludes(forWhereClause) {
-    if (!this.input.getJoins) forWhereClause = true;
-    const includes = [];
-    return includes;
   }
 }
 

@@ -1,91 +1,67 @@
-const { sequelize } = require("common");
-const { DataTypes } = require("sequelize");
-
-//Master catalog record for a book or multi-copy item; includes bibliographic metadata, ISBN, authors, genres, full-text and geospatial search fields.
-const Book = sequelize.define(
-  "book",
+const { mongoose } = require("common");
+const { Schema } = mongoose;
+const bookSchema = new mongoose.Schema(
   {
-    id: {
-      type: DataTypes.UUID,
-      primaryKey: true,
-    },
     title: {
-      // The canonical title of the book/work.
-      type: DataTypes.STRING,
-      allowNull: false,
+      type: String,
+      required: true,
     },
     authors: {
-      // List of authors (for multi-author works, in order as credited).
-      type: DataTypes.ARRAY(DataTypes.STRING),
-      allowNull: false,
+      type: [String],
+      required: true,
     },
     isbn: {
-      // International Standard Book Number (ISBN-10 or ISBN-13).
-      type: DataTypes.STRING,
-      allowNull: true,
+      type: String,
+      required: false,
+      unique: true,
     },
     synopsis: {
-      // Short/long description or synopsis of the book.
-      type: DataTypes.TEXT,
-      allowNull: true,
+      type: String,
+      required: false,
     },
     genres: {
-      // Genres/categories assigned to the book (e.g. Fiction, Science, Children, Biography).
-      type: DataTypes.ARRAY(DataTypes.STRING),
-      allowNull: true,
+      type: [String],
+      required: false,
     },
     publicationDate: {
-      // Publication date (first edition or this edition).
-      type: DataTypes.DATE,
-      allowNull: true,
+      type: Date,
+      required: false,
     },
     language: {
-      // Primary language of the book.
-      type: DataTypes.STRING,
-      allowNull: true,
+      type: String,
+      required: false,
       defaultValue: "English",
     },
     publisher: {
-      // Publisher of the edition.
-      type: DataTypes.STRING,
-      allowNull: true,
+      type: String,
+      required: false,
     },
     coverImageUrl: {
-      // Optional cover image URL for the book.
-      type: DataTypes.STRING,
-      allowNull: true,
+      type: String,
+      required: false,
     },
     isActive: {
       // isActive property will be set to false when deleted
       // so that the document will be archived
-      type: DataTypes.BOOLEAN,
-      defaultValue: true,
-      allowNull: true,
+      type: Boolean,
+      default: true,
+      required: false,
     },
   },
   {
-    indexes: [
-      {
-        unique: false,
-        fields: ["title"],
+    toJSON: {
+      transform(doc, ret) {
+        ret.id = ret._id.toString();
+        delete ret._id;
       },
-      {
-        unique: false,
-        fields: ["publicationDate"],
-      },
-
-      {
-        unique: true,
-        fields: ["title"],
-        where: { isActive: true },
-      },
-      {
-        unique: true,
-        fields: ["isbn"],
-        where: { isActive: true },
-      },
-    ],
+    },
   },
 );
 
-module.exports = Book;
+bookSchema.set("versionKey", "recordVersion");
+bookSchema.set("timestamps", true);
+
+bookSchema.set("toObject", { virtuals: true });
+bookSchema.set("toJSON", { virtuals: true });
+
+module.exports = bookSchema;

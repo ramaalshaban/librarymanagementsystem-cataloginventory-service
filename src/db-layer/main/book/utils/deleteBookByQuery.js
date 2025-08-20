@@ -1,7 +1,7 @@
 const { HttpServerError, BadRequestError } = require("common");
+
 const { Book } = require("models");
-const { Op } = require("sequelize");
-// shoul i add softdelete condition?
+
 const deleteBookByQuery = async (query) => {
   try {
     if (!query || typeof query !== "object") {
@@ -9,13 +9,16 @@ const deleteBookByQuery = async (query) => {
         "Invalid query provided. Query must be an object.",
       );
     }
+    // sholuld i match the resul returned with sequlize?
 
-    let rowsCount = null;
-    let rows = null;
-    const options = { where: { ...query, isActive: true }, returning: true };
-    [rowsCount, rows] = await Book.update({ isActive: false }, options);
-    if (!rowsCount) return [];
-    return rows.map((item) => item.getData());
+    const docs = await Book.find({ ...query, isActive: true });
+    if (!docs || docs.length === 0) return [];
+
+    await Book.updateMany(
+      { ...query, isActive: true },
+      { isActive: false, updatedAt: new Date() },
+    );
+    return docs.map((doc) => doc.getData());
   } catch (err) {
     throw new HttpServerError("errMsg_dbErrorWhenDeletingBookByQuery", err);
   }

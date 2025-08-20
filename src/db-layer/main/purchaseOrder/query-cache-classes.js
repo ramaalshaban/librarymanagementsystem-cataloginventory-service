@@ -1,10 +1,8 @@
 const { QueryCache, QueryCacheInvalidator } = require("common");
 
-const { Op } = require("sequelize");
-
 class PurchaseOrderQueryCache extends QueryCache {
   constructor(input, wClause) {
-    super("purchaseOrder", [], Op.and, Op.eq, input, wClause);
+    super("purchaseOrder", [], "$and", "$eq", input, wClause);
   }
 }
 class PurchaseOrderQueryCacheInvalidator extends QueryCacheInvalidator {

@@ -1,8 +1,6 @@
 const { HttpServerError, BadRequestError } = require("common");
 
 const { InterBranchTransfer } = require("models");
-const { Op } = require("sequelize");
-const { hexaLogger } = require("common");
 
 const getInterBranchTransferStatsByQuery = async (query, stats) => {
   const promises = [];
@@ -14,39 +12,53 @@ const getInterBranchTransferStatsByQuery = async (query, stats) => {
     };
 
     for (const stat of stats) {
-      let statParts = stat.replace("(", "-").replace(")", "").split("-");
+      const statParts = stat.replace("(", "-").replace(")", "").split("-");
       if (stat === "count") {
-        promises.push(
-          InterBranchTransfer.count({ where: queryWithSoftDelete }),
-        );
+        promises.push(InterBranchTransfer.countDocuments(queryWithSoftDelete));
         statLabels.push("count");
       } else if (statParts.length == 2) {
         if (statParts[0] === "sum") {
+          const pipeline = [
+            { $match: queryWithSoftDelete },
+            { $group: { _id: null, total: { $sum: `$${statParts[1]}` } } },
+          ];
           promises.push(
-            InterBranchTransfer.sum(statParts[1], {
-              where: queryWithSoftDelete,
-            }),
+            InterBranchTransfer.aggregate(pipeline).then((result) =>
+              result.length > 0 ? result[0].total : 0,
+            ),
           );
           statLabels.push("sum-" + statParts[1]);
         } else if (statParts[0] === "avg") {
+          const pipeline = [
+            { $match: queryWithSoftDelete },
+            { $group: { _id: null, average: { $avg: `$${statParts[1]}` } } },
+          ];
           promises.push(
-            InterBranchTransfer.avg(statParts[1], {
-              where: queryWithSoftDelete,
-            }),
+            InterBranchTransfer.aggregate(pipeline).then((result) =>
+              result.length > 0 ? result[0].average : 0,
+            ),
           );
           statLabels.push("avg-" + statParts[1]);
         } else if (statParts[0] === "min") {
+          const pipeline = [
+            { $match: queryWithSoftDelete },
+            { $group: { _id: null, minimum: { $min: `$${statParts[1]}` } } },
+          ];
           promises.push(
-            InterBranchTransfer.min(statParts[1], {
-              where: queryWithSoftDelete,
-            }),
+            InterBranchTransfer.aggregate(pipeline).then((result) =>
+              result.length > 0 ? result[0].minimum : null,
+            ),
           );
           statLabels.push("min-" + statParts[1]);
         } else if (statParts[0] === "max") {
+          const pipeline = [
+            { $match: queryWithSoftDelete },
+            { $group: { _id: null, maximum: { $max: `$${statParts[1]}` } } },
+          ];
           promises.push(
-            InterBranchTransfer.max(statParts[1], {
-              where: queryWithSoftDelete,
-            }),
+            InterBranchTransfer.aggregate(pipeline).then((result) =>
+              result.length > 0 ? result[0].maximum : null,
+            ),
           );
           statLabels.push("max-" + statParts[1]);
         }
@@ -54,7 +66,7 @@ const getInterBranchTransferStatsByQuery = async (query, stats) => {
     }
 
     if (promises.length == 0) {
-      return await InterBranchTransfer.count({ where: queryWithSoftDelete });
+      return await InterBranchTransfer.countDocuments(queryWithSoftDelete);
     } else if (promises.length == 1) {
       return await promises[0];
     } else {

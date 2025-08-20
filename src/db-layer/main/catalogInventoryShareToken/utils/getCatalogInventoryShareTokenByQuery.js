@@ -1,8 +1,6 @@
 const { HttpServerError, BadRequestError } = require("common");
 
 const { CatalogInventoryShareToken } = require("models");
-const { Op } = require("sequelize");
-const { hexaLogger } = require("common");
 
 const getCatalogInventoryShareTokenByQuery = async (query) => {
   try {
@@ -14,11 +12,13 @@ const getCatalogInventoryShareTokenByQuery = async (query) => {
 
     const catalogInventoryShareToken = await CatalogInventoryShareToken.findOne(
       {
-        where: { ...query, isActive: true },
+        ...query,
+        isActive: true,
       },
     );
 
     if (!catalogInventoryShareToken) return null;
+
     return catalogInventoryShareToken.getData();
   } catch (err) {
     throw new HttpServerError(

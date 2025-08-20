@@ -1,8 +1,5 @@
-const { HttpServerError, BadRequestError } = require("common");
-
+const { HttpServerError, BadRequestError, NotFoundError } = require("common");
 const { Book } = require("models");
-const { Op } = require("sequelize");
-const { hexaLogger } = require("common");
 
 const getBookListByQuery = async (query) => {
   try {
@@ -12,13 +9,11 @@ const getBookListByQuery = async (query) => {
       );
     }
 
-    const book = await Book.findAll({
-      where: { ...query, isActive: true },
-    });
+    const book = await Book.find(query);
 
-    //should i add not found error or only return empty array?
     if (!book || book.length === 0) return [];
 
+    //should i add not found error or only return empty array?
     //      if (!book || book.length === 0) {
     //      throw new NotFoundError(
     //      `Book with the specified criteria not found`

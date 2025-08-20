@@ -1,8 +1,6 @@
 const { HttpServerError, BadRequestError } = require("common");
 
 const { BranchInventory } = require("models");
-const { Op } = require("sequelize");
-const { hexaLogger } = require("common");
 
 const getBranchInventoryByQuery = async (query) => {
   try {
@@ -13,10 +11,12 @@ const getBranchInventoryByQuery = async (query) => {
     }
 
     const branchInventory = await BranchInventory.findOne({
-      where: { ...query, isActive: true },
+      ...query,
+      isActive: true,
     });
 
     if (!branchInventory) return null;
+
     return branchInventory.getData();
   } catch (err) {
     throw new HttpServerError(

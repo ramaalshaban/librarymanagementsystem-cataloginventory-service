@@ -117,15 +117,15 @@ class CreateBranchInventoryManager extends BranchInventoryManager {
   }
 
   async getDataClause() {
-    const { newUUID } = require("common");
+    const { newObjectId } = require("common");
 
     const { hashString } = require("common");
 
     if (this.id) this.branchInventoryId = this.id;
-    if (!this.branchInventoryId) this.branchInventoryId = newUUID(false);
+    if (!this.branchInventoryId) this.branchInventoryId = newObjectId();
 
     const dataClause = {
-      id: this.branchInventoryId,
+      _id: this.branchInventoryId,
       bookId: this.bookId,
       branchId: this.branchId,
       totalCopies: this.totalCopies,

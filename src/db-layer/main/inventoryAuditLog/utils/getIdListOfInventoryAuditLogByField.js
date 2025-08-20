@@ -1,7 +1,6 @@
-const { HttpServerError, NotFoundError, BadRequestError } = require("common");
+const { HttpServerError, BadRequestError, NotFoundError } = require("common");
 
 const { InventoryAuditLog } = require("models");
-const { Op } = require("sequelize");
 
 const getIdListOfInventoryAuditLogByField = async (
   fieldName,
@@ -9,8 +8,6 @@ const getIdListOfInventoryAuditLogByField = async (
   isArray,
 ) => {
   try {
-    let isValidField = false;
-
     const inventoryAuditLogProperties = [
       "id",
       "branchId",
@@ -21,28 +18,46 @@ const getIdListOfInventoryAuditLogByField = async (
       "recordedByUserId",
     ];
 
-    isValidField = inventoryAuditLogProperties.includes(fieldName);
-
-    if (!isValidField) {
+    if (!inventoryAuditLogProperties.includes(fieldName)) {
       throw new BadRequestError(`Invalid field name: ${fieldName}.`);
     }
 
-    const expectedType = typeof InventoryAuditLog[fieldName];
+    // type validation different from sequelize for mongodb
+    const schemaPath = InventoryAuditLog.schema.paths[fieldName];
+    if (schemaPath && fieldValue !== undefined && fieldValue !== null) {
+      const expectedType = schemaPath.instance.toLowerCase();
+      const actualType = typeof fieldValue;
 
-    if (typeof fieldValue !== expectedType) {
-      throw new BadRequestError(
-        `Invalid field value type for ${fieldName}. Expected ${expectedType}.`,
-      );
+      const typeMapping = {
+        string: "string",
+        number: "number",
+        boolean: "boolean",
+        objectid: "string", // ObjectIds are typically passed as strings
+      };
+
+      const expectedJSType = typeMapping[expectedType];
+      if (expectedJSType && actualType !== expectedJSType) {
+        throw new BadRequestError(
+          `Invalid field value type for ${fieldName}. Expected ${expectedJSType}, got ${actualType}.`,
+        );
+      }
     }
 
-    const options = {
-      where: isArray
-        ? { [fieldName]: { [Op.contains]: [fieldValue] }, isActive: true }
-        : { [fieldName]: fieldValue, isActive: true },
-      attributes: ["id"],
-    };
+    let query = isArray
+      ? {
+          [fieldName]: {
+            $in: Array.isArray(fieldValue) ? fieldValue : [fieldValue],
+          },
+        }
+      : { [fieldName]: fieldValue };
 
-    let inventoryAuditLogIdList = await InventoryAuditLog.findAll(options);
+    query.isActive = true;
+
+    let inventoryAuditLogIdList = await InventoryAuditLog.find(query, {
+      _id: 1,
+    })
+      .lean()
+      .exec();
 
     if (!inventoryAuditLogIdList || inventoryAuditLogIdList.length === 0) {
       throw new NotFoundError(
@@ -50,7 +65,10 @@ const getIdListOfInventoryAuditLogByField = async (
       );
     }
 
-    inventoryAuditLogIdList = inventoryAuditLogIdList.map((item) => item.id);
+    inventoryAuditLogIdList = inventoryAuditLogIdList.map((item) =>
+      item._id.toString(),
+    );
+
     return inventoryAuditLogIdList;
   } catch (err) {
     throw new HttpServerError(

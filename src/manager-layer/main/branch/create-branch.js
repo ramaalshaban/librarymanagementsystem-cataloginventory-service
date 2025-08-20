@@ -81,15 +81,15 @@ class CreateBranchManager extends BranchManager {
   }
 
   async getDataClause() {
-    const { newUUID } = require("common");
+    const { newObjectId } = require("common");
 
     const { hashString } = require("common");
 
     if (this.id) this.branchId = this.id;
-    if (!this.branchId) this.branchId = newUUID(false);
+    if (!this.branchId) this.branchId = newObjectId();
 
     const dataClause = {
-      id: this.branchId,
+      _id: this.branchId,
       name: this.name,
       address: this.address
         ? typeof this.address == "string"

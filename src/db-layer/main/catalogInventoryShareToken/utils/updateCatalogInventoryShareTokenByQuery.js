@@ -1,27 +1,26 @@
 const { HttpServerError, BadRequestError } = require("common");
 
 const { CatalogInventoryShareToken } = require("models");
-const { Op } = require("sequelize");
 
-const updateCatalogInventoryShareTokenByQuery = async (dataClause, query) => {
+const updateCatalogInventoryShareTokenByQuery = async (query, dataClause) => {
   try {
     if (!query || typeof query !== "object") {
       throw new BadRequestError(
         "Invalid query provided. Query must be an object.",
       );
     }
-    let rowsCount = null;
-    let rows = null;
 
-    const options = { where: { query, isActive: true }, returning: true };
+    dataClause.updatedAt = new Date();
 
-    [rowsCount, rows] = await CatalogInventoryShareToken.update(
+    const options = { new: true, runValidators: true };
+
+    const result = await CatalogInventoryShareToken.updateMany(
+      { ...query, isActive: true },
       dataClause,
       options,
     );
 
-    if (!rowsCount) return [];
-    return rows.map((item) => item.getData());
+    return { modifiedCount: result.modifiedCount };
   } catch (err) {
     throw new HttpServerError(
       "errMsg_dbErrorWhenUpdatingCatalogInventoryShareTokenByQuery",

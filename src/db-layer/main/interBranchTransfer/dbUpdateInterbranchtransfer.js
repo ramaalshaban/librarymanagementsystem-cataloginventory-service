@@ -5,20 +5,9 @@ const {
   ForbiddenError,
   NotFoundError,
 } = require("common");
+const { InterBranchTransfer } = require("models");
 
-const {
-  Book,
-  Branch,
-  BranchInventory,
-  InventoryAuditLog,
-  InterBranchTransfer,
-  PurchaseOrder,
-  CatalogInventoryShareToken,
-} = require("models");
-const { Op } = require("sequelize");
-const { sequelize } = require("common");
-
-const { DBUpdateSequelizeCommand } = require("dbCommand");
+const { DBUpdateMongooseCommand } = require("dbCommand");
 
 const {
   InterBranchTransferQueryCacheInvalidator,
@@ -27,16 +16,12 @@ const {
 const { ElasticIndexer } = require("serviceCommon");
 const getInterBranchTransferById = require("./utils/getInterBranchTransferById");
 
-//not
-//should i ask this here? is &&false intentionally added?
-
-class DbUpdateInterbranchtransferCommand extends DBUpdateSequelizeCommand {
+class DbUpdateInterbranchtransferCommand extends DBUpdateMongooseCommand {
   constructor(input) {
     const instanceMode = true;
     input.isBulk = false;
     input.updateEach = false;
     super(input, InterBranchTransfer, instanceMode);
-    this.isBulk = false;
     this.commandName = "dbUpdateInterbranchtransfer";
     this.nullResult = false;
     this.objectName = "interBranchTransfer";
@@ -76,12 +61,6 @@ class DbUpdateInterbranchtransferCommand extends DBUpdateSequelizeCommand {
 
   async setCalculatedFieldsAfterInstance(data) {
     const input = this.input;
-  }
-
-  buildIncludes(forWhereClause) {
-    if (!this.input.getJoins) forWhereClause = true;
-    const includes = [];
-    return includes;
   }
 }
 

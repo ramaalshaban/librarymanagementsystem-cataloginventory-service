@@ -1,33 +1,31 @@
 const { HttpServerError } = require("common");
 
-let { BranchInventory } = require("models");
-const { hexaLogger } = require("common");
-const { Op } = require("sequelize");
+const { BranchInventory } = require("models");
 
 const getBranchInventoryById = async (branchInventoryId) => {
   try {
-    const branchInventory = Array.isArray(branchInventoryId)
-      ? await BranchInventory.findAll({
-          where: {
-            id: { [Op.in]: branchInventoryId },
-            isActive: true,
-          },
-        })
-      : await BranchInventory.findOne({
-          where: {
-            id: branchInventoryId,
-            isActive: true,
-          },
-        });
+    let branchInventory;
+
+    if (Array.isArray(branchInventoryId)) {
+      branchInventory = await BranchInventory.find({
+        _id: { $in: branchInventoryId },
+        isActive: true,
+      });
+    } else {
+      branchInventory = await BranchInventory.findOne({
+        _id: branchInventoryId,
+        isActive: true,
+      });
+    }
 
     if (!branchInventory) {
       return null;
     }
+
     return Array.isArray(branchInventoryId)
       ? branchInventory.map((item) => item.getData())
       : branchInventory.getData();
   } catch (err) {
-    console.log(err);
     throw new HttpServerError(
       "errMsg_dbErrorWhenRequestingBranchInventoryById",
       err,

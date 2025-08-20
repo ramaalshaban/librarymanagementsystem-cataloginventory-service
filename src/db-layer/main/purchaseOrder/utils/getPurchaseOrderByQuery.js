@@ -1,8 +1,6 @@
 const { HttpServerError, BadRequestError } = require("common");
 
 const { PurchaseOrder } = require("models");
-const { Op } = require("sequelize");
-const { hexaLogger } = require("common");
 
 const getPurchaseOrderByQuery = async (query) => {
   try {
@@ -13,10 +11,12 @@ const getPurchaseOrderByQuery = async (query) => {
     }
 
     const purchaseOrder = await PurchaseOrder.findOne({
-      where: { ...query, isActive: true },
+      ...query,
+      isActive: true,
     });
 
     if (!purchaseOrder) return null;
+
     return purchaseOrder.getData();
   } catch (err) {
     throw new HttpServerError(
