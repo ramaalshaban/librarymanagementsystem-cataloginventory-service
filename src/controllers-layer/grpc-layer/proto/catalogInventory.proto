@@ -1,0 +1,106 @@
+
+syntax = "proto3";
+
+package catalogInventory;
+
+import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
+message book {
+    string id = 1;
+    string title = 2;
+    repeated string authors = 3;
+    string isbn = 4;
+    string synopsis = 5;
+    repeated string genres = 6;
+    google.protobuf.Timestamp publicationDate = 7;
+    string language = 8;
+    string publisher = 9;
+    string coverImageUrl = 10;
+}
+message branch {
+    string id = 1;
+    string name = 2;
+    google.protobuf.Struct address = 3;
+    google.protobuf.Struct geoLocation = 4;
+    string contactEmail = 5;
+}
+message branchInventory {
+    string id = 1;
+    string bookId = 2;
+    string branchId = 3;
+    int32 totalCopies = 4;
+    int32 availableCopies = 5;
+    string localShelfLocation = 6;
+    string conditionNotes = 7;
+}
+message inventoryAuditLog {
+    string id = 1;
+    string branchId = 2;
+    string branchInventoryId = 3;
+    int32 auditType = 4;
+    string detailNote = 5;
+    int32 adjustmentValue = 6;
+    string recordedByUserId = 7;
+}
+message interBranchTransfer {
+    string id = 1;
+    string bookId = 2;
+    string sourceBranchId = 3;
+    string destBranchId = 4;
+    int32 quantity = 5;
+    string requestedByUserId = 6;
+    int32 status = 7;
+    repeated google.protobuf.Struct transferLog = 8;
+}
+message purchaseOrder {
+    string id = 1;
+    string branchId = 2;
+    string requestedByUserId = 3;
+    repeated google.protobuf.Struct itemRequests = 4;
+    int32 status = 5;
+    string approvalNotes = 6;
+}
+message catalogInventoryShareToken {
+    string id = 1;
+    string configName = 2;
+    string objectName = 3;
+    string objectId = 4;
+    string ownerId = 5;
+    string peopleOption = 6;
+    string tokenPermissions = 7;
+    string allowedEmails = 8;
+    google.protobuf.Timestamp expireDate = 9;
+}
+
+
+
+
+
+
+
+
+
+
+message VoidRequest {}
+
+message CurrentUserReply {
+    string userId = 1;
+    string sessionId = 2;
+    string fullname = 3;
+    string email = 4;
+    string roleId = 5;
+    string avatar = 6;
+    bool emailVerified = 7;
+        string mobile = 8;
+    bool mobileVerified = 9;        repeated string userGroupNames = 10;
+    repeated string userGroupIdList = 11;string accessToken = 12;
+}
+
+message HelloMessageReply {
+    string hello = 1;
+}
+
+service catalogInventoryService {
+    rpc currentUser(VoidRequest) returns (CurrentUserReply);
+    rpc helloMessage(VoidRequest) returns (HelloMessageReply);
+}

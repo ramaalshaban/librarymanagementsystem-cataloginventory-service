@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Welcome to Service</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 40px;
+        padding: 20px;
+        background-color: #f4f4f4;
+        text-align: center;
+      }
+      .container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      h1 {
+        color: #333;
+      }
+      p {
+        color: #666;
+      }
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+      li {
+        background: #eaeaea;
+        margin: 5px 0;
+        padding: 10px;
+        border-radius: 4px;
+      }
+      .download {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 10px 15px;
+        background: #007bff;
+        color: white;
+        text-decoration: none;
+        border-radius: 4px;
+      }
+      .download:hover {
+        background: #0056b3;
+      }
+    </style>
+  </head>
+  <script>
+    async function logout() {
+      try {
+        const response = await fetch("/logout", {
+          method: "POST",
+          credentials: "include", // to send cookies if necessary
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        if (response.ok) {
+          window.location.href = "/login"; // redirect to login or home
+        } else {
+          alert("Logout failed");
+        }
+      } catch (err) {
+        console.error("Logout error:", err);
+      }
+    }
+  </script>
+  <body>
+    <div class="container">
+      <h1>Welcome to librarymanagementsystem-catalogInventory Service</h1>
+      <p>
+        Manages the master book catalog, detailed metadata, per-branch
+        inventory, advanced searching, inventory audits, inter-branch transfers,
+        and collection purchasing workflows for a multi-branch library network..
+      </p>
+      <h2>Available Routes</h2>
+      <ul>
+        <li><strong>getBook</strong> => GET /books/:bookId</li>
+
+        <li><strong>createBook</strong> => POST /books</li>
+
+        <li><strong>updateBook</strong> => PATCH /books/:bookId</li>
+
+        <li><strong>deleteBook</strong> => DELETE /books/:bookId</li>
+
+        <li><strong>listBooks</strong> => GET /books</li>
+
+        <li><strong>getBranch</strong> => GET /branches/:branchId</li>
+
+        <li><strong>createBranch</strong> => POST /branches</li>
+
+        <li><strong>updateBranch</strong> => PATCH /branches/:branchId</li>
+
+        <li><strong>deleteBranch</strong> => DELETE /branches/:branchId</li>
+
+        <li><strong>listBranches</strong> => GET /branches</li>
+
+        <li>
+          <strong>getBranchInventory</strong> => GET
+          /branchinventories/:branchInventoryId
+        </li>
+
+        <li>
+          <strong>createBranchInventory</strong> => POST /branchinventories
+        </li>
+
+        <li>
+          <strong>updateBranchInventory</strong> => PATCH
+          /branchinventories/:branchInventoryId
+        </li>
+
+        <li>
+          <strong>deleteBranchInventory</strong> => DELETE
+          /branchinventories/:branchInventoryId
+        </li>
+
+        <li>
+          <strong>listBranchInventories</strong> => GET /branchinventories
+        </li>
+
+        <li>
+          <strong>getInventoryAuditLog</strong> => GET
+          /inventoryauditlogs/:inventoryAuditLogId
+        </li>
+
+        <li>
+          <strong>createInventoryAuditLog</strong> => POST /inventoryauditlogs
+        </li>
+
+        <li>
+          <strong>updateInventoryAuditLog</strong> => PATCH
+          /inventoryauditlogs/:inventoryAuditLogId
+        </li>
+
+        <li>
+          <strong>deleteInventoryAuditLog</strong> => DELETE
+          /inventoryauditlogs/:inventoryAuditLogId
+        </li>
+
+        <li>
+          <strong>listInventoryAuditLogs</strong> => GET /inventoryauditlogs
+        </li>
+
+        <li>
+          <strong>getInterBranchTransfer</strong> => GET
+          /interbranchtransfers/:interBranchTransferId
+        </li>
+
+        <li>
+          <strong>createInterBranchTransfer</strong> => POST
+          /interbranchtransfers
+        </li>
+
+        <li>
+          <strong>updateInterBranchTransfer</strong> => PATCH
+          /interbranchtransfers/:interBranchTransferId
+        </li>
+
+        <li>
+          <strong>deleteInterBranchTransfer</strong> => DELETE
+          /interbranchtransfers/:interBranchTransferId
+        </li>
+
+        <li>
+          <strong>listInterBranchTransfers</strong> => GET /interbranchtransfers
+        </li>
+
+        <li>
+          <strong>getPurchaseOrder</strong> => GET
+          /purchaseorders/:purchaseOrderId
+        </li>
+
+        <li><strong>createPurchaseOrder</strong> => POST /purchaseorders</li>
+
+        <li>
+          <strong>updatePurchaseOrder</strong> => PATCH
+          /purchaseorders/:purchaseOrderId
+        </li>
+
+        <li>
+          <strong>deletePurchaseOrder</strong> => DELETE
+          /purchaseorders/:purchaseOrderId
+        </li>
+
+        <li><strong>listPurchaseOrders</strong> => GET /purchaseorders</li>
+      </ul>
+      <a class="download" href="/swagger">Go to Swagger Page</a>
+      <br />
+      <a class="download" href="/getPostmanCollection" download
+        >Download Postman Collection</a
+      >
+      $loginInfo
+    </div>
+  </body>
+</html>

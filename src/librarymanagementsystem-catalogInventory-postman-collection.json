@@ -1,0 +1,944 @@
+{
+  "info": {
+    "name": "librarymanagementsystem-cataloginventory-service API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "getBook",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "ExampleValue",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{serviceUrl}}//books/:bookId",
+          "host": [
+            "{{serviceUrl}}"
+          ],
+          "path": [
+            "books",
+            ":bookId"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "createBook",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "ExampleValue",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"String\",\n  \"authors\": \"String\",\n  \"isbn\": \"String\",\n  \"synopsis\": \"Text\",\n  \"genres\": \"String\",\n  \"publicationDate\": \"Date\",\n  \"language\": \"String\",\n  \"publisher\": \"String\",\n  \"coverImageUrl\": \"String\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{serviceUrl}}//books",
+          "host": [
+            "{{serviceUrl}}"
+          ],
+          "path": [
+            "books"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "updateBook",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "ExampleValue",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"String\",\n  \"authors\": \"String\",\n  \"isbn\": \"String\",\n  \"synopsis\": \"Text\",\n  \"genres\": \"String\",\n  \"publicationDate\": \"Date\",\n  \"language\": \"String\",\n  \"publisher\": \"String\",\n  \"coverImageUrl\": \"String\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{serviceUrl}}//books/:bookId",
+          "host": [
+            "{{serviceUrl}}"
+          ],
+          "path": [
+            "books",
+            ":bookId"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "deleteBook",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "ExampleValue",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{serviceUrl}}//books/:bookId",
+          "host": [
+            "{{serviceUrl}}"
+          ],
+          "path": [
+            "books",
+            ":bookId"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "listBooks",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "ExampleValue",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{serviceUrl}}//books",
+          "host": [
+            "{{serviceUrl}}"
+          ],
+          "path": [
+            "books"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "getBranch",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "ExampleValue",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{serviceUrl}}//branches/:branchId",
+          "host": [
+            "{{serviceUrl}}"
+          ],
+          "path": [
+            "branches",
+            ":branchId"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "createBranch",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "ExampleValue",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"String\",\n  \"address\": \"Object\",\n  \"geoLocation\": \"Object\",\n  \"contactEmail\": \"String\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{serviceUrl}}//branches",
+          "host": [
+            "{{serviceUrl}}"
+          ],
+          "path": [
+            "branches"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "updateBranch",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "ExampleValue",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"String\",\n  \"address\": \"Object\",\n  \"geoLocation\": \"Object\",\n  \"contactEmail\": \"String\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{serviceUrl}}//branches/:branchId",
+          "host": [
+            "{{serviceUrl}}"
+          ],
+          "path": [
+            "branches",
+            ":branchId"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "deleteBranch",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "ExampleValue",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{serviceUrl}}//branches/:branchId",
+          "host": [
+            "{{serviceUrl}}"
+          ],
+          "path": [
+            "branches",
+            ":branchId"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "listBranches",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "ExampleValue",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{serviceUrl}}//branches",
+          "host": [
+            "{{serviceUrl}}"
+          ],
+          "path": [
+            "branches"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "getBranchInventory",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "ExampleValue",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{serviceUrl}}//branchinventories/:branchInventoryId",
+          "host": [
+            "{{serviceUrl}}"
+          ],
+          "path": [
+            "branchinventories",
+            ":branchInventoryId"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "createBranchInventory",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "ExampleValue",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"bookId\": \"ID\",\n  \"branchId\": \"ID\",\n  \"totalCopies\": \"Integer\",\n  \"availableCopies\": \"Integer\",\n  \"localShelfLocation\": \"String\",\n  \"conditionNotes\": \"Text\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{serviceUrl}}//branchinventories",
+          "host": [
+            "{{serviceUrl}}"
+          ],
+          "path": [
+            "branchinventories"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "updateBranchInventory",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "ExampleValue",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"totalCopies\": \"Integer\",\n  \"availableCopies\": \"Integer\",\n  \"localShelfLocation\": \"String\",\n  \"conditionNotes\": \"Text\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{serviceUrl}}//branchinventories/:branchInventoryId",
+          "host": [
+            "{{serviceUrl}}"
+          ],
+          "path": [
+            "branchinventories",
+            ":branchInventoryId"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "deleteBranchInventory",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "ExampleValue",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{serviceUrl}}//branchinventories/:branchInventoryId",
+          "host": [
+            "{{serviceUrl}}"
+          ],
+          "path": [
+            "branchinventories",
+            ":branchInventoryId"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "listBranchInventories",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "ExampleValue",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{serviceUrl}}//branchinventories",
+          "host": [
+            "{{serviceUrl}}"
+          ],
+          "path": [
+            "branchinventories"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "getInventoryAuditLog",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "ExampleValue",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{serviceUrl}}//inventoryauditlogs/:inventoryAuditLogId",
+          "host": [
+            "{{serviceUrl}}"
+          ],
+          "path": [
+            "inventoryauditlogs",
+            ":inventoryAuditLogId"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "createInventoryAuditLog",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "ExampleValue",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"branchId\": \"ID\",\n  \"branchInventoryId\": \"ID\",\n  \"auditType\": \"Enum\",\n  \"detailNote\": \"Text\",\n  \"adjustmentValue\": \"Integer\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{serviceUrl}}//inventoryauditlogs",
+          "host": [
+            "{{serviceUrl}}"
+          ],
+          "path": [
+            "inventoryauditlogs"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "updateInventoryAuditLog",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "ExampleValue",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"auditType\": \"Enum\",\n  \"detailNote\": \"Text\",\n  \"adjustmentValue\": \"Integer\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{serviceUrl}}//inventoryauditlogs/:inventoryAuditLogId",
+          "host": [
+            "{{serviceUrl}}"
+          ],
+          "path": [
+            "inventoryauditlogs",
+            ":inventoryAuditLogId"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "deleteInventoryAuditLog",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "ExampleValue",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{serviceUrl}}//inventoryauditlogs/:inventoryAuditLogId",
+          "host": [
+            "{{serviceUrl}}"
+          ],
+          "path": [
+            "inventoryauditlogs",
+            ":inventoryAuditLogId"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "listInventoryAuditLogs",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "ExampleValue",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{serviceUrl}}//inventoryauditlogs",
+          "host": [
+            "{{serviceUrl}}"
+          ],
+          "path": [
+            "inventoryauditlogs"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "getInterBranchTransfer",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "ExampleValue",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{serviceUrl}}//interbranchtransfers/:interBranchTransferId",
+          "host": [
+            "{{serviceUrl}}"
+          ],
+          "path": [
+            "interbranchtransfers",
+            ":interBranchTransferId"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "createInterBranchTransfer",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "ExampleValue",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"bookId\": \"ID\",\n  \"sourceBranchId\": \"ID\",\n  \"destBranchId\": \"ID\",\n  \"quantity\": \"Integer\",\n  \"status\": \"Enum\",\n  \"transferLog\": \"Object\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{serviceUrl}}//interbranchtransfers",
+          "host": [
+            "{{serviceUrl}}"
+          ],
+          "path": [
+            "interbranchtransfers"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "updateInterBranchTransfer",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "ExampleValue",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"status\": \"Enum\",\n  \"transferLog\": \"Object\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{serviceUrl}}//interbranchtransfers/:interBranchTransferId",
+          "host": [
+            "{{serviceUrl}}"
+          ],
+          "path": [
+            "interbranchtransfers",
+            ":interBranchTransferId"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "deleteInterBranchTransfer",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "ExampleValue",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{serviceUrl}}//interbranchtransfers/:interBranchTransferId",
+          "host": [
+            "{{serviceUrl}}"
+          ],
+          "path": [
+            "interbranchtransfers",
+            ":interBranchTransferId"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "listInterBranchTransfers",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "ExampleValue",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{serviceUrl}}//interbranchtransfers",
+          "host": [
+            "{{serviceUrl}}"
+          ],
+          "path": [
+            "interbranchtransfers"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "getPurchaseOrder",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "ExampleValue",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{serviceUrl}}//purchaseorders/:purchaseOrderId",
+          "host": [
+            "{{serviceUrl}}"
+          ],
+          "path": [
+            "purchaseorders",
+            ":purchaseOrderId"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "createPurchaseOrder",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "ExampleValue",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"branchId\": \"ID\",\n  \"itemRequests\": \"Object\",\n  \"status\": \"Enum\",\n  \"approvalNotes\": \"Text\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{serviceUrl}}//purchaseorders",
+          "host": [
+            "{{serviceUrl}}"
+          ],
+          "path": [
+            "purchaseorders"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "updatePurchaseOrder",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "ExampleValue",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"itemRequests\": \"Object\",\n  \"status\": \"Enum\",\n  \"approvalNotes\": \"Text\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{serviceUrl}}//purchaseorders/:purchaseOrderId",
+          "host": [
+            "{{serviceUrl}}"
+          ],
+          "path": [
+            "purchaseorders",
+            ":purchaseOrderId"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "deletePurchaseOrder",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "ExampleValue",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{serviceUrl}}//purchaseorders/:purchaseOrderId",
+          "host": [
+            "{{serviceUrl}}"
+          ],
+          "path": [
+            "purchaseorders",
+            ":purchaseOrderId"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "listPurchaseOrders",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "ExampleValue",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{serviceUrl}}//purchaseorders",
+          "host": [
+            "{{serviceUrl}}"
+          ],
+          "path": [
+            "purchaseorders"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

@@ -1,0 +1,6283 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "librarymanagementsystem-cataloginventory-service API",
+    "description": "Manages the master book catalog, detailed metadata, per-branch inventory, advanced searching, inventory audits, inter-branch transfers, and collection purchasing workflows for a multi-branch library network..",
+    "version": "1.0.0"
+  },
+  "servers": [],
+  "paths": {
+    "/books/{bookId}": {
+      "get": {
+        "tags": [
+          "book"
+        ],
+        "summary": "The getBook API has 1 parameter.",
+        "description": "getBook",
+        "parameters": [
+          {
+            "name": "bookId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/getBook"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/getBook"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/getBook"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Response JSON represents the most comprehensive form of the **book** object in the response. However, some properties may be omitted based on the object&#39;s internal logic.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/getBook-Response"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/getBook-Response"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/getBook-Response"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request was improperly formatted or contained invalid parameters, preventing the server from processing it.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The request lacked valid authentication credentials or the credentials provided do not grant access to the requested resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource was not found on the server.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "The server encountered an unexpected condition that prevented it from fulfilling the request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "book"
+        ],
+        "summary": "The updateBook API has 10 parameters.",
+        "description": "updateBook",
+        "parameters": [
+          {
+            "name": "bookId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/updateBook"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/updateBook"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/updateBook"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Response JSON represents the most comprehensive form of the **book** object in the response. However, some properties may be omitted based on the object&#39;s internal logic.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/updateBook-Response"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/updateBook-Response"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/updateBook-Response"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request was improperly formatted or contained invalid parameters, preventing the server from processing it.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The request lacked valid authentication credentials or the credentials provided do not grant access to the requested resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource was not found on the server.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "The server encountered an unexpected condition that prevented it from fulfilling the request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "book"
+        ],
+        "summary": "The deleteBook API has 1 parameter.",
+        "description": "deleteBook",
+        "parameters": [
+          {
+            "name": "bookId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/deleteBook"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/deleteBook"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/deleteBook"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Response JSON represents the most comprehensive form of the **book** object in the response. However, some properties may be omitted based on the object&#39;s internal logic.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/deleteBook-Response"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/deleteBook-Response"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/deleteBook-Response"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request was improperly formatted or contained invalid parameters, preventing the server from processing it.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The request lacked valid authentication credentials or the credentials provided do not grant access to the requested resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource was not found on the server.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "The server encountered an unexpected condition that prevented it from fulfilling the request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/books": {
+      "post": {
+        "tags": [
+          "book"
+        ],
+        "summary": "The createBook API has 9 parameters.",
+        "description": "createBook",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/createBook"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/createBook"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/createBook"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Response JSON represents the most comprehensive form of the **book** object in the response. However, some properties may be omitted based on the object&#39;s internal logic.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/createBook-Response"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/createBook-Response"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/createBook-Response"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request was improperly formatted or contained invalid parameters, preventing the server from processing it.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The request lacked valid authentication credentials or the credentials provided do not grant access to the requested resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource was not found on the server.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "The server encountered an unexpected condition that prevented it from fulfilling the request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "books"
+        ],
+        "summary": "The listBooks API has no parameters.",
+        "description": "listBooks",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/listBooks"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/listBooks"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/listBooks"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Response JSON represents the most comprehensive form of the **books** object in the response. However, some properties may be omitted based on the object&#39;s internal logic.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/listBooks-Response"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/listBooks-Response"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/listBooks-Response"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request was improperly formatted or contained invalid parameters, preventing the server from processing it.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The request lacked valid authentication credentials or the credentials provided do not grant access to the requested resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource was not found on the server.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "The server encountered an unexpected condition that prevented it from fulfilling the request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/branches/{branchId}": {
+      "get": {
+        "tags": [
+          "branch"
+        ],
+        "summary": "The getBranch API has 1 parameter.",
+        "description": "getBranch",
+        "parameters": [
+          {
+            "name": "branchId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/getBranch"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/getBranch"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/getBranch"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Response JSON represents the most comprehensive form of the **branch** object in the response. However, some properties may be omitted based on the object&#39;s internal logic.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/getBranch-Response"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/getBranch-Response"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/getBranch-Response"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request was improperly formatted or contained invalid parameters, preventing the server from processing it.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The request lacked valid authentication credentials or the credentials provided do not grant access to the requested resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource was not found on the server.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "The server encountered an unexpected condition that prevented it from fulfilling the request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "branch"
+        ],
+        "summary": "The updateBranch API has 5 parameters.",
+        "description": "updateBranch",
+        "parameters": [
+          {
+            "name": "branchId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/updateBranch"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/updateBranch"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/updateBranch"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Response JSON represents the most comprehensive form of the **branch** object in the response. However, some properties may be omitted based on the object&#39;s internal logic.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/updateBranch-Response"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/updateBranch-Response"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/updateBranch-Response"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request was improperly formatted or contained invalid parameters, preventing the server from processing it.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The request lacked valid authentication credentials or the credentials provided do not grant access to the requested resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource was not found on the server.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "The server encountered an unexpected condition that prevented it from fulfilling the request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "branch"
+        ],
+        "summary": "The deleteBranch API has 1 parameter.",
+        "description": "deleteBranch",
+        "parameters": [
+          {
+            "name": "branchId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/deleteBranch"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/deleteBranch"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/deleteBranch"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Response JSON represents the most comprehensive form of the **branch** object in the response. However, some properties may be omitted based on the object&#39;s internal logic.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/deleteBranch-Response"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/deleteBranch-Response"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/deleteBranch-Response"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request was improperly formatted or contained invalid parameters, preventing the server from processing it.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The request lacked valid authentication credentials or the credentials provided do not grant access to the requested resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource was not found on the server.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "The server encountered an unexpected condition that prevented it from fulfilling the request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/branches": {
+      "post": {
+        "tags": [
+          "branch"
+        ],
+        "summary": "The createBranch API has 4 parameters.",
+        "description": "createBranch",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/createBranch"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/createBranch"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/createBranch"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Response JSON represents the most comprehensive form of the **branch** object in the response. However, some properties may be omitted based on the object&#39;s internal logic.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/createBranch-Response"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/createBranch-Response"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/createBranch-Response"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request was improperly formatted or contained invalid parameters, preventing the server from processing it.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The request lacked valid authentication credentials or the credentials provided do not grant access to the requested resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource was not found on the server.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "The server encountered an unexpected condition that prevented it from fulfilling the request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "branches"
+        ],
+        "summary": "The listBranches API has no parameters.",
+        "description": "listBranches",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/listBranches"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/listBranches"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/listBranches"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Response JSON represents the most comprehensive form of the **branches** object in the response. However, some properties may be omitted based on the object&#39;s internal logic.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/listBranches-Response"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/listBranches-Response"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/listBranches-Response"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request was improperly formatted or contained invalid parameters, preventing the server from processing it.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The request lacked valid authentication credentials or the credentials provided do not grant access to the requested resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource was not found on the server.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "The server encountered an unexpected condition that prevented it from fulfilling the request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/branchinventories/{branchInventoryId}": {
+      "get": {
+        "tags": [
+          "branchInventory"
+        ],
+        "summary": "The getBranchInventory API has 1 parameter.",
+        "description": "getBranchInventory",
+        "parameters": [
+          {
+            "name": "branchInventoryId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/getBranchInventory"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/getBranchInventory"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/getBranchInventory"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Response JSON represents the most comprehensive form of the **branchInventory** object in the response. However, some properties may be omitted based on the object&#39;s internal logic.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/getBranchInventory-Response"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/getBranchInventory-Response"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/getBranchInventory-Response"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request was improperly formatted or contained invalid parameters, preventing the server from processing it.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The request lacked valid authentication credentials or the credentials provided do not grant access to the requested resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource was not found on the server.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "The server encountered an unexpected condition that prevented it from fulfilling the request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "branchInventory"
+        ],
+        "summary": "The updateBranchInventory API has 5 parameters.",
+        "description": "updateBranchInventory",
+        "parameters": [
+          {
+            "name": "branchInventoryId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/updateBranchInventory"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/updateBranchInventory"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/updateBranchInventory"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Response JSON represents the most comprehensive form of the **branchInventory** object in the response. However, some properties may be omitted based on the object&#39;s internal logic.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/updateBranchInventory-Response"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/updateBranchInventory-Response"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/updateBranchInventory-Response"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request was improperly formatted or contained invalid parameters, preventing the server from processing it.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The request lacked valid authentication credentials or the credentials provided do not grant access to the requested resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource was not found on the server.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "The server encountered an unexpected condition that prevented it from fulfilling the request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "branchInventory"
+        ],
+        "summary": "The deleteBranchInventory API has 1 parameter.",
+        "description": "deleteBranchInventory",
+        "parameters": [
+          {
+            "name": "branchInventoryId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/deleteBranchInventory"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/deleteBranchInventory"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/deleteBranchInventory"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Response JSON represents the most comprehensive form of the **branchInventory** object in the response. However, some properties may be omitted based on the object&#39;s internal logic.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/deleteBranchInventory-Response"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/deleteBranchInventory-Response"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/deleteBranchInventory-Response"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request was improperly formatted or contained invalid parameters, preventing the server from processing it.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The request lacked valid authentication credentials or the credentials provided do not grant access to the requested resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource was not found on the server.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "The server encountered an unexpected condition that prevented it from fulfilling the request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/branchinventories": {
+      "post": {
+        "tags": [
+          "branchInventory"
+        ],
+        "summary": "The createBranchInventory API has 6 parameters.",
+        "description": "createBranchInventory",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/createBranchInventory"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/createBranchInventory"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/createBranchInventory"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Response JSON represents the most comprehensive form of the **branchInventory** object in the response. However, some properties may be omitted based on the object&#39;s internal logic.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/createBranchInventory-Response"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/createBranchInventory-Response"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/createBranchInventory-Response"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request was improperly formatted or contained invalid parameters, preventing the server from processing it.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The request lacked valid authentication credentials or the credentials provided do not grant access to the requested resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource was not found on the server.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "The server encountered an unexpected condition that prevented it from fulfilling the request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "branchInventories"
+        ],
+        "summary": "The listBranchInventories API has no parameters.",
+        "description": "listBranchInventories",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/listBranchInventories"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/listBranchInventories"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/listBranchInventories"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Response JSON represents the most comprehensive form of the **branchInventories** object in the response. However, some properties may be omitted based on the object&#39;s internal logic.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/listBranchInventories-Response"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/listBranchInventories-Response"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/listBranchInventories-Response"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request was improperly formatted or contained invalid parameters, preventing the server from processing it.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The request lacked valid authentication credentials or the credentials provided do not grant access to the requested resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource was not found on the server.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "The server encountered an unexpected condition that prevented it from fulfilling the request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/inventoryauditlogs/{inventoryAuditLogId}": {
+      "get": {
+        "tags": [
+          "inventoryAuditLog"
+        ],
+        "summary": "The getInventoryAuditLog API has 1 parameter.",
+        "description": "getInventoryAuditLog",
+        "parameters": [
+          {
+            "name": "inventoryAuditLogId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/getInventoryAuditLog"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/getInventoryAuditLog"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/getInventoryAuditLog"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Response JSON represents the most comprehensive form of the **inventoryAuditLog** object in the response. However, some properties may be omitted based on the object&#39;s internal logic.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/getInventoryAuditLog-Response"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/getInventoryAuditLog-Response"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/getInventoryAuditLog-Response"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request was improperly formatted or contained invalid parameters, preventing the server from processing it.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The request lacked valid authentication credentials or the credentials provided do not grant access to the requested resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource was not found on the server.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "The server encountered an unexpected condition that prevented it from fulfilling the request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "inventoryAuditLog"
+        ],
+        "summary": "The updateInventoryAuditLog API has 4 parameters.",
+        "description": "updateInventoryAuditLog",
+        "parameters": [
+          {
+            "name": "inventoryAuditLogId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/updateInventoryAuditLog"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/updateInventoryAuditLog"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/updateInventoryAuditLog"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Response JSON represents the most comprehensive form of the **inventoryAuditLog** object in the response. However, some properties may be omitted based on the object&#39;s internal logic.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/updateInventoryAuditLog-Response"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/updateInventoryAuditLog-Response"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/updateInventoryAuditLog-Response"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request was improperly formatted or contained invalid parameters, preventing the server from processing it.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The request lacked valid authentication credentials or the credentials provided do not grant access to the requested resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource was not found on the server.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "The server encountered an unexpected condition that prevented it from fulfilling the request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "inventoryAuditLog"
+        ],
+        "summary": "The deleteInventoryAuditLog API has 1 parameter.",
+        "description": "deleteInventoryAuditLog",
+        "parameters": [
+          {
+            "name": "inventoryAuditLogId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/deleteInventoryAuditLog"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/deleteInventoryAuditLog"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/deleteInventoryAuditLog"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Response JSON represents the most comprehensive form of the **inventoryAuditLog** object in the response. However, some properties may be omitted based on the object&#39;s internal logic.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/deleteInventoryAuditLog-Response"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/deleteInventoryAuditLog-Response"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/deleteInventoryAuditLog-Response"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request was improperly formatted or contained invalid parameters, preventing the server from processing it.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The request lacked valid authentication credentials or the credentials provided do not grant access to the requested resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource was not found on the server.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "The server encountered an unexpected condition that prevented it from fulfilling the request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/inventoryauditlogs": {
+      "post": {
+        "tags": [
+          "inventoryAuditLog"
+        ],
+        "summary": "The createInventoryAuditLog API has 5 parameters.",
+        "description": "createInventoryAuditLog",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/createInventoryAuditLog"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/createInventoryAuditLog"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/createInventoryAuditLog"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Response JSON represents the most comprehensive form of the **inventoryAuditLog** object in the response. However, some properties may be omitted based on the object&#39;s internal logic.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/createInventoryAuditLog-Response"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/createInventoryAuditLog-Response"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/createInventoryAuditLog-Response"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request was improperly formatted or contained invalid parameters, preventing the server from processing it.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The request lacked valid authentication credentials or the credentials provided do not grant access to the requested resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource was not found on the server.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "The server encountered an unexpected condition that prevented it from fulfilling the request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "inventoryAuditLogs"
+        ],
+        "summary": "The listInventoryAuditLogs API has no parameters.",
+        "description": "listInventoryAuditLogs",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/listInventoryAuditLogs"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/listInventoryAuditLogs"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/listInventoryAuditLogs"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Response JSON represents the most comprehensive form of the **inventoryAuditLogs** object in the response. However, some properties may be omitted based on the object&#39;s internal logic.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/listInventoryAuditLogs-Response"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/listInventoryAuditLogs-Response"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/listInventoryAuditLogs-Response"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request was improperly formatted or contained invalid parameters, preventing the server from processing it.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The request lacked valid authentication credentials or the credentials provided do not grant access to the requested resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource was not found on the server.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "The server encountered an unexpected condition that prevented it from fulfilling the request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/interbranchtransfers/{interBranchTransferId}": {
+      "get": {
+        "tags": [
+          "interBranchTransfer"
+        ],
+        "summary": "The getInterBranchTransfer API has 1 parameter.",
+        "description": "getInterBranchTransfer",
+        "parameters": [
+          {
+            "name": "interBranchTransferId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/getInterBranchTransfer"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/getInterBranchTransfer"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/getInterBranchTransfer"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Response JSON represents the most comprehensive form of the **interBranchTransfer** object in the response. However, some properties may be omitted based on the object&#39;s internal logic.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/getInterBranchTransfer-Response"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/getInterBranchTransfer-Response"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/getInterBranchTransfer-Response"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request was improperly formatted or contained invalid parameters, preventing the server from processing it.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The request lacked valid authentication credentials or the credentials provided do not grant access to the requested resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource was not found on the server.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "The server encountered an unexpected condition that prevented it from fulfilling the request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "interBranchTransfer"
+        ],
+        "summary": "The updateInterBranchTransfer API has 3 parameters.",
+        "description": "updateInterBranchTransfer",
+        "parameters": [
+          {
+            "name": "interBranchTransferId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/updateInterBranchTransfer"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/updateInterBranchTransfer"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/updateInterBranchTransfer"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Response JSON represents the most comprehensive form of the **interBranchTransfer** object in the response. However, some properties may be omitted based on the object&#39;s internal logic.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/updateInterBranchTransfer-Response"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/updateInterBranchTransfer-Response"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/updateInterBranchTransfer-Response"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request was improperly formatted or contained invalid parameters, preventing the server from processing it.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The request lacked valid authentication credentials or the credentials provided do not grant access to the requested resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource was not found on the server.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "The server encountered an unexpected condition that prevented it from fulfilling the request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "interBranchTransfer"
+        ],
+        "summary": "The deleteInterBranchTransfer API has 1 parameter.",
+        "description": "deleteInterBranchTransfer",
+        "parameters": [
+          {
+            "name": "interBranchTransferId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/deleteInterBranchTransfer"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/deleteInterBranchTransfer"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/deleteInterBranchTransfer"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Response JSON represents the most comprehensive form of the **interBranchTransfer** object in the response. However, some properties may be omitted based on the object&#39;s internal logic.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/deleteInterBranchTransfer-Response"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/deleteInterBranchTransfer-Response"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/deleteInterBranchTransfer-Response"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request was improperly formatted or contained invalid parameters, preventing the server from processing it.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The request lacked valid authentication credentials or the credentials provided do not grant access to the requested resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource was not found on the server.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "The server encountered an unexpected condition that prevented it from fulfilling the request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/interbranchtransfers": {
+      "post": {
+        "tags": [
+          "interBranchTransfer"
+        ],
+        "summary": "The createInterBranchTransfer API has 6 parameters.",
+        "description": "createInterBranchTransfer",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/createInterBranchTransfer"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/createInterBranchTransfer"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/createInterBranchTransfer"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Response JSON represents the most comprehensive form of the **interBranchTransfer** object in the response. However, some properties may be omitted based on the object&#39;s internal logic.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/createInterBranchTransfer-Response"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/createInterBranchTransfer-Response"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/createInterBranchTransfer-Response"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request was improperly formatted or contained invalid parameters, preventing the server from processing it.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The request lacked valid authentication credentials or the credentials provided do not grant access to the requested resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource was not found on the server.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "The server encountered an unexpected condition that prevented it from fulfilling the request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "interBranchTransfers"
+        ],
+        "summary": "The listInterBranchTransfers API has no parameters.",
+        "description": "listInterBranchTransfers",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/listInterBranchTransfers"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/listInterBranchTransfers"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/listInterBranchTransfers"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Response JSON represents the most comprehensive form of the **interBranchTransfers** object in the response. However, some properties may be omitted based on the object&#39;s internal logic.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/listInterBranchTransfers-Response"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/listInterBranchTransfers-Response"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/listInterBranchTransfers-Response"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request was improperly formatted or contained invalid parameters, preventing the server from processing it.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The request lacked valid authentication credentials or the credentials provided do not grant access to the requested resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource was not found on the server.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "The server encountered an unexpected condition that prevented it from fulfilling the request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/purchaseorders/{purchaseOrderId}": {
+      "get": {
+        "tags": [
+          "purchaseOrder"
+        ],
+        "summary": "The getPurchaseOrder API has 1 parameter.",
+        "description": "getPurchaseOrder",
+        "parameters": [
+          {
+            "name": "purchaseOrderId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/getPurchaseOrder"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/getPurchaseOrder"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/getPurchaseOrder"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Response JSON represents the most comprehensive form of the **purchaseOrder** object in the response. However, some properties may be omitted based on the object&#39;s internal logic.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/getPurchaseOrder-Response"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/getPurchaseOrder-Response"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/getPurchaseOrder-Response"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request was improperly formatted or contained invalid parameters, preventing the server from processing it.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The request lacked valid authentication credentials or the credentials provided do not grant access to the requested resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource was not found on the server.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "The server encountered an unexpected condition that prevented it from fulfilling the request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "purchaseOrder"
+        ],
+        "summary": "The updatePurchaseOrder API has 4 parameters.",
+        "description": "updatePurchaseOrder",
+        "parameters": [
+          {
+            "name": "purchaseOrderId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/updatePurchaseOrder"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/updatePurchaseOrder"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/updatePurchaseOrder"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Response JSON represents the most comprehensive form of the **purchaseOrder** object in the response. However, some properties may be omitted based on the object&#39;s internal logic.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/updatePurchaseOrder-Response"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/updatePurchaseOrder-Response"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/updatePurchaseOrder-Response"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request was improperly formatted or contained invalid parameters, preventing the server from processing it.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The request lacked valid authentication credentials or the credentials provided do not grant access to the requested resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource was not found on the server.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "The server encountered an unexpected condition that prevented it from fulfilling the request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "purchaseOrder"
+        ],
+        "summary": "The deletePurchaseOrder API has 1 parameter.",
+        "description": "deletePurchaseOrder",
+        "parameters": [
+          {
+            "name": "purchaseOrderId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/deletePurchaseOrder"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/deletePurchaseOrder"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/deletePurchaseOrder"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Response JSON represents the most comprehensive form of the **purchaseOrder** object in the response. However, some properties may be omitted based on the object&#39;s internal logic.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/deletePurchaseOrder-Response"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/deletePurchaseOrder-Response"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/deletePurchaseOrder-Response"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request was improperly formatted or contained invalid parameters, preventing the server from processing it.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The request lacked valid authentication credentials or the credentials provided do not grant access to the requested resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource was not found on the server.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "The server encountered an unexpected condition that prevented it from fulfilling the request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/purchaseorders": {
+      "post": {
+        "tags": [
+          "purchaseOrder"
+        ],
+        "summary": "The createPurchaseOrder API has 4 parameters.",
+        "description": "createPurchaseOrder",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/createPurchaseOrder"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/createPurchaseOrder"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/createPurchaseOrder"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Response JSON represents the most comprehensive form of the **purchaseOrder** object in the response. However, some properties may be omitted based on the object&#39;s internal logic.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/createPurchaseOrder-Response"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/createPurchaseOrder-Response"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/createPurchaseOrder-Response"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request was improperly formatted or contained invalid parameters, preventing the server from processing it.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The request lacked valid authentication credentials or the credentials provided do not grant access to the requested resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource was not found on the server.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "The server encountered an unexpected condition that prevented it from fulfilling the request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "purchaseOrders"
+        ],
+        "summary": "The listPurchaseOrders API has no parameters.",
+        "description": "listPurchaseOrders",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/listPurchaseOrders"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/listPurchaseOrders"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/listPurchaseOrders"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Response JSON represents the most comprehensive form of the **purchaseOrders** object in the response. However, some properties may be omitted based on the object&#39;s internal logic.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/listPurchaseOrders-Response"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/listPurchaseOrders-Response"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/listPurchaseOrders-Response"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request was improperly formatted or contained invalid parameters, preventing the server from processing it.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The request lacked valid authentication credentials or the credentials provided do not grant access to the requested resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource was not found on the server.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "The server encountered an unexpected condition that prevented it from fulfilling the request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "errCode": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "date": {
+            "type": "string"
+          },
+          "detail": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "getBook": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "updateBook": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "authors": {
+            "type": "string",
+            "nullable": true
+          },
+          "isbn": {
+            "type": "string",
+            "nullable": true
+          },
+          "synopsis": {
+            "type": "string",
+            "nullable": true
+          },
+          "genres": {
+            "type": "string",
+            "nullable": true
+          },
+          "publicationDate": {
+            "type": "string",
+            "nullable": true
+          },
+          "language": {
+            "type": "string",
+            "nullable": true
+          },
+          "publisher": {
+            "type": "string",
+            "nullable": true
+          },
+          "coverImageUrl": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "deleteBook": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "createBook": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "nullable": false
+          },
+          "authors": {
+            "type": "string",
+            "nullable": false
+          },
+          "isbn": {
+            "type": "string",
+            "nullable": true
+          },
+          "synopsis": {
+            "type": "string",
+            "nullable": true
+          },
+          "genres": {
+            "type": "string",
+            "nullable": true
+          },
+          "publicationDate": {
+            "type": "string",
+            "nullable": true
+          },
+          "language": {
+            "type": "string",
+            "nullable": true
+          },
+          "publisher": {
+            "type": "string",
+            "nullable": true
+          },
+          "coverImageUrl": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "listBooks": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "getBranch": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "updateBranch": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "address": {
+            "type": "object",
+            "nullable": true
+          },
+          "geoLocation": {
+            "type": "object",
+            "nullable": true
+          },
+          "contactEmail": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "deleteBranch": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "createBranch": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": false
+          },
+          "address": {
+            "type": "object",
+            "nullable": true
+          },
+          "geoLocation": {
+            "type": "object",
+            "nullable": true
+          },
+          "contactEmail": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "listBranches": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "getBranchInventory": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "updateBranchInventory": {
+        "type": "object",
+        "properties": {
+          "totalCopies": {
+            "type": "string",
+            "nullable": true
+          },
+          "availableCopies": {
+            "type": "string",
+            "nullable": true
+          },
+          "localShelfLocation": {
+            "type": "string",
+            "nullable": true
+          },
+          "conditionNotes": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "deleteBranchInventory": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "createBranchInventory": {
+        "type": "object",
+        "properties": {
+          "bookId": {
+            "type": "string",
+            "nullable": false
+          },
+          "branchId": {
+            "type": "string",
+            "nullable": false
+          },
+          "totalCopies": {
+            "type": "string",
+            "nullable": false
+          },
+          "availableCopies": {
+            "type": "string",
+            "nullable": false
+          },
+          "localShelfLocation": {
+            "type": "string",
+            "nullable": true
+          },
+          "conditionNotes": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "listBranchInventories": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "getInventoryAuditLog": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "updateInventoryAuditLog": {
+        "type": "object",
+        "properties": {
+          "auditType": {
+            "type": "string",
+            "nullable": true
+          },
+          "detailNote": {
+            "type": "string",
+            "nullable": true
+          },
+          "adjustmentValue": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "deleteInventoryAuditLog": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "createInventoryAuditLog": {
+        "type": "object",
+        "properties": {
+          "branchId": {
+            "type": "string",
+            "nullable": false
+          },
+          "branchInventoryId": {
+            "type": "string",
+            "nullable": false
+          },
+          "auditType": {
+            "type": "string",
+            "nullable": false
+          },
+          "detailNote": {
+            "type": "string",
+            "nullable": true
+          },
+          "adjustmentValue": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "listInventoryAuditLogs": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "getInterBranchTransfer": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "updateInterBranchTransfer": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "transferLog": {
+            "type": "object",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "deleteInterBranchTransfer": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "createInterBranchTransfer": {
+        "type": "object",
+        "properties": {
+          "bookId": {
+            "type": "string",
+            "nullable": false
+          },
+          "sourceBranchId": {
+            "type": "string",
+            "nullable": false
+          },
+          "destBranchId": {
+            "type": "string",
+            "nullable": false
+          },
+          "quantity": {
+            "type": "string",
+            "nullable": false
+          },
+          "status": {
+            "type": "string",
+            "nullable": false
+          },
+          "transferLog": {
+            "type": "object",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "listInterBranchTransfers": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "getPurchaseOrder": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "updatePurchaseOrder": {
+        "type": "object",
+        "properties": {
+          "itemRequests": {
+            "type": "object",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "approvalNotes": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "deletePurchaseOrder": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "createPurchaseOrder": {
+        "type": "object",
+        "properties": {
+          "branchId": {
+            "type": "string",
+            "nullable": false
+          },
+          "itemRequests": {
+            "type": "object",
+            "nullable": false
+          },
+          "status": {
+            "type": "string",
+            "nullable": false
+          },
+          "approvalNotes": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "listPurchaseOrders": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "getBook-Response": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "statusCode": {
+            "type": "string"
+          },
+          "elapsedMs": {
+            "type": "number"
+          },
+          "ssoTime": {
+            "type": "number"
+          },
+          "source": {
+            "type": "string"
+          },
+          "cacheKey": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "sessionId": {
+            "type": "string"
+          },
+          "requestId": {
+            "type": "string"
+          },
+          "dataName": {
+            "type": "string"
+          },
+          "method": {
+            "type": "string"
+          },
+          "action": {
+            "type": "string"
+          },
+          "appVersion": {
+            "type": "string"
+          },
+          "rowCount": {
+            "type": "number"
+          },
+          "book": {
+            "$ref": "#/components/schemas/book-object"
+          }
+        }
+      },
+      "updateBook-Response": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "statusCode": {
+            "type": "string"
+          },
+          "elapsedMs": {
+            "type": "number"
+          },
+          "ssoTime": {
+            "type": "number"
+          },
+          "source": {
+            "type": "string"
+          },
+          "cacheKey": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "sessionId": {
+            "type": "string"
+          },
+          "requestId": {
+            "type": "string"
+          },
+          "dataName": {
+            "type": "string"
+          },
+          "method": {
+            "type": "string"
+          },
+          "action": {
+            "type": "string"
+          },
+          "appVersion": {
+            "type": "string"
+          },
+          "rowCount": {
+            "type": "number"
+          },
+          "book": {
+            "$ref": "#/components/schemas/book-object"
+          }
+        }
+      },
+      "deleteBook-Response": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "statusCode": {
+            "type": "string"
+          },
+          "elapsedMs": {
+            "type": "number"
+          },
+          "ssoTime": {
+            "type": "number"
+          },
+          "source": {
+            "type": "string"
+          },
+          "cacheKey": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "sessionId": {
+            "type": "string"
+          },
+          "requestId": {
+            "type": "string"
+          },
+          "dataName": {
+            "type": "string"
+          },
+          "method": {
+            "type": "string"
+          },
+          "action": {
+            "type": "string"
+          },
+          "appVersion": {
+            "type": "string"
+          },
+          "rowCount": {
+            "type": "number"
+          },
+          "book": {
+            "$ref": "#/components/schemas/book-object"
+          }
+        }
+      },
+      "createBook-Response": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "statusCode": {
+            "type": "string"
+          },
+          "elapsedMs": {
+            "type": "number"
+          },
+          "ssoTime": {
+            "type": "number"
+          },
+          "source": {
+            "type": "string"
+          },
+          "cacheKey": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "sessionId": {
+            "type": "string"
+          },
+          "requestId": {
+            "type": "string"
+          },
+          "dataName": {
+            "type": "string"
+          },
+          "method": {
+            "type": "string"
+          },
+          "action": {
+            "type": "string"
+          },
+          "appVersion": {
+            "type": "string"
+          },
+          "rowCount": {
+            "type": "number"
+          },
+          "book": {
+            "$ref": "#/components/schemas/book-object"
+          }
+        }
+      },
+      "listBooks-Response": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "statusCode": {
+            "type": "string"
+          },
+          "elapsedMs": {
+            "type": "number"
+          },
+          "ssoTime": {
+            "type": "number"
+          },
+          "source": {
+            "type": "string"
+          },
+          "cacheKey": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "sessionId": {
+            "type": "string"
+          },
+          "requestId": {
+            "type": "string"
+          },
+          "dataName": {
+            "type": "string"
+          },
+          "method": {
+            "type": "string"
+          },
+          "action": {
+            "type": "string"
+          },
+          "appVersion": {
+            "type": "string"
+          },
+          "rowCount": {
+            "type": "string"
+          },
+          "books": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/books-object"
+            }
+          },
+          "paging": {
+            "$ref": "#/components/schemas/paging-object"
+          },
+          "filters": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "uiPermissions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "getBranch-Response": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "statusCode": {
+            "type": "string"
+          },
+          "elapsedMs": {
+            "type": "number"
+          },
+          "ssoTime": {
+            "type": "number"
+          },
+          "source": {
+            "type": "string"
+          },
+          "cacheKey": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "sessionId": {
+            "type": "string"
+          },
+          "requestId": {
+            "type": "string"
+          },
+          "dataName": {
+            "type": "string"
+          },
+          "method": {
+            "type": "string"
+          },
+          "action": {
+            "type": "string"
+          },
+          "appVersion": {
+            "type": "string"
+          },
+          "rowCount": {
+            "type": "number"
+          },
+          "branch": {
+            "$ref": "#/components/schemas/branch-object"
+          }
+        }
+      },
+      "updateBranch-Response": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "statusCode": {
+            "type": "string"
+          },
+          "elapsedMs": {
+            "type": "number"
+          },
+          "ssoTime": {
+            "type": "number"
+          },
+          "source": {
+            "type": "string"
+          },
+          "cacheKey": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "sessionId": {
+            "type": "string"
+          },
+          "requestId": {
+            "type": "string"
+          },
+          "dataName": {
+            "type": "string"
+          },
+          "method": {
+            "type": "string"
+          },
+          "action": {
+            "type": "string"
+          },
+          "appVersion": {
+            "type": "string"
+          },
+          "rowCount": {
+            "type": "number"
+          },
+          "branch": {
+            "$ref": "#/components/schemas/branch-object"
+          }
+        }
+      },
+      "deleteBranch-Response": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "statusCode": {
+            "type": "string"
+          },
+          "elapsedMs": {
+            "type": "number"
+          },
+          "ssoTime": {
+            "type": "number"
+          },
+          "source": {
+            "type": "string"
+          },
+          "cacheKey": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "sessionId": {
+            "type": "string"
+          },
+          "requestId": {
+            "type": "string"
+          },
+          "dataName": {
+            "type": "string"
+          },
+          "method": {
+            "type": "string"
+          },
+          "action": {
+            "type": "string"
+          },
+          "appVersion": {
+            "type": "string"
+          },
+          "rowCount": {
+            "type": "number"
+          },
+          "branch": {
+            "$ref": "#/components/schemas/branch-object"
+          }
+        }
+      },
+      "createBranch-Response": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "statusCode": {
+            "type": "string"
+          },
+          "elapsedMs": {
+            "type": "number"
+          },
+          "ssoTime": {
+            "type": "number"
+          },
+          "source": {
+            "type": "string"
+          },
+          "cacheKey": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "sessionId": {
+            "type": "string"
+          },
+          "requestId": {
+            "type": "string"
+          },
+          "dataName": {
+            "type": "string"
+          },
+          "method": {
+            "type": "string"
+          },
+          "action": {
+            "type": "string"
+          },
+          "appVersion": {
+            "type": "string"
+          },
+          "rowCount": {
+            "type": "number"
+          },
+          "branch": {
+            "$ref": "#/components/schemas/branch-object"
+          }
+        }
+      },
+      "listBranches-Response": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "statusCode": {
+            "type": "string"
+          },
+          "elapsedMs": {
+            "type": "number"
+          },
+          "ssoTime": {
+            "type": "number"
+          },
+          "source": {
+            "type": "string"
+          },
+          "cacheKey": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "sessionId": {
+            "type": "string"
+          },
+          "requestId": {
+            "type": "string"
+          },
+          "dataName": {
+            "type": "string"
+          },
+          "method": {
+            "type": "string"
+          },
+          "action": {
+            "type": "string"
+          },
+          "appVersion": {
+            "type": "string"
+          },
+          "rowCount": {
+            "type": "string"
+          },
+          "branches": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/branches-object"
+            }
+          },
+          "paging": {
+            "$ref": "#/components/schemas/paging-object"
+          },
+          "filters": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "uiPermissions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "getBranchInventory-Response": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "statusCode": {
+            "type": "string"
+          },
+          "elapsedMs": {
+            "type": "number"
+          },
+          "ssoTime": {
+            "type": "number"
+          },
+          "source": {
+            "type": "string"
+          },
+          "cacheKey": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "sessionId": {
+            "type": "string"
+          },
+          "requestId": {
+            "type": "string"
+          },
+          "dataName": {
+            "type": "string"
+          },
+          "method": {
+            "type": "string"
+          },
+          "action": {
+            "type": "string"
+          },
+          "appVersion": {
+            "type": "string"
+          },
+          "rowCount": {
+            "type": "number"
+          },
+          "branchInventory": {
+            "$ref": "#/components/schemas/branchInventory-object"
+          }
+        }
+      },
+      "updateBranchInventory-Response": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "statusCode": {
+            "type": "string"
+          },
+          "elapsedMs": {
+            "type": "number"
+          },
+          "ssoTime": {
+            "type": "number"
+          },
+          "source": {
+            "type": "string"
+          },
+          "cacheKey": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "sessionId": {
+            "type": "string"
+          },
+          "requestId": {
+            "type": "string"
+          },
+          "dataName": {
+            "type": "string"
+          },
+          "method": {
+            "type": "string"
+          },
+          "action": {
+            "type": "string"
+          },
+          "appVersion": {
+            "type": "string"
+          },
+          "rowCount": {
+            "type": "number"
+          },
+          "branchInventory": {
+            "$ref": "#/components/schemas/branchInventory-object"
+          }
+        }
+      },
+      "deleteBranchInventory-Response": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "statusCode": {
+            "type": "string"
+          },
+          "elapsedMs": {
+            "type": "number"
+          },
+          "ssoTime": {
+            "type": "number"
+          },
+          "source": {
+            "type": "string"
+          },
+          "cacheKey": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "sessionId": {
+            "type": "string"
+          },
+          "requestId": {
+            "type": "string"
+          },
+          "dataName": {
+            "type": "string"
+          },
+          "method": {
+            "type": "string"
+          },
+          "action": {
+            "type": "string"
+          },
+          "appVersion": {
+            "type": "string"
+          },
+          "rowCount": {
+            "type": "number"
+          },
+          "branchInventory": {
+            "$ref": "#/components/schemas/branchInventory-object"
+          }
+        }
+      },
+      "createBranchInventory-Response": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "statusCode": {
+            "type": "string"
+          },
+          "elapsedMs": {
+            "type": "number"
+          },
+          "ssoTime": {
+            "type": "number"
+          },
+          "source": {
+            "type": "string"
+          },
+          "cacheKey": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "sessionId": {
+            "type": "string"
+          },
+          "requestId": {
+            "type": "string"
+          },
+          "dataName": {
+            "type": "string"
+          },
+          "method": {
+            "type": "string"
+          },
+          "action": {
+            "type": "string"
+          },
+          "appVersion": {
+            "type": "string"
+          },
+          "rowCount": {
+            "type": "number"
+          },
+          "branchInventory": {
+            "$ref": "#/components/schemas/branchInventory-object"
+          }
+        }
+      },
+      "listBranchInventories-Response": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "statusCode": {
+            "type": "string"
+          },
+          "elapsedMs": {
+            "type": "number"
+          },
+          "ssoTime": {
+            "type": "number"
+          },
+          "source": {
+            "type": "string"
+          },
+          "cacheKey": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "sessionId": {
+            "type": "string"
+          },
+          "requestId": {
+            "type": "string"
+          },
+          "dataName": {
+            "type": "string"
+          },
+          "method": {
+            "type": "string"
+          },
+          "action": {
+            "type": "string"
+          },
+          "appVersion": {
+            "type": "string"
+          },
+          "rowCount": {
+            "type": "string"
+          },
+          "branchInventories": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/branchInventories-object"
+            }
+          },
+          "paging": {
+            "$ref": "#/components/schemas/paging-object"
+          },
+          "filters": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "uiPermissions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "getInventoryAuditLog-Response": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "statusCode": {
+            "type": "string"
+          },
+          "elapsedMs": {
+            "type": "number"
+          },
+          "ssoTime": {
+            "type": "number"
+          },
+          "source": {
+            "type": "string"
+          },
+          "cacheKey": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "sessionId": {
+            "type": "string"
+          },
+          "requestId": {
+            "type": "string"
+          },
+          "dataName": {
+            "type": "string"
+          },
+          "method": {
+            "type": "string"
+          },
+          "action": {
+            "type": "string"
+          },
+          "appVersion": {
+            "type": "string"
+          },
+          "rowCount": {
+            "type": "number"
+          },
+          "inventoryAuditLog": {
+            "$ref": "#/components/schemas/inventoryAuditLog-object"
+          }
+        }
+      },
+      "updateInventoryAuditLog-Response": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "statusCode": {
+            "type": "string"
+          },
+          "elapsedMs": {
+            "type": "number"
+          },
+          "ssoTime": {
+            "type": "number"
+          },
+          "source": {
+            "type": "string"
+          },
+          "cacheKey": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "sessionId": {
+            "type": "string"
+          },
+          "requestId": {
+            "type": "string"
+          },
+          "dataName": {
+            "type": "string"
+          },
+          "method": {
+            "type": "string"
+          },
+          "action": {
+            "type": "string"
+          },
+          "appVersion": {
+            "type": "string"
+          },
+          "rowCount": {
+            "type": "number"
+          },
+          "inventoryAuditLog": {
+            "$ref": "#/components/schemas/inventoryAuditLog-object"
+          }
+        }
+      },
+      "deleteInventoryAuditLog-Response": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "statusCode": {
+            "type": "string"
+          },
+          "elapsedMs": {
+            "type": "number"
+          },
+          "ssoTime": {
+            "type": "number"
+          },
+          "source": {
+            "type": "string"
+          },
+          "cacheKey": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "sessionId": {
+            "type": "string"
+          },
+          "requestId": {
+            "type": "string"
+          },
+          "dataName": {
+            "type": "string"
+          },
+          "method": {
+            "type": "string"
+          },
+          "action": {
+            "type": "string"
+          },
+          "appVersion": {
+            "type": "string"
+          },
+          "rowCount": {
+            "type": "number"
+          },
+          "inventoryAuditLog": {
+            "$ref": "#/components/schemas/inventoryAuditLog-object"
+          }
+        }
+      },
+      "createInventoryAuditLog-Response": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "statusCode": {
+            "type": "string"
+          },
+          "elapsedMs": {
+            "type": "number"
+          },
+          "ssoTime": {
+            "type": "number"
+          },
+          "source": {
+            "type": "string"
+          },
+          "cacheKey": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "sessionId": {
+            "type": "string"
+          },
+          "requestId": {
+            "type": "string"
+          },
+          "dataName": {
+            "type": "string"
+          },
+          "method": {
+            "type": "string"
+          },
+          "action": {
+            "type": "string"
+          },
+          "appVersion": {
+            "type": "string"
+          },
+          "rowCount": {
+            "type": "number"
+          },
+          "inventoryAuditLog": {
+            "$ref": "#/components/schemas/inventoryAuditLog-object"
+          }
+        }
+      },
+      "listInventoryAuditLogs-Response": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "statusCode": {
+            "type": "string"
+          },
+          "elapsedMs": {
+            "type": "number"
+          },
+          "ssoTime": {
+            "type": "number"
+          },
+          "source": {
+            "type": "string"
+          },
+          "cacheKey": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "sessionId": {
+            "type": "string"
+          },
+          "requestId": {
+            "type": "string"
+          },
+          "dataName": {
+            "type": "string"
+          },
+          "method": {
+            "type": "string"
+          },
+          "action": {
+            "type": "string"
+          },
+          "appVersion": {
+            "type": "string"
+          },
+          "rowCount": {
+            "type": "string"
+          },
+          "inventoryAuditLogs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/inventoryAuditLogs-object"
+            }
+          },
+          "paging": {
+            "$ref": "#/components/schemas/paging-object"
+          },
+          "filters": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "uiPermissions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "getInterBranchTransfer-Response": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "statusCode": {
+            "type": "string"
+          },
+          "elapsedMs": {
+            "type": "number"
+          },
+          "ssoTime": {
+            "type": "number"
+          },
+          "source": {
+            "type": "string"
+          },
+          "cacheKey": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "sessionId": {
+            "type": "string"
+          },
+          "requestId": {
+            "type": "string"
+          },
+          "dataName": {
+            "type": "string"
+          },
+          "method": {
+            "type": "string"
+          },
+          "action": {
+            "type": "string"
+          },
+          "appVersion": {
+            "type": "string"
+          },
+          "rowCount": {
+            "type": "number"
+          },
+          "interBranchTransfer": {
+            "$ref": "#/components/schemas/interBranchTransfer-object"
+          }
+        }
+      },
+      "updateInterBranchTransfer-Response": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "statusCode": {
+            "type": "string"
+          },
+          "elapsedMs": {
+            "type": "number"
+          },
+          "ssoTime": {
+            "type": "number"
+          },
+          "source": {
+            "type": "string"
+          },
+          "cacheKey": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "sessionId": {
+            "type": "string"
+          },
+          "requestId": {
+            "type": "string"
+          },
+          "dataName": {
+            "type": "string"
+          },
+          "method": {
+            "type": "string"
+          },
+          "action": {
+            "type": "string"
+          },
+          "appVersion": {
+            "type": "string"
+          },
+          "rowCount": {
+            "type": "number"
+          },
+          "interBranchTransfer": {
+            "$ref": "#/components/schemas/interBranchTransfer-object"
+          }
+        }
+      },
+      "deleteInterBranchTransfer-Response": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "statusCode": {
+            "type": "string"
+          },
+          "elapsedMs": {
+            "type": "number"
+          },
+          "ssoTime": {
+            "type": "number"
+          },
+          "source": {
+            "type": "string"
+          },
+          "cacheKey": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "sessionId": {
+            "type": "string"
+          },
+          "requestId": {
+            "type": "string"
+          },
+          "dataName": {
+            "type": "string"
+          },
+          "method": {
+            "type": "string"
+          },
+          "action": {
+            "type": "string"
+          },
+          "appVersion": {
+            "type": "string"
+          },
+          "rowCount": {
+            "type": "number"
+          },
+          "interBranchTransfer": {
+            "$ref": "#/components/schemas/interBranchTransfer-object"
+          }
+        }
+      },
+      "createInterBranchTransfer-Response": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "statusCode": {
+            "type": "string"
+          },
+          "elapsedMs": {
+            "type": "number"
+          },
+          "ssoTime": {
+            "type": "number"
+          },
+          "source": {
+            "type": "string"
+          },
+          "cacheKey": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "sessionId": {
+            "type": "string"
+          },
+          "requestId": {
+            "type": "string"
+          },
+          "dataName": {
+            "type": "string"
+          },
+          "method": {
+            "type": "string"
+          },
+          "action": {
+            "type": "string"
+          },
+          "appVersion": {
+            "type": "string"
+          },
+          "rowCount": {
+            "type": "number"
+          },
+          "interBranchTransfer": {
+            "$ref": "#/components/schemas/interBranchTransfer-object"
+          }
+        }
+      },
+      "listInterBranchTransfers-Response": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "statusCode": {
+            "type": "string"
+          },
+          "elapsedMs": {
+            "type": "number"
+          },
+          "ssoTime": {
+            "type": "number"
+          },
+          "source": {
+            "type": "string"
+          },
+          "cacheKey": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "sessionId": {
+            "type": "string"
+          },
+          "requestId": {
+            "type": "string"
+          },
+          "dataName": {
+            "type": "string"
+          },
+          "method": {
+            "type": "string"
+          },
+          "action": {
+            "type": "string"
+          },
+          "appVersion": {
+            "type": "string"
+          },
+          "rowCount": {
+            "type": "string"
+          },
+          "interBranchTransfers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/interBranchTransfers-object"
+            }
+          },
+          "paging": {
+            "$ref": "#/components/schemas/paging-object"
+          },
+          "filters": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "uiPermissions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "getPurchaseOrder-Response": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "statusCode": {
+            "type": "string"
+          },
+          "elapsedMs": {
+            "type": "number"
+          },
+          "ssoTime": {
+            "type": "number"
+          },
+          "source": {
+            "type": "string"
+          },
+          "cacheKey": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "sessionId": {
+            "type": "string"
+          },
+          "requestId": {
+            "type": "string"
+          },
+          "dataName": {
+            "type": "string"
+          },
+          "method": {
+            "type": "string"
+          },
+          "action": {
+            "type": "string"
+          },
+          "appVersion": {
+            "type": "string"
+          },
+          "rowCount": {
+            "type": "number"
+          },
+          "purchaseOrder": {
+            "$ref": "#/components/schemas/purchaseOrder-object"
+          }
+        }
+      },
+      "updatePurchaseOrder-Response": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "statusCode": {
+            "type": "string"
+          },
+          "elapsedMs": {
+            "type": "number"
+          },
+          "ssoTime": {
+            "type": "number"
+          },
+          "source": {
+            "type": "string"
+          },
+          "cacheKey": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "sessionId": {
+            "type": "string"
+          },
+          "requestId": {
+            "type": "string"
+          },
+          "dataName": {
+            "type": "string"
+          },
+          "method": {
+            "type": "string"
+          },
+          "action": {
+            "type": "string"
+          },
+          "appVersion": {
+            "type": "string"
+          },
+          "rowCount": {
+            "type": "number"
+          },
+          "purchaseOrder": {
+            "$ref": "#/components/schemas/purchaseOrder-object"
+          }
+        }
+      },
+      "deletePurchaseOrder-Response": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "statusCode": {
+            "type": "string"
+          },
+          "elapsedMs": {
+            "type": "number"
+          },
+          "ssoTime": {
+            "type": "number"
+          },
+          "source": {
+            "type": "string"
+          },
+          "cacheKey": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "sessionId": {
+            "type": "string"
+          },
+          "requestId": {
+            "type": "string"
+          },
+          "dataName": {
+            "type": "string"
+          },
+          "method": {
+            "type": "string"
+          },
+          "action": {
+            "type": "string"
+          },
+          "appVersion": {
+            "type": "string"
+          },
+          "rowCount": {
+            "type": "number"
+          },
+          "purchaseOrder": {
+            "$ref": "#/components/schemas/purchaseOrder-object"
+          }
+        }
+      },
+      "createPurchaseOrder-Response": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "statusCode": {
+            "type": "string"
+          },
+          "elapsedMs": {
+            "type": "number"
+          },
+          "ssoTime": {
+            "type": "number"
+          },
+          "source": {
+            "type": "string"
+          },
+          "cacheKey": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "sessionId": {
+            "type": "string"
+          },
+          "requestId": {
+            "type": "string"
+          },
+          "dataName": {
+            "type": "string"
+          },
+          "method": {
+            "type": "string"
+          },
+          "action": {
+            "type": "string"
+          },
+          "appVersion": {
+            "type": "string"
+          },
+          "rowCount": {
+            "type": "number"
+          },
+          "purchaseOrder": {
+            "$ref": "#/components/schemas/purchaseOrder-object"
+          }
+        }
+      },
+      "listPurchaseOrders-Response": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "statusCode": {
+            "type": "string"
+          },
+          "elapsedMs": {
+            "type": "number"
+          },
+          "ssoTime": {
+            "type": "number"
+          },
+          "source": {
+            "type": "string"
+          },
+          "cacheKey": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "sessionId": {
+            "type": "string"
+          },
+          "requestId": {
+            "type": "string"
+          },
+          "dataName": {
+            "type": "string"
+          },
+          "method": {
+            "type": "string"
+          },
+          "action": {
+            "type": "string"
+          },
+          "appVersion": {
+            "type": "string"
+          },
+          "rowCount": {
+            "type": "string"
+          },
+          "purchaseOrders": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/purchaseOrders-object"
+            }
+          },
+          "paging": {
+            "$ref": "#/components/schemas/paging-object"
+          },
+          "filters": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "uiPermissions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "book-object": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "isActive": {
+            "type": "boolean"
+          }
+        }
+      },
+      "books-object": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "isActive": {
+            "type": "boolean"
+          }
+        }
+      },
+      "paging-object": {
+        "type": "object",
+        "properties": {
+          "pageNumber": {
+            "type": "number"
+          },
+          "pageRowCount": {
+            "type": "number"
+          },
+          "totalRowCount": {
+            "type": "number"
+          },
+          "pageCount": {
+            "type": "number"
+          }
+        }
+      },
+      "branch-object": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "isActive": {
+            "type": "boolean"
+          }
+        }
+      },
+      "branches-object": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "isActive": {
+            "type": "boolean"
+          }
+        }
+      },
+      "branchInventory-object": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "isActive": {
+            "type": "boolean"
+          }
+        }
+      },
+      "branchInventories-object": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "isActive": {
+            "type": "boolean"
+          }
+        }
+      },
+      "inventoryAuditLog-object": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "isActive": {
+            "type": "boolean"
+          }
+        }
+      },
+      "inventoryAuditLogs-object": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "isActive": {
+            "type": "boolean"
+          }
+        }
+      },
+      "interBranchTransfer-object": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "isActive": {
+            "type": "boolean"
+          }
+        }
+      },
+      "interBranchTransfers-object": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "isActive": {
+            "type": "boolean"
+          }
+        }
+      },
+      "purchaseOrder-object": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "isActive": {
+            "type": "boolean"
+          }
+        }
+      },
+      "purchaseOrders-object": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "isActive": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "apiKey",
+        "description": "JWT Authorization header using the Bearer scheme. \\r\\n\\r\\n \r\n  Enter 'Bearer' [space] and then your token in the text input below.\r\n                      \\r\\n\\r\\nExample: 'Bearer 12345abcdef'",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  },
+  "security": [
+    {
+      "Bearer": []
+    }
+  ]
+}
